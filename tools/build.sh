@@ -17,5 +17,6 @@ touch "$project_root/local/.gdignore"
 if [[ "$action" == pack ]]; then
     exec "$DOTNET_ROOT/dotnet" publish Shenshen.csproj -c Release "$@"
 else
-    exec "$DOTNET_ROOT/dotnet" build Shenshen.csproj "$@"
+    # Match the configuration used by packages.lock.json and resource packaging.
+    exec "$DOTNET_ROOT/dotnet" build Shenshen.csproj -c Release "$@"
 fi

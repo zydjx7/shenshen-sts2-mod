@@ -15,7 +15,8 @@ $dotnet = Join-Path $env:DOTNET_ROOT 'dotnet.exe'
 if (-not (Test-Path -LiteralPath $dotnet)) { throw 'Run ./tools/bootstrap.ps1 first.' }
 @($env:DOTNET_CLI_HOME, $env:NUGET_PACKAGES) | ForEach-Object { New-Item -ItemType Directory -Path $_ -Force | Out-Null }
 New-Item -ItemType File -Path (Join-Path $projectRoot 'local/.gdignore') -Force | Out-Null
-$dotnetArguments = @('build', 'Shenshen.csproj')
+# Match the configuration used by packages.lock.json and resource packaging.
+$dotnetArguments = @('build', 'Shenshen.csproj', '-c', 'Release')
 if ($Action -eq 'pack') { $dotnetArguments = @('publish', 'Shenshen.csproj', '-c', 'Release') }
 Push-Location $projectRoot
 try {
