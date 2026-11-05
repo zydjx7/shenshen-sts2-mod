@@ -11,7 +11,7 @@ namespace Shenshen.ShenshenCode.Cards;
 
 public sealed class TransformationMagic : ShenshenCard
 {
-    public TransformationMagic() : base(1, CardType.Skill, CardRarity.Token, TargetType.Self) { }
+    public TransformationMagic() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self) { }
     public override ShenshenForm? Form => null;
     public override bool CanBeGeneratedInCombat => false;
     public override bool GainsBlock => IsUpgraded;

@@ -19,6 +19,7 @@
   "SHENSHEN-CAT_DODGE_POWER.usedDescription": "本回合已使用闪避。自身下回合正常抽牌前刷新；变形不刷新。",
   "SHENSHEN-CAT_DODGE_POWER.smartDescription": "猫形态时，闪避本回合第一次敌方多段攻击的第一段，不消耗格挡或触发反伤。自身下回合正常抽牌前刷新。",
   "SHENSHEN-FLUFFED_UP_POWER.title": "炸毛",
-  "SHENSHEN-FLUFFED_UP_POWER.description": "生效后本场首次因敌人攻击实际扣血时获得3荆棘，后续每次获得1。\n敌人每次成功施加每种负面效果时另获得1荆棘，不占首次扣血奖励。\n首次奖励不随回合或变形刷新；自伤、中毒扣血及塞入状态牌不触发。",
-  "SHENSHEN-FLUFFED_UP_POWER.smartDescription": "生效后本场首次因敌人攻击实际扣血时获得3荆棘，后续每次获得1。\n敌人每次成功施加每种负面效果时另获得1荆棘，不占首次扣血奖励。\n首次奖励不随回合或变形刷新；自伤、中毒扣血及塞入状态牌不触发。"
+  "SHENSHEN-FLUFFED_UP_POWER.description": "生效后本场首次因敌人攻击实际扣血时获得3荆棘，之后不再增长。\n首次奖励不随回合或变形刷新；负面效果、自伤、中毒扣血及塞入状态牌不触发。",
+  "SHENSHEN-FLUFFED_UP_POWER.smartDescription": "生效后本场首次因敌人攻击实际扣血时获得3荆棘，之后不再增长。首次奖励整场只触发一次。",
+  "SHENSHEN-FLUFFED_UP_POWER.upgradedDescription": "生效后本场首次因敌人攻击实际扣血时获得3荆棘，后续每次获得1。\n敌人每次成功施加每种负面效果时另获得1荆棘，不占首次扣血奖励。\n首次奖励不随回合或变形刷新；自伤、中毒扣血及塞入状态牌不触发。"
 }

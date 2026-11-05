@@ -20,5 +20,5 @@
   "SHENSHEN-LIGHT_BLESSING.title": "光之祝福",
   "SHENSHEN-LIGHT_BLESSING.description": "[gold]少女牌。[/gold]\n祝福另一位队友。在其下回合正常抽牌前，由其从自己的抽牌堆额外选择{Cards:diff()}张牌加入手牌。",
   "SHENSHEN-FLUFFED_UP.title": "炸毛",
-  "SHENSHEN-FLUFFED_UP.description": "[gold]猫牌。[/gold]\n生效后本场首次因敌人攻击实际扣血时，获得3点[gold]荆棘[/gold]；后续每次获得1点。\n敌人每次成功施加每种负面效果时，另获得1点[gold]荆棘[/gold]。\n效果跨形态保留；重复使用不叠加，也不重置首次奖励。"
+  "SHENSHEN-FLUFFED_UP.description": "[gold]猫牌。[/gold]\n生效后本场首次因敌人攻击实际扣血时，获得{ThornsPower:diff()}点[gold]荆棘[/gold]。{IfUpgraded:show:\n后续每次敌方攻击实际扣血时，获得{LaterThorns:diff()}点[gold]荆棘[/gold]；敌人每次成功施加每种负面效果时，另获得{DebuffThorns:diff()}点。}\n效果跨形态保留；重复使用不叠加，也不重置首次奖励。"
 }

@@ -20,5 +20,5 @@
   "SHENSHEN-LIGHT_BLESSING.title": "Light Blessing",
   "SHENSHEN-LIGHT_BLESSING.description": "[gold]Girl form.[/gold]\nBless another player. Before their next normal draw, they choose {Cards:diff()} extra cards from their draw pile to add to hand.",
   "SHENSHEN-FLUFFED_UP.title": "Fluffed Up",
-  "SHENSHEN-FLUFFED_UP.description": "[gold]Cat form.[/gold]\nAfter activation, gain 3 [gold]Thorns[/gold] the first time you lose HP to an enemy attack this combat; gain 1 on each later hit.\nAlso gain 1 [gold]Thorns[/gold] for each different debuff an enemy successfully applies.\nPersists across forms. Additional copies do not stack or reset the first-hit reward."
+  "SHENSHEN-FLUFFED_UP.description": "[gold]Cat form.[/gold]\nAfter activation, gain {ThornsPower:diff()} [gold]Thorns[/gold] the first time you lose HP to an enemy attack this combat.{IfUpgraded:show:\nGain {LaterThorns:diff()} [gold]Thorns[/gold] on each later enemy attack hit that causes HP loss, and {DebuffThorns:diff()} for each different debuff an enemy successfully applies.}\nPersists across forms. Additional copies do not stack or reset the first-hit reward."
 }

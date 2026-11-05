@@ -91,7 +91,9 @@ public partial class Harness : Node
         await PowerCmd.Apply<FormPower>(context, player.Creature, 1, player.Creature, null);
         var state = player.PlayerCombatState!;
         var all = state.AllCards.ToArray();
-        Check(player.Deck.Cards.Count == 18 && all.Length == 18, "both owned nine-card starting decks");
+        Check(player.Deck.Cards.Count == 19 && all.Length == 19, "both owned nine-card starting decks and one permanent transformation");
+        var ownedTransformation = all.OfType<TransformationMagic>().Single();
+        await CardPileCmd.Add(ownedTransformation, PileType.Hand);
         var upgraded = all.OfType<LittleFireball>().First();
         upgraded.UpgradeInternal();
         upgraded.EnergyCost.SetThisCombat(0);
@@ -101,12 +103,14 @@ public partial class Harness : Node
         await CardPileCmd.Shuffle(context, player);
         Check(inactiveOrder.SequenceEqual(state.DrawPile.Cards.Where(c => c is ShenshenCard { Form: Shenshen.ShenshenCode.Character.ShenshenForm.Cat })), "inactive draw order survives shuffle");
         await Switch(context, player);
-        Check(state.Hand.Cards.Count == 5 && state.Hand.Cards.All(c => c is ShenshenCard { Form: Shenshen.ShenshenCode.Character.ShenshenForm.Cat }), "switch draws same count cats");
+        Check(state.Hand.Cards.Count == 6 && state.Hand.Cards.Contains(ownedTransformation) &&
+            state.Hand.Cards.Where(c => c is not TransformationMagic).All(c => c is ShenshenCard { Form: Shenshen.ShenshenCode.Character.ShenshenForm.Cat }),
+            "switch draws same count cats and retains the actual owned transformation");
         for (int i = 0; i < 8; i++) await Switch(context, player);
-        Check(all.ToHashSet().SetEquals(state.AllCards) && state.AllCards.Count() == 18, "repeated switches preserve every exact card reference");
+        Check(all.ToHashSet().SetEquals(state.AllCards) && state.AllCards.Count() == 19, "repeated switches preserve every exact card reference");
         Check(upgraded.IsUpgraded && upgraded.EnergyCost.GetWithModifiers(CostModifiers.Local) == 0, "upgrade and cost state persist");
-        // A nine-card form alone cannot fill the ten-card hand. Two shared cards
-        // provide eleven eligible cards, leaving a real drawable card at the cap.
+        // The real shared transformation remains retained. Shared state cards
+        // provide eligible draws beyond the ten-card hand cap.
         var handLimitFillers = new[] { combat.CreateCard<Wound>(player), combat.CreateCard<Wound>(player) };
         foreach (var filler in handLimitFillers)
             await CardPileCmd.AddGeneratedCardToCombat(filler, PileType.Draw, player);
@@ -122,7 +126,7 @@ public partial class Harness : Node
             e.CreationResult!.Card is ShenshenCard && e.CreationResult.Card.Rarity != CardRarity.Token && e.CreationResult.Card is not LightBlessing),
             "standard solo merchant fills all five character slots without tokens or multiplayer cards");
 
-        await CardCmd.Discard(context, state.Hand.Cards.ToArray());
+        await CardCmd.Discard(context, state.Hand.Cards.Where(c => c is not TransformationMagic).ToArray());
         var injury = combat.CreateCard<Injury>(player);
         var wound = combat.CreateCard<Wound>(player);
         await CardPileCmd.AddGeneratedCardToCombat(injury, PileType.Hand, player);
@@ -170,10 +174,10 @@ public partial class Harness : Node
         Check(player.Creature.GetPower<CatDodgePower>()!.Amount == 1, "next own hand draw refreshes one dodge");
 
         player.Creature.GetPower<FormPower>()!.SetAmount(1);
-        await PowerCmd.Apply<FluffedUpPower>(context, player.Creature, 1, player.Creature, null);
+        await PowerCmd.Apply<FluffedUpPower>(context, player.Creature, 3, player.Creature, null);
         int thorns = player.Creature.GetPower<ThornsPower>()!.Amount;
         await PowerCmd.Apply<WeakPower>(context, player.Creature, 3, enemy, null);
-        Check(player.Creature.GetPower<ThornsPower>()!.Amount == thorns + 1 && player.Creature.GetPower<FluffedUpPower>()!.Amount == 1,
+        Check(player.Creature.GetPower<ThornsPower>()!.Amount == thorns + 1 && player.Creature.GetPower<FluffedUpPower>()!.Amount == 3,
             "enemy multi-layer debuff awards one thorns without consuming first HP-loss reward");
         enemyHp = enemy.CurrentHp;
         await DamageCmd.Attack(2).FromMonster(enemy.Monster!).WithNoAttackerAnim().Execute(context);
@@ -291,11 +295,14 @@ public partial class Harness : Node
         // This combat fixture intentionally has no generated map/room sets. Reload its
         // real SerializablePlayer inventory rather than pretending to restore a complete run.
         var loadedHeroine = Player.FromSerializable(parsedSave.SaveData!.Players.Single(p => p.NetId == heroine.NetId));
-        Check(loadedHeroine.Deck.Cards.Count == 18 && loadedHeroine.Deck.Cards.Count(c => c is LittleFireball or LightShield or LightMark) == 9 &&
-            loadedHeroine.Deck.Cards.Count(c => c is ClawStrike or MiDodge or CatTailSweep) == 9 && loadedHeroine.Deck.Cards.OfType<LittleFireball>().Count(c => c.IsUpgraded) == 1,
-            "permanent save reload preserves both nine-card owned decks and the original upgrade");
+        Check(loadedHeroine.Deck.Cards.Count == 19 && loadedHeroine.Deck.Cards.Count(c => c is LittleFireball or LightShield or LightMark) == 9 &&
+            loadedHeroine.Deck.Cards.Count(c => c is ClawStrike or MiDodge or CatTailSweep) == 9 &&
+            loadedHeroine.Deck.Cards.OfType<TransformationMagic>().Count() == 1 &&
+            loadedHeroine.Deck.Cards.OfType<LittleFireball>().Count(c => c.IsUpgraded) == 1,
+            "permanent save reload preserves both nine-card owned decks, the shared transformation and the original upgrade");
         File.WriteAllText(Path.Combine(Environment.GetEnvironmentVariable("SHENSHEN_REPO_ROOT")!, "work", "headless-tests", "roundtrip.save"), saveJson);
         await RunDeckDesignChecks();
+        await RunUpgradeAccessChecks();
         UiResourceChecks.Run(Check);
         AnimationChecks.Run(this, Check);
     }

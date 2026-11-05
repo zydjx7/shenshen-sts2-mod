@@ -50,8 +50,8 @@ public partial class Harness
         Check(HasStartingComposition(heroine), "starting inventory owns exactly four attacks, four defenses and one signature per form");
         Check(heroine.Deck.Cards.Count(c => c is ShenshenCard { Form: ShenshenForm.Human }) == 9 &&
             heroine.Deck.Cards.Count(c => c is ShenshenCard { Form: ShenshenForm.Cat }) == 9 &&
-            heroine.Deck.Cards.All(c => c is not TransformationMagic),
-            "both nine-card inventories are permanent while transformation remains combat-only");
+            heroine.Deck.Cards.OfType<TransformationMagic>().Count() == 1,
+            "both nine-card inventories and one shared transformation are permanently owned");
 
         void CheckUpgrade<T>(params (string Name, decimal Base, decimal Upgraded)[] values) where T : CardModel
         {
@@ -67,7 +67,6 @@ public partial class Harness
         CheckUpgrade<LightShield>(("Block", 5, 8));
         CheckUpgrade<ClawStrike>(("Damage", 2, 3), ("Repeat", 3, 3));
         CheckUpgrade<MiDodge>(("Block", 7, 10));
-        CheckUpgrade<TransformationMagic>(("StrengthPower", 1, 1), ("DexterityPower", 1, 1), ("ThornsPower", 0, 1), ("Block", 0, 4));
         CheckUpgrade<LightMark>(("Damage", 4, 4), ("BurnDamage", 1, 2), ("Turns", 2, 3));
         CheckUpgrade<CatTailSweep>(("Damage", 2, 3), ("Repeat", 2, 2), ("Block", 6, 8));
         CheckUpgrade<IDontLikeYou>(("Damage", 5, 6), ("Repeat", 2, 2), ("StrengthPower", 3, 4), ("EnemyStrength", 1, 1));
@@ -76,6 +75,10 @@ public partial class Harness
 
         await Hook.BeforeHandDraw(combat, heroine, context);
         var transform = state.Hand.Cards.OfType<TransformationMagic>().Single();
+        Check(transform.EnergyCost.Canonical == 1 && transform.DynamicVars.Strength.BaseValue == 1 &&
+            transform.DynamicVars["DexterityPower"].BaseValue == 1 && transform.DynamicVars["ThornsPower"].BaseValue == 0 &&
+            transform.DynamicVars.Block.BaseValue == 0,
+            "the unique owned transformation has its one-energy base bonuses");
         var baseText = transform.GetDescriptionForPile(PileType.Hand);
         var upgradePreviewText = transform.GetDescriptionForUpgradePreview();
         Check(baseText.Contains("Strength") && baseText.Contains("Dexterity") && !baseText.Contains("Thorns") &&
@@ -107,6 +110,10 @@ public partial class Harness
             "base return to girl adds one dexterity, retains strength and gives no extra block");
         transform.UpgradeInternal();
         transform.FinalizeUpgradeInternal();
+        Check(transform.EnergyCost.Canonical == 1 && transform.DynamicVars.Strength.BaseValue == 1 &&
+            transform.DynamicVars["DexterityPower"].BaseValue == 1 && transform.DynamicVars["ThornsPower"].BaseValue == 1 &&
+            transform.DynamicVars.Block.BaseValue == 4,
+            "upgrading the same owned combat transformation unlocks only thorns and fixed block");
         var upgradedText = transform.GetDescriptionForPile(PileType.Hand);
         Check(upgradedText.Contains("Thorns") && upgradedText.Contains("fixed") && !upgradedText.Contains("{IfUpgraded"),
             "upgraded transformation text displays the thorns and fixed-block clauses through native formatting");
@@ -283,7 +290,8 @@ public partial class Harness
         PowerCmd.FindExistingInstanceForStacking(ModelDb.Power<LightMarkPower>(), target, applier) as LightMarkPower;
 
     private static bool HasStartingComposition(Player player) =>
-        player.Deck.Cards.Count == 18 && player.Deck.Cards.OfType<LittleFireball>().Count() == 4 &&
+        player.Deck.Cards.Count == 19 && player.Deck.Cards.OfType<TransformationMagic>().Count() == 1 &&
+        player.Deck.Cards.OfType<LittleFireball>().Count() == 4 &&
         player.Deck.Cards.OfType<LightShield>().Count() == 4 && player.Deck.Cards.OfType<LightMark>().Count() == 1 &&
         player.Deck.Cards.OfType<ClawStrike>().Count() == 4 && player.Deck.Cards.OfType<MiDodge>().Count() == 4 &&
         player.Deck.Cards.OfType<CatTailSweep>().Count() == 1;

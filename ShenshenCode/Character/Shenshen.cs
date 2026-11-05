@@ -37,7 +37,8 @@ public class Shenshen : PlaceholderCharacterModel
             .Append(ModelDb.Card<LightMark>())
             .Concat(Enumerable.Repeat(ModelDb.Card<ClawStrike>(), 4))
             .Concat(Enumerable.Repeat(ModelDb.Card<MiDodge>(), 4))
-            .Append(ModelDb.Card<CatTailSweep>());
+            .Append(ModelDb.Card<CatTailSweep>())
+            .Append(ModelDb.Card<TransformationMagic>());
 
     public override IReadOnlyList<RelicModel> StartingRelics =>
     [
