@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using Shenshen.ShenshenCode.Character;
+using Shenshen.ShenshenCode.Visuals;
 
 namespace Shenshen.ShenshenCode.Cards;
 
@@ -19,7 +20,9 @@ public sealed class LittleFireball : ShenshenCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, cardPlay)
-            .Targeting(cardPlay.Target).Execute(choiceContext);
+            .Targeting(cardPlay.Target)
+            .AfterAttackerAnim(() => LittleFireballVfx.Play(Owner.Creature, cardPlay.Target))
+            .Execute(choiceContext);
     }
 
     // Prototype upgrade: follows the base game's Strike; not a confirmed design rule.

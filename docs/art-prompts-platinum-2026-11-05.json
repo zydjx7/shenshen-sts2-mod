@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-05",
+  "method": "built-in image_gen",
+  "request": "自然浅笑、白金发、细描边；保留少女v5体型与首版白皙肤色，猫v2不改。",
+  "assets": [
+    {
+      "key": "parts",
+      "prompt": "Use case: precise-object-edit. Edit image1, a production 1024x1536 transparent 3-column 4-row animation parts atlas for an adult magical girl game character. Image2 is HAIR COLOR ONLY reference. Preserve EXACT canvas size, every part's location, bounding box, pose, silhouette, small details, pink/ivory/gold clothes, very fair ivory skin and proportions. Change ONLY: all blonde head hair AND detached ponytail to pale platinum blonde matching photo: nearly white ivory/champagne highlights, soft cool beige shadows, no orange/golden yellow hair; eyebrows harmonize. Make heavy dark outlines about one-third lighter/thinner, refined warm brown fine linework rather than heavy black contour, keep crisp readable painterly angular game illustration. Preserve original top-left natural gentle small smile and brown eyes EXACTLY; top-middle matching CLOSED eyes. Never redraw anatomy, no change legs/chest/waist. All12 cells remain in precisely same layout. Critical: output actual RGBA transparent, entire empty gutters/background alpha=0, no backdrop, glow fog, checkerboard, grid, labels, text, filled cell rectangles, no shadow behind components. Retain self-contained pink-gold magic curl in bottom-right only. This will replace a working rig atlas; do not recenter/resize components or add parts.",
+      "reference_roles": [
+        "existing parts atlas",
+        "user platinum hair photo (not committed)"
+      ]
+    },
+    {
+      "key": "selection",
+      "prompt": "Use case: precise-object-edit. Image1 is edit target, existing full-length adult magical girl transparent 1024x1536 selection portrait. Image2 TOP LEFT HEAD ONLY provides desired exact face/expression. Image3 HAIR COLOR ONLY. Preserve image1 entire full-length pose, exact body silhouette and proportions, very fair ivory skin, high waist, natural thigh/calf fullness, pink/ivory/gold clothing and boots/staff. Change face to image2 top-left face: relaxed natural brown eyes and subtle small gentle smile; avoid exaggerated raised eyebrow, broad grin, smirk or visibly artificial smile. All hair head and side ponytail should be near-white PLATINUM blonde, ivory/champagne highlights and pale cool beige shadows like image3, not orange/yellow. Reduce thick dark outline by about one-third, refined light brown fine linework and crisp painterly angular fantasy deckbuilder-game style. Remove comic orange exclamation streaks around magic/staff. Keep all body visible with existing spacing. Output real transparent RGBA with alpha0 everywhere outside silhouette and detached magic, no cast shadow, no gradients/fog/background. Do not alter approved anatomy, redesign outfit, enlarge chest or slim legs.",
+      "reference_roles": [
+        "existing approved assets",
+        "top-left atlas head for expression",
+        "user hair photo (not committed)"
+      ]
+    },
+    {
+      "key": "avatar",
+      "prompt": "Use case: precise-object-edit. Image1 is edit target, a near-square game HUD/map avatar of adult magical girl. Image2 TOP LEFT HEAD ONLY is exact desired natural expression. Image3 HAIR COLOR ONLY reference. Preserve image1 framing/transparent silhouette, head pose, ponytail, pink ribbon, cat pin, ivory cape and pink gem. Replace expression with relaxed attentive brown eyes and tiny natural gentle smile from image2 top-left, do not exaggerate smile or eyebrows, no broad teeth. Change ALL head hair and ponytail to near-white platinum blonde matching photo image3: ivory/champagne highlights and pale cool beige shadows, no orange/yellow; eyebrows harmonize. Keep very fair ivory skin. Make heavy dark outlines about1/3 thinner/lighter, fine warm brown contours rather than thick black, crisp painterly angular fantasy game rendering. Actual transparent RGBA outside silhouette, alpha0, no glow/fog/backdrop/shadows or text. Preserve near-square original canvas and layout.",
+      "reference_roles": [
+        "existing approved assets",
+        "top-left atlas head for expression",
+        "user hair photo (not committed)"
+      ]
+    },
+    {
+      "key": "button",
+      "prompt": "Use case: identity-preserve. Create a production 2:3 VERTICAL character-selection button portrait of the EXACT adult magical girl HEAD IN TOP LEFT of image1 parts atlas. Image2 hair COLOR only. Shoulder-up bust, face large and clearly legible at80x120pixels, 3/4 facing right, relaxed natural brown eyes and tiny friendly slight smile matching that top-left head (not broad grin, smirk, toothy expression or dramatic brow). Her entire head and bow fit frame; shoulders/cape extend to bottom edge. Preserve golden cat hairpin, pink ribbon side ponytail, long ivory ribbon earrings, ivory cape with tiny pink gem. Very fair ivory skin exactly from atlas. Change hair to nearly white platinum blonde, ivory/champagne highlights and pale cool beige shadows matching photo, no orange/golden yellow. Refined fine light brown contours instead of thick black outlines, crisp angular painterly fantasy deckbuilder game style. Composition character fills central vertical frame, no staff/fireball/body/legs, no text/UI/border. Background actual RGBA TRANSPARENT alpha0, no fog/glow/shadow. This is the same approved character not a redesign.",
+      "reference_roles": [
+        "existing approved assets",
+        "top-left atlas head for expression",
+        "user hair photo (not committed)"
+      ]
+    }
+  ],
+  "outputs": {
+    "parts": "Shenshen/images/character_forms/human/p1/parts.png",
+    "selection": "Shenshen/images/character_forms/human/p1/revised-design.png",
+    "avatar": "Shenshen/images/character_forms/human/p1/avatar.png",
+    "button": "Shenshen/images/character_forms/human/p1/select-icon.png"
+  }
+}

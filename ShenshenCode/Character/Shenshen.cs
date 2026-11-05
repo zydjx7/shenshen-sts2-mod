@@ -66,8 +66,8 @@ public class Shenshen : PlaceholderCharacterModel
     // resolve to imported PNG textures rather than AtlasTexture resources.
     public override string CustomIconTexturePath => ShenshenVisuals.AssetDirectory + "/avatar.png";
     public override string CustomIconOutlineTexturePath => ShenshenVisuals.AssetDirectory + "/avatar.png";
-    public override string CustomCharacterSelectIconPath => ShenshenVisuals.AssetDirectory + "/revised-design.png";
-    public override string CustomCharacterSelectLockedIconPath => ShenshenVisuals.AssetDirectory + "/revised-design.png";
+    public override string CustomCharacterSelectIconPath => ShenshenVisuals.AssetDirectory + "/select-icon.png";
+    public override string CustomCharacterSelectLockedIconPath => ShenshenVisuals.AssetDirectory + "/select-icon.png";
     public override string CustomMapMarkerPath => ShenshenVisuals.AssetDirectory + "/avatar.png";
     public override string CustomCharacterSelectBg => "res://Shenshen/scenes/character_select/shenshen_select_bg.tscn";
 }

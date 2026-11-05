@@ -24,7 +24,8 @@ public sealed class ShenshenVisuals
     private static readonly ConditionalWeakTable<NCreatureVisuals, ShenshenVisuals> Controllers = new();
     private readonly NCreatureVisuals _root = new();
     private readonly Node2D _human = new() { Name = "HumanRig" };
-    private readonly Node2D _canvas = new() { Name = "Canvas" };
+    // Painted parts keep smooth linear sampling regardless of the host scene's filter.
+    private readonly Node2D _canvas = new() { Name = "Canvas", TextureFilter = CanvasItem.TextureFilterEnum.Linear };
     private readonly Node2D _catCanvas = new() { Name = "CatCanvas", Visible = false };
     private readonly AnimationPlayer _player = new() { Name = "AnimationPlayer" };
     private readonly Dictionary<string, RigPart> _parts;
@@ -155,7 +156,12 @@ public sealed class ShenshenVisuals
         var path = part.File.StartsWith("res://", StringComparison.Ordinal) ? part.File : part.Directory + "/" + part.File;
         var source = GD.Load<Texture2D>(path) ?? throw new InvalidOperationException("Cannot load Shenshen part: " + path);
         Texture2D texture = part.Region is { Length: 4 } region
-            ? new AtlasTexture { Atlas = source, Region = new Rect2(region[0], region[1], region[2], region[3]) }
+            ? new AtlasTexture
+            {
+                Atlas = source,
+                Region = new Rect2(region[0], region[1], region[2], region[3]),
+                FilterClip = true
+            }
             : source;
         var sprite = new Sprite2D
         {
