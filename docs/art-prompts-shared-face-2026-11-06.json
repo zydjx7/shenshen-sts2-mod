@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-06",
+  "method": "built-in image_gen for removal of the old head only; Godot AtlasTexture directly reuses approved head pixels",
+  "prompt": "Use case: precise-object-edit / background-extraction. Production game character layer edit, NOT a new character illustration. Edit the provided 1024x1536 RGBA full-length adult magical-girl portrait. The goal is a HEADLESS BODY BASE for deterministic compositing of the existing approved animation head; no head or face must be drawn here. Remove ONLY her entire existing head: all crown/bangs/head hair, face, jaw, ears, earrings, gold cat hairpin, head-side pink bow and exposed neck, replacing those removed pixels with fully transparent alpha=0. Preserve the existing ivory costume collar and shoulders exactly, and retain the LONG flowing platinum ponytail below/behind the shoulder, its lower tresses. Remove bow at old head attachment; the separate approved head already contains the bow. Do not invent a mannequin stump or skin oval at collar. Keep original collar opening suitable to place a separate head and neck over it. All body below collar stays in exactly the same pixel position, size, pose, silhouette, clothing details, pink/ivory/gold palette, very fair ivory skin, approved natural thigh/calf/chest proportions, staff and open hand and little pink/gold spell. No recentering, no crop, no resize, no anatomy/outfit/style changes. Preserve source canvas 1024x1536 with original transparent margins. Output true transparent RGBA: alpha0 outside all retained body/ponytail/staff/magic and throughout removed head/neck area. No colored fog, glow backdrop, shadow panel, checkerboard or text. Result intentionally has no head; do NOT complete missing face, eyes, hair, cat pin, neck or earrings.",
+  "source": "Shenshen/images/character_forms/human/p1/revised-design.png",
+  "output": "Shenshen/images/character_forms/human/p1/select-body.png",
+  "head_source": {
+    "file": "Shenshen/images/character_forms/human/p1/parts.png",
+    "region": [
+      36,
+      21,
+      294,
+      311
+    ]
+  },
+  "constraints": "No generation or redraw of the replacement head. Selection head and animation open-eye head share the same atlas region. Existing body composition and pose retained.",
+  "icon_export": {
+    "tool": "tools/export-head-icons.gd",
+    "method": "Godot Image.load_from_file and blit_rect; no head scaling, rotation or recoloring",
+    "avatar": { "canvas": [320, 320], "head_offset": [13, 4] },
+    "select_icon": { "canvas": [294, 441], "head_offset": [0, 65] }
+  },
+  "validation": {
+    "head_pixels": "Both exported head regions match every RGBA pixel of the original 294x311 region",
+    "regression": "112 checks passed, including packed selection atlas and visible icon pixel identity",
+    "game": "Character selection inspected in actual Windows v0.111.0 using the dedicated save; no combat replay this round"
+  }
+}
