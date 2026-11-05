@@ -14,7 +14,7 @@ public sealed class MiDodge : ShenshenCard
 
     public override ShenshenForm? Form => ShenshenForm.Cat;
     public override bool GainsBlock => true;
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(6m, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(7m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -22,6 +22,5 @@ public sealed class MiDodge : ShenshenCard
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
     }
 
-    // Prototype upgrade: follows the base game's Defend; this card grants no dodge.
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m);
 }

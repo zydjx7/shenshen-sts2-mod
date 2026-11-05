@@ -91,22 +91,28 @@ public partial class Harness : Node
         await PowerCmd.Apply<FormPower>(context, player.Creature, 1, player.Creature, null);
         var state = player.PlayerCombatState!;
         var all = state.AllCards.ToArray();
-        Check(player.Deck.Cards.Count == 20 && all.Length == 20, "both owned starting decks");
+        Check(player.Deck.Cards.Count == 18 && all.Length == 18, "both owned nine-card starting decks");
         var upgraded = all.OfType<LittleFireball>().First();
         upgraded.UpgradeInternal();
         upgraded.EnergyCost.SetThisCombat(0);
         var drawn = (await CardPileCmd.Draw(context, 5, player)).ToArray();
-        Check(drawn.Length == 5 && drawn.All(c => c is LittleFireball or LightShield), "girl draw filters cats");
-        var inactiveOrder = state.DrawPile.Cards.Where(c => c is ClawStrike or MiDodge).ToArray();
+        Check(drawn.Length == 5 && drawn.All(c => c is ShenshenCard { Form: Shenshen.ShenshenCode.Character.ShenshenForm.Human }), "girl draw filters cats");
+        var inactiveOrder = state.DrawPile.Cards.Where(c => c is ShenshenCard { Form: Shenshen.ShenshenCode.Character.ShenshenForm.Cat }).ToArray();
         await CardPileCmd.Shuffle(context, player);
-        Check(inactiveOrder.SequenceEqual(state.DrawPile.Cards.Where(c => c is ClawStrike or MiDodge)), "inactive draw order survives shuffle");
+        Check(inactiveOrder.SequenceEqual(state.DrawPile.Cards.Where(c => c is ShenshenCard { Form: Shenshen.ShenshenCode.Character.ShenshenForm.Cat })), "inactive draw order survives shuffle");
         await Switch(context, player);
-        Check(state.Hand.Cards.Count == 5 && state.Hand.Cards.All(c => c is ClawStrike or MiDodge), "switch draws same count cats");
+        Check(state.Hand.Cards.Count == 5 && state.Hand.Cards.All(c => c is ShenshenCard { Form: Shenshen.ShenshenCode.Character.ShenshenForm.Cat }), "switch draws same count cats");
         for (int i = 0; i < 8; i++) await Switch(context, player);
-        Check(all.ToHashSet().SetEquals(state.AllCards) && state.AllCards.Count() == 20, "repeated switches preserve every exact card reference");
+        Check(all.ToHashSet().SetEquals(state.AllCards) && state.AllCards.Count() == 18, "repeated switches preserve every exact card reference");
         Check(upgraded.IsUpgraded && upgraded.EnergyCost.GetWithModifiers(CostModifiers.Local) == 0, "upgrade and cost state persist");
+        // A nine-card form alone cannot fill the ten-card hand. Two shared cards
+        // provide eleven eligible cards, leaving a real drawable card at the cap.
+        var handLimitFillers = new[] { combat.CreateCard<Wound>(player), combat.CreateCard<Wound>(player) };
+        foreach (var filler in handLimitFillers)
+            await CardPileCmd.AddGeneratedCardToCombat(filler, PileType.Draw, player);
         await CardPileCmd.Draw(context, 100, player);
-        Check(state.Hand.Cards.Count == 10, "hand cap");
+        Check(state.Hand.Cards.Count == 10 && state.DrawPile.Cards.Any(c => c is Wound ||
+            c is ShenshenCard { Form: Shenshen.ShenshenCode.Character.ShenshenForm.Cat }), "hand cap leaves eligible cards undrawn");
         Check(!(await CardPileCmd.Draw(context, 1, player)).Any(), "full hand draws none");
         var reward = new CardReward(CardCreationOptions.ForRoom(player, RoomType.Monster), 3, player);
         reward.Populate();
@@ -131,6 +137,8 @@ public partial class Harness : Node
         var wrong = state.AllCards.OfType<ClawStrike>().First();
         await CardPileCmd.Add(wrong, PileType.Hand);
         Check(!wrong.CanPlay(out var reason, out _) && reason.HasFlag(UnplayableReason.BlockedByCardLogic), "directly selected inactive card cannot be manually played");
+        foreach (var filler in handLimitFillers)
+            await CardPileCmd.Add(filler, PileType.Exhaust);
         foreach (var card in state.AllCards.Where(c => c is ShenshenCard { Form: Shenshen.ShenshenCode.Character.ShenshenForm.Human }).ToArray())
             await CardPileCmd.Add(card, PileType.Exhaust);
         await CardPileCmd.Add(state.Hand.Cards.ToArray(), PileType.Exhaust);
@@ -225,18 +233,21 @@ public partial class Harness : Node
         Check(ReferenceEquals((await CardPileCmd.Draw(context, 1, teammate)).Single(), catForStock), "other characters keep vanilla drawing even for a cat card");
         Check(CardCreationOptions.ForRoom(heroine, RoomType.Monster).GetPossibleCards(heroine).Any(c => c is LightBlessing),
             "two-player reward candidates include teammate blessing");
+        // Keep the older direct card checks independent of the transformation bonuses.
+        await PowerCmd.Remove(heroine.Creature.GetPower<StrengthPower>());
+        await PowerCmd.Remove(heroine.Creature.GetPower<FormShiftPower>());
         await CreatureCmd.SetMaxAndCurrentHp(duoEnemy, 1000);
         int targetHp = duoEnemy.CurrentHp;
         await CardCmd.AutoPlay(context, duoCombat.CreateCard<ClawStrike>(heroine), duoEnemy);
-        Check(duoEnemy.CurrentHp == targetHp - 6, "claw card executes two three-damage hits");
+        Check(duoEnemy.CurrentHp == targetHp - 6, "unshifted claw card executes three two-damage hits");
         await CardCmd.AutoPlay(context, duoCombat.CreateCard<MiDodge>(heroine), null);
-        Check(heroine.Creature.Block == 6, "cat defense card grants exactly six block");
+        Check(heroine.Creature.Block == 7, "cat defense card grants exactly seven block");
         heroine.Creature.GetPower<FormPower>()!.SetAmount(1);
         targetHp = duoEnemy.CurrentHp;
         await CardCmd.AutoPlay(context, duoCombat.CreateCard<LittleFireball>(heroine), duoEnemy);
         Check(duoEnemy.CurrentHp == targetHp - 6, "fireball card executes six damage");
         await CardCmd.AutoPlay(context, duoCombat.CreateCard<LightShield>(heroine), null);
-        Check(heroine.Creature.Block == 11, "girl defense card grants five additional block");
+        Check(heroine.Creature.Block == 12, "girl defense card grants five additional block");
         targetHp = duoEnemy.CurrentHp;
         await CardCmd.AutoPlay(context, duoCombat.CreateCard<IDontLikeYou>(heroine), duoEnemy);
         Check(duoEnemy.CurrentHp == targetHp - 10 && heroine.Creature.GetPower<StrengthPower>()!.Amount == 3 && duoEnemy.GetPower<StrengthPower>()!.Amount == 1,
@@ -280,17 +291,18 @@ public partial class Harness : Node
         // This combat fixture intentionally has no generated map/room sets. Reload its
         // real SerializablePlayer inventory rather than pretending to restore a complete run.
         var loadedHeroine = Player.FromSerializable(parsedSave.SaveData!.Players.Single(p => p.NetId == heroine.NetId));
-        Check(loadedHeroine.Deck.Cards.Count == 20 && loadedHeroine.Deck.Cards.Count(c => c is LittleFireball or LightShield) == 10 &&
-            loadedHeroine.Deck.Cards.Count(c => c is ClawStrike or MiDodge) == 10 && loadedHeroine.Deck.Cards.OfType<LittleFireball>().Count(c => c.IsUpgraded) == 1,
-            "permanent save reload preserves both ten-card owned decks and the original upgrade");
+        Check(loadedHeroine.Deck.Cards.Count == 18 && loadedHeroine.Deck.Cards.Count(c => c is LittleFireball or LightShield or LightMark) == 9 &&
+            loadedHeroine.Deck.Cards.Count(c => c is ClawStrike or MiDodge or CatTailSweep) == 9 && loadedHeroine.Deck.Cards.OfType<LittleFireball>().Count(c => c.IsUpgraded) == 1,
+            "permanent save reload preserves both nine-card owned decks and the original upgrade");
         File.WriteAllText(Path.Combine(Environment.GetEnvironmentVariable("SHENSHEN_REPO_ROOT")!, "work", "headless-tests", "roundtrip.save"), saveJson);
+        await RunDeckDesignChecks();
         UiResourceChecks.Run(Check);
         AnimationChecks.Run(this, Check);
     }
 
-    private static Task Switch(PlayerChoiceContext context, Player player) =>
+    private static Task Switch(PlayerChoiceContext context, Player player, bool upgraded = false) =>
         (Task)typeof(Hero).Assembly.GetType("Shenshen.ShenshenCode.Mechanics.FormState")!
-            .GetMethod("Switch", BindingFlags.NonPublic | BindingFlags.Static)!.Invoke(null, [context, player])!;
+            .GetMethod("Switch", BindingFlags.NonPublic | BindingFlags.Static)!.Invoke(null, [context, player, upgraded])!;
 
     private static void RegisterLoadedMod(string id, Assembly assembly)
     {

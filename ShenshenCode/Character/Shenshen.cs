@@ -32,10 +32,12 @@ public class Shenshen : PlaceholderCharacterModel
     public override int StartingHp => 70;
 
     public override IEnumerable<CardModel> StartingDeck =>
-        Enumerable.Repeat<CardModel>(ModelDb.Card<LittleFireball>(), 5)
-            .Concat(Enumerable.Repeat(ModelDb.Card<LightShield>(), 5))
-            .Concat(Enumerable.Repeat(ModelDb.Card<ClawStrike>(), 5))
-            .Concat(Enumerable.Repeat(ModelDb.Card<MiDodge>(), 5));
+        Enumerable.Repeat<CardModel>(ModelDb.Card<LittleFireball>(), 4)
+            .Concat(Enumerable.Repeat(ModelDb.Card<LightShield>(), 4))
+            .Append(ModelDb.Card<LightMark>())
+            .Concat(Enumerable.Repeat(ModelDb.Card<ClawStrike>(), 4))
+            .Concat(Enumerable.Repeat(ModelDb.Card<MiDodge>(), 4))
+            .Append(ModelDb.Card<CatTailSweep>());
 
     public override IReadOnlyList<RelicModel> StartingRelics =>
     [

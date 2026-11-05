@@ -5,6 +5,8 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Hooks;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 using Shenshen.ShenshenCode.Cards;
 using Shenshen.ShenshenCode.Character;
 using Shenshen.ShenshenCode.Powers;
@@ -18,15 +20,33 @@ internal static class FormState
     internal static ShenshenForm GetForm(Player player) =>
         player.Creature.GetPower<FormPower>()?.Amount == 2 ? ShenshenForm.Cat : ShenshenForm.Human;
 
-    internal static async Task Switch(PlayerChoiceContext context, Player player)
+    internal static bool HasShiftedThisTurn(Player player) =>
+        player.Creature.GetPower<FormShiftPower>()?.Amount > 0;
+
+    internal static async Task Switch(PlayerChoiceContext context, Player player, bool upgraded = false)
     {
-        var current = GetForm(player);
-        var replaced = player.PlayerCombatState!.Hand.Cards
-            .OfType<ShenshenCard>().Where(card => card.Form == current).ToArray();
         var power = player.Creature.GetPower<FormPower>();
-        if (power == null) return;
+        if (power == null || player.PlayerCombatState == null) return;
+        var current = GetForm(player);
+        var replaced = player.PlayerCombatState.Hand.Cards
+            .OfType<ShenshenCard>().Where(card => card.Form == current).ToArray();
         await CardCmd.Discard(context, replaced);
         power.SetAmount(current == ShenshenForm.Human ? 2 : 1);
+        if (!HasShiftedThisTurn(player))
+            await PowerCmd.Apply<FormShiftPower>(context, player.Creature, 1, player.Creature, null);
+        if (current == ShenshenForm.Human)
+        {
+            await PowerCmd.Apply<StrengthPower>(context, player.Creature, 1, player.Creature, null);
+            if (upgraded)
+                await PowerCmd.Apply<ThornsPower>(context, player.Creature, 1, player.Creature, null);
+        }
+        else
+        {
+            await PowerCmd.Apply<DexterityPower>(context, player.Creature, 1, player.Creature, null);
+            // Prototype choice: this immediate reward is fixed, rather than boosted by Dexterity.
+            if (upgraded)
+                await CreatureCmd.GainBlock(player.Creature, 4m, ValueProp.Unpowered, null);
+        }
         ShenshenVisuals.SetForm(player.Creature.GetCreatureNode()?.Visuals, GetForm(player));
         await CardPileCmd.Draw(context, replaced.Length, player);
         MainFile.Logger.Info($"Form switched to {GetForm(player)}; replaced {replaced.Length} owned cards.");
