@@ -19,6 +19,7 @@ public sealed class FluffedUp : ShenshenCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         if (Owner.Creature.GetPower<FluffedUpPower>() == null)
             await PowerCmd.Apply<FluffedUpPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
     }

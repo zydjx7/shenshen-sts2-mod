@@ -22,6 +22,7 @@ public sealed class LightBlessing : ShenshenCard
     {
         // Keep the effect-side check even though the target UI normally excludes self.
         if (cardPlay.Target?.Player is not { } teammate || teammate == Owner) return;
+        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<LightBlessingPower>(choiceContext, teammate.Creature,
             DynamicVars.Cards.IntValue, Owner.Creature, this);
     }

@@ -72,3 +72,23 @@
 3. 在图形界面逐项实测猫闪避、炸毛、镜与强化跨形态的组合；自动回归已覆盖主要结算边界，但不能替代真实界面与内容扩展后的测试。
 4. 用真实双端验证祝福目标方选牌、两形态同步和重连；headless 的序列化检查不能代替它。
 5. Mac 更新到相同目标游戏版本后重新构建并实测。继续补完整卡池、原型细节确认与原创美术。
+
+## P1 美术与真实分件动画接续
+
+用户选择 P1「樱粉圣光」，并要求肤色更白、小腿稍长、胸部略丰满但不夸张。生成修订稿和独立部件图集后，按枢轴/父子层级装配人形；金毛、粉色蝴蝶结猫形为配套临时美术，未冒充已确认造型。原照片未加入仓库。来源、提示和剩余占位范围见 [角色美术与动画](character-art.md)。
+
+已实现 `NCreatureVisuals` + `Sprite2D` 分件 + `AnimationPlayer`，使用本机 BaseLib 3.4.7 的非 Spine 动作桥接，未构造原版依赖 Spine 的 CreatureAnimator。待机包含呼吸、头部、马尾/猫尾、披风和眨眼；攻击、施法、受击、倒下、复活动作有独立轨道，单次动作结束回待机，死亡保持末帧。技能显式调用 Cast；变形切换互斥 Canvas，Ready 根据实际 FormPower 恢复外形，战斗结束只恢复存活角色的人形视觉。没有修改已确认数值、两套牌堆、卡牌实例或炸毛计数。
+
+首次带动画运行 `./tools/test.ps1`：Release publish、Godot 资源导入及 PCK 导出全部退出 0；主工程及测试工程均 0 警告、0 错误，`SHENSHEN_HEADLESS_PASS checks=80`。其中原有 45 项玩法回归保留通过，新增 35 项实际 BaseLib 触发、匹配头部眨眼、肩臂带杖、动作回返/死亡保持、猫/人互斥及 Ready 顺序等检查；源码保存在 `tools/tests/AnimationChecks.cs`。这些测试读取正式打包图集，而不是用模拟动画重写预期结果。
+
+另用独立 MegaDot 图形进程实际 GPU 渲染，目视检查人形/猫形 Idle、Blink、Cast、Attack 和人形 Hit 关键帧；修正施法杖头被头部遮住的问题。录制 600×760、30 FPS、316 帧、10.53 秒的真实运行预览，覆盖少女待机→施法→攻击→受击→猫待机→挥爪→少女施法→待机。预览不是游戏截图，不代替游戏内适配验证；原始录制工程与日志留在忽略目录 `work/animation-preview/`。
+
+实际再次运行 `./tools/play-test.ps1 start`，新产物部署到本机游戏，继续使用 `local/play-test/appdata` 和 `--force-steam=off`。日志确认真实游戏在 14.590 秒到达主菜单，但自动初始化选人按钮时出现 AtlasTexture→CompressedTexture2D 的 InvalidCastException；仅检查资源可按 Texture2D 加载不足以证明兼容。按本机 CharacterModel getter 和 BaseLib 路径补丁核对后，按钮、头像与地图路径改用导入 PNG，并补充真实 getter/AssetCache 的类型回归。
+
+首次电脑窗口获取时，工具报告用户通过物理 Escape 停止 Computer Use；立即停止后续界面操作。本轮未取得新外观的战斗截图，也未实测选人布局、真实卡牌动作、受击或双形态外观，均列为待验。没有通过其他输入手段绕过停止操作。
+
+随后日志确认 Quit button pressed / Quit confirmed，进程已退出；没有继续用电脑自动化控制该窗口。运行 `./tools/play-test.ps1 verify` 退出 0，1025 个日常文件哈希均未变化，隔离档有 153 个测试文件。测试部署暂保留，后续继续用专用测试脚本。不要把预览、自动回归或旧版占位外观的实测写成新美术的游戏内验收通过。
+
+UI 类型修复后再次完整运行 `./tools/test.ps1`，编译与打包退出 0，`SHENSHEN_HEADLESS_PASS checks=95`。新增 `UiResourceChecks.cs` 的 15 项检查实际调用原生选人/锁定图标、地图 AssetCache、HUD 及 outline getter，确认所需资源均为 CompressedTexture2D，同时检查继承手势资源与 HUD Control 构造。不能只用“文件存在”或 Texture2D 基类加载代替这些约束。
+
+最后仅运行真实安装游戏的无窗口 headless 启动复测（没有电脑输入或显示窗口）：重新部署最新产物，同一隔离 APPDATA、Steam off，定时退出码 0；BaseLib 282 补丁成功、0 失败，13.135 秒到达主菜单；原来的 AtlasTexture 强制转换异常消失，日志没有托管异常。退出仍有前述原生 RID/资源未释放提示，不能声称完全无告警。记录为 `local/play-test/art-ui-fixed-headless.log`，原错误日志保留为 `art-ui-before-fix.log`。再次 verify 退出 0，1025 个日常文件哈希仍全部一致。当前游戏已关闭，最新测试部署保留；新角色的可见窗口实战验收仍待完成。

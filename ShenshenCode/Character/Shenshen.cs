@@ -1,6 +1,5 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils.NodeFactories;
-using Shenshen.ShenshenCode.Extensions;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
@@ -11,6 +10,8 @@ using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using Shenshen.ShenshenCode.Cards;
 using Shenshen.ShenshenCode.CardPools;
+using Shenshen.ShenshenCode.Visuals;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 
 namespace Shenshen.ShenshenCode.Character;
 
@@ -24,11 +25,10 @@ public class Shenshen : PlaceholderCharacterModel
 
     public const bool FormMechanicsImplemented = true;
 
-    // White and neutral gender are template placeholders. The design now confirms 70 starting HP.
-    public static readonly Color Color = new("ffffff");
+    public static readonly Color Color = new("e8a1b8");
 
     public override Color NameColor => Color;
-    public override CharacterGender Gender => CharacterGender.Neutral;
+    public override CharacterGender Gender => CharacterGender.Feminine;
     public override int StartingHp => 70;
 
     public override IEnumerable<CardModel> StartingDeck =>
@@ -42,13 +42,17 @@ public class Shenshen : PlaceholderCharacterModel
         ModelDb.Relic<BurningBlood>()
     ];
 
-    // Burning Blood, relic/potion pools and visuals remain explicit prototype placeholders.
+    // Burning Blood and the relic/potion pools remain explicit prototype placeholders.
     public override CardPoolModel CardPool => ModelDb.CardPool<ShenshenCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<IroncladRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<IroncladPotionPool>();
 
-    // All visuals still use template or base-game placeholders, including the combat appearance.
-    // Human/cat artwork directories are reserved only; neither form is wired to these assets.
+    public override NCreatureVisuals CreateCustomVisuals() => ShenshenVisuals.Create();
+    public override float AttackAnimDelay => ShenshenVisuals.AttackDelay;
+    public override float CastAnimDelay => ShenshenVisuals.CastDelay;
+    public override float DeathAnimTime => ShenshenVisuals.DeathDuration;
+
+    // Character-select and combat art use separate resources.
     public override Control CustomIcon
     {
         get
@@ -58,8 +62,12 @@ public class Shenshen : PlaceholderCharacterModel
             return icon;
         }
     }
-    public override string CustomIconTexturePath => "character_icon_char_name.png".CharacterUiPath();
-    public override string CustomCharacterSelectIconPath => "char_select_char_name.png".CharacterUiPath();
-    public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();
-    public override string CustomMapMarkerPath => "map_marker_char_name.png".CharacterUiPath();
+    // Native selection and map getters require CompressedTexture2D, so these paths must
+    // resolve to imported PNG textures rather than AtlasTexture resources.
+    public override string CustomIconTexturePath => ShenshenVisuals.AssetDirectory + "/avatar.png";
+    public override string CustomIconOutlineTexturePath => ShenshenVisuals.AssetDirectory + "/avatar.png";
+    public override string CustomCharacterSelectIconPath => ShenshenVisuals.AssetDirectory + "/revised-design.png";
+    public override string CustomCharacterSelectLockedIconPath => ShenshenVisuals.AssetDirectory + "/revised-design.png";
+    public override string CustomMapMarkerPath => ShenshenVisuals.AssetDirectory + "/avatar.png";
+    public override string CustomCharacterSelectBg => "res://Shenshen/scenes/character_select/shenshen_select_bg.tscn";
 }

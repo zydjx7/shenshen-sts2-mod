@@ -58,6 +58,8 @@ Windows 专用测试可运行 `./tools/play-test.ps1 start`：脚本在游戏退
 
 真实程序集自动回归运行 `./tools/test.ps1`：先打包当前源码，再将 `tools/tests/` 的原创测试工程复制到忽略的 `work/headless-tests/`，引用本机游戏程序集并在 MegaDot headless 中运行。测试的 APPDATA/LOCALAPPDATA 指向 `local/regression-*`，游戏 SaveManager 使用内置 TestMode 的内存存储；不会测试 Steam 双端网络或替代游戏界面验收。
 
+该入口也运行 `AnimationChecks.cs`：挂载真实打包图集，检查 BaseLib 非 Spine 触发桥接、动作回返、分件/眨眼、两形态互斥与入树前形态恢复。headless 检查能验证节点和动画状态，不能证明画面拼接自然；新美术仍需图形渲染与实际游戏窗口验收。
+
 ## 日常同步
 
 1. 开工前拉取远端，检查两台电脑的游戏版本和分支与锁文件记录一致。

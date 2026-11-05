@@ -1,0 +1,298 @@
+{
+  "design_size": [
+    1000,
+    1400
+  ],
+  "feet": [
+    500,
+    1340
+  ],
+  "display_height": 300,
+  "parts": [
+    {
+      "id": "cape",
+      "file": "parts.png",
+      "region": [
+        341,
+        397,
+        307,
+        357
+      ],
+      "position": [
+        490,
+        345
+      ],
+      "size": [
+        460,
+        680
+      ],
+      "pivot": [
+        0.68,
+        0.025
+      ],
+      "z": -30
+    },
+    {
+      "id": "leg_back",
+      "file": "parts.png",
+      "region": [
+        83,
+        1157,
+        167,
+        358
+      ],
+      "position": [
+        430,
+        835
+      ],
+      "size": [
+        200,
+        520
+      ],
+      "pivot": [
+        0.8,
+        0.03
+      ],
+      "z": -15
+    },
+    {
+      "id": "leg_front",
+      "file": "parts.png",
+      "region": [
+        459,
+        1153,
+        144,
+        362
+      ],
+      "position": [
+        570,
+        830
+      ],
+      "size": [
+        190,
+        520
+      ],
+      "pivot": [
+        0.35,
+        0.02
+      ],
+      "z": -12
+    },
+    {
+      "id": "torso",
+      "file": "parts.png",
+      "region": [
+        701,
+        26,
+        297,
+        350
+      ],
+      "position": [
+        500,
+        340
+      ],
+      "size": [
+        300,
+        350
+      ],
+      "pivot": [
+        0.51,
+        0.07
+      ],
+      "z": 0
+    },
+    {
+      "id": "skirt",
+      "file": "parts.png",
+      "region": [
+        15,
+        441,
+        326,
+        274
+      ],
+      "parent": "torso",
+      "position": [
+        0,
+        275
+      ],
+      "size": [
+        450,
+        340
+      ],
+      "pivot": [
+        0.5,
+        0.05
+      ],
+      "z": 2
+    },
+    {
+      "id": "head",
+      "file": "parts.png",
+      "region": [
+        36,
+        23,
+        298,
+        322
+      ],
+      "parent": "torso",
+      "position": [
+        -10,
+        0
+      ],
+      "size": [
+        300,
+        324
+      ],
+      "pivot": [
+        0.6,
+        0.95
+      ],
+      "z": 20
+    },
+    {
+      "id": "head_closed",
+      "file": "parts.png",
+      "region": [
+        365,
+        23,
+        295,
+        322
+      ],
+      "parent": "head",
+      "position": [
+        0,
+        0
+      ],
+      "size": [
+        300,
+        324
+      ],
+      "pivot": [
+        0.6,
+        0.95
+      ],
+      "z": 0
+    },
+    {
+      "id": "ponytail",
+      "file": "parts.png",
+      "region": [
+        737,
+        404,
+        197,
+        341
+      ],
+      "parent": "head",
+      "position": [
+        -115,
+        -138
+      ],
+      "size": [
+        215,
+        370
+      ],
+      "pivot": [
+        0.5,
+        0.06
+      ],
+      "z": -4
+    },
+    {
+      "id": "arm_free",
+      "file": "parts.png",
+      "region": [
+        346,
+        853,
+        335,
+        205
+      ],
+      "parent": "torso",
+      "position": [
+        55,
+        78
+      ],
+      "size": [
+        335,
+        205
+      ],
+      "pivot": [
+        0.15,
+        0.13
+      ],
+      "z": -1
+    },
+    {
+      "id": "arm_staff",
+      "file": "parts.png",
+      "region": [
+        22,
+        846,
+        277,
+        213
+      ],
+      "parent": "torso",
+      "position": [
+        -105,
+        105
+      ],
+      "size": [
+        277,
+        213
+      ],
+      "pivot": [
+        0.15,
+        0.13
+      ],
+      "z": 4
+    },
+    {
+      "id": "staff",
+      "file": "parts.png",
+      "region": [
+        795,
+        783,
+        126,
+        332
+      ],
+      "parent": "arm_staff",
+      "position": [
+        205,
+        -60
+      ],
+      "size": [
+        125,
+        335
+      ],
+      "pivot": [
+        0.5,
+        0.67
+      ],
+      "rotation": 27,
+      "z": -1
+    },
+    {
+      "id": "magic",
+      "file": "parts.png",
+      "region": [
+        744,
+        1217,
+        201,
+        238
+      ],
+      "parent": "arm_free",
+      "position": [
+        235,
+        -55
+      ],
+      "size": [
+        125,
+        145
+      ],
+      "pivot": [
+        0.5,
+        0.8
+      ],
+      "z": 8
+    }
+  ]
+}

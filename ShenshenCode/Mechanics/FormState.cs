@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Hooks;
 using Shenshen.ShenshenCode.Cards;
 using Shenshen.ShenshenCode.Character;
 using Shenshen.ShenshenCode.Powers;
+using Shenshen.ShenshenCode.Visuals;
 
 namespace Shenshen.ShenshenCode.Mechanics;
 
@@ -26,6 +27,7 @@ internal static class FormState
         if (power == null) return;
         await CardCmd.Discard(context, replaced);
         power.SetAmount(current == ShenshenForm.Human ? 2 : 1);
+        ShenshenVisuals.SetForm(player.Creature.GetCreatureNode()?.Visuals, GetForm(player));
         await CardPileCmd.Draw(context, replaced.Length, player);
         MainFile.Logger.Info($"Form switched to {GetForm(player)}; replaced {replaced.Length} owned cards.");
     }
