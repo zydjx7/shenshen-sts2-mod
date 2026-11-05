@@ -33,7 +33,7 @@ Windows：
 
 默认只向 `dist/` 输出，不改 Steam 设置、游戏安装目录或存档。`dist/Shenshen/` 包含本模组，`dist/BaseLib/` 包含匹配的运行依赖。游戏退出后，才可按需将这两个目录复制到游戏的 mods 目录进行测试。
 
-Mac 交接版本已通过编译与资源检查；本轮 Windows 已完成工具安装、编译、打包和独立资源检查。游戏内、保存和多人验证分别记录，不能由编译结果替代。首次换到 Windows 请先看 [Windows 接续说明](docs/windows-handoff.md)，日常协作见 [开发说明](docs/development.md)。
+Mac 交接版本已通过编译与资源检查；本轮 Windows 已通过编译打包、45 项真实程序集回归，并在专用测试档实际验证角色入口、双向换牌、费用/格挡保留、变形牌回手与保留、猫形跨回合及保存退出后继续。当前保存沿用原版战前/房间边界，不恢复战斗中途快照；双端多人和 Mac 新代码仍待验证。完整范围见 [Windows 验证记录](docs/windows-validation.md)，日常协作见 [开发说明](docs/development.md)。
 
 ## 锁定版本
 
