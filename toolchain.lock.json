@@ -6,6 +6,7 @@
   "templateVersion": "2.5.3",
   "baseLibVersion": "3.4.7",
   "modAnalyzersVersion": "0.2.1",
-  "gameVersion": "0.107.1",
-  "steamBuildId": "23811903"
+  "gameVersion": "0.111.0",
+  "steamBuildId": "24724944",
+  "steamBranch": "public-beta"
 }
