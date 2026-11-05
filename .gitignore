@@ -1,0 +1,69 @@
+# macOS / Windows metadata
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# Godot generated data and export secrets
+.godot/
+.mono/
+.import/
+export_credentials.cfg
+
+# .NET build output and packages
+bin/
+obj/
+artifacts/
+TestResults/
+*.nupkg
+*.snupkg
+
+# Generated mod packages and deployment output
+/dist/
+/publish/
+/Publish/
+/mod_upload/
+*.dll
+*.exe
+*.pdb
+*.mdb
+*.pck
+
+# IDE state
+.idea/
+.vs/
+.vscode/
+*.user
+*.suo
+*.sln.docstates
+*.DotSettings.user
+
+# Per-machine paths, reference material and credentials
+/local/
+/work/
+local.props
+local.*.props
+Directory.Build.local.props
+Directory.Build.local.targets
+.env
+.env.*
+!.env.example
+!.env.template
+
+# Game references and decompiled output must stay local
+/game-assemblies/
+/game-reference/
+/decompiled/
+/decompilation/
+sts2.xml
+
+# Game saves belong outside the source repository
+*.save
+*.save.*
+*.run
+*.corrupt
+
+# Temporary files and logs
+*.log
+*.tmp
+*.bak

@@ -1,0 +1,17 @@
+{
+  "id": "Shenshen",
+  "name": "光之魔法少女深深",
+  "author": "zydjx7",
+  "description": "光之魔法少女深深（Shenshen, Magical Girl of Light）的开发原型。人形与猫形仅有定义，尚未接入战斗；数值、初始内容与画面为开发占位。",
+  "version": "v0.0.0",
+  "min_game_version": "0.107.1",
+  "has_pck": true,
+  "has_dll": true,
+  "dependencies": [
+    {
+      "id": "BaseLib",
+      "min_version": "3.4.7"
+    }
+  ],
+  "affects_gameplay": true
+}

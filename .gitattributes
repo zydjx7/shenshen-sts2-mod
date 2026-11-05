@@ -1,0 +1,30 @@
+# Shared text files use LF; keep media and build artifacts binary.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.icns binary
+*.psd binary
+*.aseprite binary
+*.blend binary
+*.glb binary
+*.fbx binary
+*.wav binary
+*.ogg binary
+*.mp3 binary
+*.mp4 binary
+*.webm binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.dll binary
+*.pdb binary
+*.pck binary
+*.zip binary
+*.7z binary

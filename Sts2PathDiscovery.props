@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <Sts2Architecture Condition="'$(Sts2Architecture)' == '' and '$(NETCoreSdkRuntimeIdentifier)' == 'osx-arm64'">arm64</Sts2Architecture>
+    <Sts2Architecture Condition="'$(Sts2Architecture)' == ''">x86_64</Sts2Architecture>
+    <Sts2Path Condition="'$(Sts2Path)' == '' and $([MSBuild]::IsOSPlatform('OSX'))">$([System.Environment]::GetFolderPath('UserProfile'))/Library/Application Support/Steam/steamapps/common/Slay the Spire 2</Sts2Path>
+    <Sts2Path Condition="'$(Sts2Path)' == '' and $([MSBuild]::IsOSPlatform('Windows'))">C:/Program Files (x86)/Steam/steamapps/common/Slay the Spire 2</Sts2Path>
+    <Sts2DataDir Condition="'$(Sts2DataDir)' == '' and $([MSBuild]::IsOSPlatform('OSX'))">$(Sts2Path)/SlayTheSpire2.app/Contents/Resources/data_sts2_macos_$(Sts2Architecture)</Sts2DataDir>
+    <Sts2DataDir Condition="'$(Sts2DataDir)' == '' and $([MSBuild]::IsOSPlatform('Windows'))">$(Sts2Path)/data_sts2_windows_x86_64</Sts2DataDir>
+    <ModsPath>$(MSBuildProjectDirectory)/dist/</ModsPath>
+  </PropertyGroup>
+</Project>

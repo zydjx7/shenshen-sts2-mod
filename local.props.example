@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <!-- Copy to local.props only when overriding bootstrap-generated local settings. -->
+    <!-- macOS: /Users/you/Library/Application Support/Steam/steamapps/common/Slay the Spire 2 -->
+    <!-- Windows: D:/SteamLibrary/steamapps/common/Slay the Spire 2 -->
+    <Sts2Path>YOUR_STEAM_GAME_DIRECTORY</Sts2Path>
+    <Sts2Architecture>arm64</Sts2Architecture>
+    <GodotPath>YOUR_MEGADOT_EXECUTABLE</GodotPath>
+  </PropertyGroup>
+</Project>

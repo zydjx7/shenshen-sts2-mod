@@ -1,0 +1,16 @@
+{
+  "SHENSHEN-SHENSHEN.title": "Shenshen, Magical Girl of Light",
+  "SHENSHEN-SHENSHEN.titleObject": "Shenshen, Magical Girl of Light",
+  "SHENSHEN-SHENSHEN.description": "A development prototype of Shenshen, Magical Girl of Light.\nThe character has human and cat forms in her design; neither form is connected to combat yet. Stats, starting content, and visuals are development placeholders.",
+  "SHENSHEN-SHENSHEN.pronounObject": "her",
+  "SHENSHEN-SHENSHEN.possessiveAdjective": "her",
+  "SHENSHEN-SHENSHEN.pronounPossessive": "hers",
+  "SHENSHEN-SHENSHEN.pronounSubject": "she",
+  "SHENSHEN-SHENSHEN.goldMonologue": "[Development placeholder]",
+  "SHENSHEN-SHENSHEN.eventDeathPrevention": "[Development placeholder]",
+  "SHENSHEN-SHENSHEN.aromaPrinciple": "[Development placeholder: story text has not been written.]",
+  "SHENSHEN-SHENSHEN.cardsModifierTitle": "Shenshen Cards (Development)",
+  "SHENSHEN-SHENSHEN.cardsModifierDescription": "Development placeholder. No original Shenshen cards are implemented; this prototype uses base-game content.",
+  "SHENSHEN-SHENSHEN.banter.alive.endTurnPing": "[Development placeholder]",
+  "SHENSHEN-SHENSHEN.banter.dead.endTurnPing": "..."
+}
