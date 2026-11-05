@@ -32,6 +32,7 @@ public sealed class ShenshenVisuals
     private readonly Dictionary<string, Sprite2D> _sprites = new();
     private ShenshenForm _form = ShenshenForm.Human;
     private readonly bool _hasCat;
+    private readonly bool _traceAnimations = OS.GetCmdlineArgs().Contains("--shenshen-test", StringComparer.Ordinal);
 
     private ShenshenVisuals(RigLayout layout, RigLayout? catLayout)
     {
@@ -57,6 +58,7 @@ public sealed class ShenshenVisuals
             _catCanvas.Position = -Vector(catLayout.Feet) * ratio;
         }
         foreach (var part in _parts.Values) AddPart(part.Id);
+        SortLocalLayers();
         body.AddChild(_player);
         AddUnique(new Control
         {
@@ -69,6 +71,8 @@ public sealed class ShenshenVisuals
         AddUnique(new Marker2D { Position = new Vector2(0, -layout.DisplayHeight - 40) }, "OrbPos");
         AddUnique(new Marker2D { Position = new Vector2(0, -layout.DisplayHeight * 0.9f) }, "TalkPos");
         BuildAnimations();
+        if (_traceAnimations)
+            _player.AnimationStarted += animation => TraceAnimation(animation, "started");
         _root.Ready += () =>
         {
             UpdateEffectAnchors();
@@ -77,9 +81,13 @@ public sealed class ShenshenVisuals
         // BaseLib forwards clips, but does not queue an idle after a one-shot animation.
         _player.AnimationFinished += animation =>
         {
+            if (_traceAnimations) TraceAnimation(animation, "finished");
             if (animation != "Dead") _player.Play("Idle");
         };
     }
+
+    private void TraceAnimation(StringName animation, string eventName) =>
+        MainFile.Logger.Info($"VisualAnimation form={_form} clip={animation} event={eventName}");
 
     public static NCreatureVisuals Create()
     {
@@ -156,13 +164,31 @@ public sealed class ShenshenVisuals
             Centered = false,
             Offset = -Vector(part.Pivot) * texture.GetSize(),
             Scale = Vector(part.Size) / texture.GetSize(),
-            Visible = id is not ("head_closed" or "cat_head_closed" or "magic"),
-            ZIndex = part.Z
+            Visible = id is not ("head_closed" or "cat_head_closed" or "magic")
         };
         pivot.AddChild(sprite);
         _pivots.Add(id, pivot);
         _sprites.Add(id, sprite);
         return pivot;
+    }
+
+    private void SortLocalLayers()
+    {
+        // The game's combat scene is at Z=-10 and its front VFX are at Z=-9.
+        // Real per-part Z values would put limbs behind the room or heads above pause UI.
+        // Keep every CanvasItem at Z=0; rig z only orders siblings inside this character.
+        var order = new Dictionary<Node, int>();
+        foreach (var part in _parts.Values)
+        {
+            order.Add(_pivots[part.Id], part.Z);
+            order.Add(_sprites[part.Id], part.Z);
+        }
+        foreach (var parent in _pivots.Values.Prepend(_catCanvas).Prepend(_canvas))
+        {
+            var children = parent.GetChildren().OrderBy(child => order.GetValueOrDefault(child)).ToArray();
+            for (var index = 0; index < children.Length; index++)
+                parent.MoveChild(children[index], index);
+        }
     }
 
     private string PartPath(string id)
@@ -198,8 +224,11 @@ public sealed class ShenshenVisuals
         Rotate(attack, "cape", (0, 0), (0.3f, -0.12f), (0.62f, 0));
         Track(attack, "HumanRig:position", (0, Vector2.Zero), (AttackDelay, new Vector2(35, 0)), (0.62f, Vector2.Zero));
         Magic(attack, 0.16f, 0.38f);
-        Rotate(attack, "cat_front", (0, 0), (0.13f, -0.42f), (AttackDelay, 0.65f), (0.62f, 0));
-        Rotate(attack, "cat_front_back", (0, 0), (AttackDelay, -0.18f), (0.62f, 0));
+        // Lift and swipe the near paw forward; the other three feet keep supporting the body.
+        Rotate(attack, "cat_front", (0, 0), (0.13f, 0.22f), (AttackDelay, -0.78f), (0.39f, -0.42f), (0.62f, 0));
+        Move(attack, "cat_front", (0, Vector2.Zero), (AttackDelay, new Vector2(8, -15)), (0.62f, Vector2.Zero));
+        foreach (var support in new[] { "cat_front_back", "cat_rear_back", "cat_rear" })
+            Move(attack, support, (0, Vector2.Zero), (AttackDelay, new Vector2(-35 / _catCanvas.Scale.X, 0)), (0.62f, Vector2.Zero));
         Rotate(attack, "cat_body", (0, 0), (AttackDelay, 0.04f), (0.62f, 0));
         Rotate(attack, "cat_head", (0, 0), (AttackDelay, -0.06f), (0.62f, 0));
         Rotate(attack, "cat_tail", (0, 0), (0.3f, -0.2f), (0.62f, 0));
@@ -212,6 +241,9 @@ public sealed class ShenshenVisuals
         Rotate(cast, "cape", (0, 0), (0.45f, 0.09f), (0.85f, 0));
         Rotate(cast, "ponytail", (0, 0), (0.45f, -0.09f), (0.85f, 0));
         Magic(cast, 0.18f, 0.7f);
+        Scale(cast, "magic", (0, new Vector2(0.8f, 0.8f)), (CastDelay, Vector2.One),
+            (0.55f, new Vector2(1.12f, 1.12f)), (0.85f, new Vector2(0.8f, 0.8f)));
+        Rotate(cast, "magic", (0, -0.08f), (0.55f, 0.1f), (0.85f, 0.16f));
         Rotate(cast, "cat_head", (0, 0), (CastDelay, -0.10f), (0.85f, 0));
         Rotate(cast, "cat_tail", (0, 0), (0.45f, 0.25f), (0.85f, 0));
         Move(cast, "cat_body", (0, Vector2.Zero), (CastDelay, new Vector2(0, -8)), (0.85f, Vector2.Zero));
@@ -222,12 +254,20 @@ public sealed class ShenshenVisuals
         Track(hit, "HumanRig:position", (0, Vector2.Zero), (0.07f, new Vector2(-32, 0)), (0.42f, Vector2.Zero));
         Track(hit, "HumanRig:modulate", (0, Colors.White), (0.06f, new Color(1f, 0.58f, 0.7f)), (0.42f, Colors.White));
         Rotate(hit, "torso", (0, 0), (0.08f, -0.085f), (0.42f, 0));
-        Rotate(hit, "head", (0, 0), (0.1f, 0.08f), (0.42f, 0));
+        Rotate(hit, "head", (0, 0), (0.1f, -0.12f), (0.42f, 0));
+        Rotate(hit, "arm_staff", (0, 0), (0.1f, 0.10f), (0.42f, 0));
+        Rotate(hit, "arm_free", (0, 0), (0.1f, 0.12f), (0.42f, 0));
         Rotate(hit, "ponytail", (0, 0), (0.18f, 0.18f), (0.42f, 0));
         Blink(hit, 0.02f, 0.26f);
         Rotate(hit, "cat_body", (0, 0), (0.08f, -0.08f), (0.42f, 0));
+        Move(hit, "cat_body", (0, Vector2.Zero), (0.1f, new Vector2(-10, 12)), (0.42f, Vector2.Zero));
+        Scale(hit, "cat_body", (0, Vector2.One), (0.1f, new Vector2(0.98f, 0.94f)), (0.42f, Vector2.One));
         Rotate(hit, "cat_head", (0, 0), (0.1f, 0.09f), (0.42f, 0));
+        Move(hit, "cat_head", (0, Vector2.Zero), (0.1f, new Vector2(-8, 5)), (0.42f, Vector2.Zero));
         Rotate(hit, "cat_tail", (0, 0), (0.18f, 0.2f), (0.42f, 0));
+        Rotate(hit, "cat_front", (0, 0), (0.1f, 0.16f), (0.42f, 0));
+        Rotate(hit, "cat_front_back", (0, 0), (0.1f, 0.09f), (0.42f, 0));
+        Move(hit, "cat_front", (0, Vector2.Zero), (0.1f, new Vector2(-9, 3)), (0.42f, Vector2.Zero));
         Blink(hit, 0.02f, 0.26f, cat: true);
         library.AddAnimation("Hit", hit);
 
@@ -268,6 +308,7 @@ public sealed class ShenshenVisuals
         {
             Track(animation, PartPath(part.Id) + ":rotation", (0, Mathf.DegToRad(part.Rotation)));
             Track(animation, PartPath(part.Id) + ":position", (0, Vector(part.Position)));
+            Track(animation, PartPath(part.Id) + ":scale", (0, Vector2.One));
         }
         Visibility(animation, "head", (0, true));
         Visibility(animation, "head_closed", (0, false));
@@ -289,6 +330,13 @@ public sealed class ShenshenVisuals
         if (!_parts.TryGetValue(id, out var part)) return;
         Track(animation, PartPath(id) + ":position", keys.Select(key =>
             (key.Time, Variant.From(Vector(part.Position) + key.Value))).ToArray());
+    }
+
+    private void Scale(Animation animation, string id, params (float Time, Vector2 Value)[] keys)
+    {
+        if (!_parts.ContainsKey(id)) return;
+        Track(animation, PartPath(id) + ":scale", keys.Select(key =>
+            (key.Time, Variant.From(key.Value))).ToArray());
     }
 
     private void Blink(Animation animation, float start, float end, bool cat = false)

@@ -1,9 +1,10 @@
-using System.Reflection;
 using BaseLib.Utils;
 using Godot;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Models;
 using Shenshen.ShenshenCode.Character;
 using Shenshen.ShenshenCode.Visuals;
+using Hero = Shenshen.ShenshenCode.Character.Shenshen;
 
 // Runs inside the existing isolated MegaDot harness with the real game, BaseLib and packed art.
 internal static class AnimationChecks
@@ -11,7 +12,9 @@ internal static class AnimationChecks
     internal static void Run(Node host, Action<bool, string> check)
     {
         CheckTriggerBridge(check);
-        var restored = ShenshenVisuals.Create();
+        // Exercise the same CharacterModel.CreateVisuals call used by NCreature in the game.
+        var character = ModelDb.Character<Hero>();
+        var restored = character.CreateVisuals();
         ShenshenVisuals.SetForm(restored, ShenshenForm.Cat, animate: false);
         host.AddChild(restored);
         check(!restored.GetNode<Node2D>("Visuals/HumanRig/Canvas").Visible &&
@@ -20,7 +23,7 @@ internal static class AnimationChecks
             "tracked cat restored before tree insertion survives Ready idle initialization");
         host.RemoveChild(restored);
         restored.Free();
-        var visuals = ShenshenVisuals.Create();
+        var visuals = character.CreateVisuals();
         host.AddChild(visuals);
         try
         {
@@ -33,7 +36,23 @@ internal static class AnimationChecks
             var closed = torso.GetNode<Sprite2D>("Part_head/Part_head_closed/Sprite");
             var ponytail = torso.GetNode<Node2D>("Part_head/Part_ponytail");
             var arm = torso.GetNode<Node2D>("Part_arm_staff");
+            var freeArm = torso.GetNode<Node2D>("Part_arm_free");
+            var headPivot = torso.GetNode<Node2D>("Part_head");
             var staff = arm.GetNode<Node2D>("Part_staff");
+            var magic = freeArm.GetNode<Node2D>("Part_magic");
+            check(CanvasItems(visuals).All(item => item.ZIndex == 0 && item.ZAsRelative),
+                "all character layers inherit the combat scene Z without negative or positive global escapes");
+            check(human.GetNode<Node2D>("Part_cape").GetIndex() < human.GetNode<Node2D>("Part_leg_back").GetIndex() &&
+                human.GetNode<Node2D>("Part_leg_back").GetIndex() < torso.GetIndex() &&
+                human.GetNode<Node2D>("Part_leg_front").GetIndex() < torso.GetIndex(),
+                "human cape and both legs draw behind the torso using local sibling order");
+            check(freeArm.GetIndex() < torso.GetNode<Sprite2D>("Sprite").GetIndex() &&
+                arm.GetIndex() > torso.GetNode<Sprite2D>("Sprite").GetIndex() && headPivot.GetIndex() > arm.GetIndex(),
+                "human back arm, torso, staff arm and head keep their local front to back order");
+            check(cat.GetNode<Node2D>("Part_cat_tail").GetIndex() < cat.GetNode<Node2D>("Part_cat_body").GetIndex() &&
+                cat.GetNode<Node2D>("Part_cat_front_back").GetIndex() < cat.GetNode<Node2D>("Part_cat_body").GetIndex() &&
+                cat.GetNode<Node2D>("Part_cat_rear_back").GetIndex() < cat.GetNode<Node2D>("Part_cat_body").GetIndex(),
+                "cat tail and far legs draw behind its body without leaving the character render layer");
             check(!visuals.HasSpineAnimation && visuals.Body.Name == "Visuals" && visuals.Bounds.Size.Y > 0,
                 "layered visuals ready required nodes without Spine");
             check(player.CurrentAnimation == "Idle" && human.Visible && !cat.Visible,
@@ -48,6 +67,8 @@ internal static class AnimationChecks
             player.Seek(2.7, true);
             check(head.Visible && !closed.Visible, "idle blink reopens eyes");
             var armRest = arm.Rotation;
+            var freeArmRest = freeArm.Rotation;
+            var headRest = headPivot.Rotation;
             Play(player, "Attack", ShenshenVisuals.AttackDelay);
             check(!Mathf.IsEqualApprox(arm.Rotation, armRest) && staff.GetParent() == arm,
                 "attack rotates a separate shoulder pivot carrying the staff");
@@ -55,11 +76,18 @@ internal static class AnimationChecks
             check(player.CurrentAnimation == "Idle", "attack completion returns to idle");
             Play(player, "Cast", ShenshenVisuals.CastDelay);
             check(!Mathf.IsEqualApprox(arm.Rotation, armRest), "cast moves the staff arm independently");
+            check(!Mathf.IsEqualApprox(freeArm.Rotation, freeArmRest) && magic.GetNode<Sprite2D>("Sprite").Visible,
+                "cast lifts the free hand and displays the actual attached magic layer");
+            var magicSize = magic.Scale;
+            player.Advance(0.12);
+            check(magic.Scale != magicSize, "cast magic grows during the spell instead of remaining a fixed overlay");
             Finish(player);
             check(player.CurrentAnimation == "Idle", "cast completion returns to idle");
             Play(player, "Hit", 0.08f);
             check(visuals.GetNode<Node2D>("Visuals/HumanRig").Position != Vector2.Zero,
                 "hit visibly recoils the rig");
+            check(!Mathf.IsEqualApprox(headPivot.Rotation, headRest) && !head.Visible && closed.Visible,
+                "girl hit independently tilts the head back and closes her eyes");
             Finish(player);
             check(player.CurrentAnimation == "Idle", "hit completion returns to idle");
             Play(player, "Dead", ShenshenVisuals.DeathDuration + 0.1f);
@@ -81,6 +109,8 @@ internal static class AnimationChecks
             var catHead = catBody.GetNode<Sprite2D>("Part_cat_head/Sprite");
             var catClosed = catBody.GetNode<Sprite2D>("Part_cat_head/Part_cat_head_closed/Sprite");
             var catPaw = cat.GetNode<Node2D>("Part_cat_front");
+            var supportPaw = cat.GetNode<Node2D>("Part_cat_front_back");
+            var catHeadPivot = catBody.GetNode<Node2D>("Part_cat_head");
             Play(player, "Idle", 0);
             var catRest = catBody.Position;
             var catTailRest = catTail.Rotation;
@@ -92,11 +122,29 @@ internal static class AnimationChecks
             player.Seek(2.7, true);
             check(catHead.Visible && !catClosed.Visible, "cat blink reopens eyes");
             var pawRest = catPaw.Rotation;
+            var supportRest = supportPaw.GlobalPosition;
             Play(player, "Attack", ShenshenVisuals.AttackDelay);
             check(!Mathf.IsEqualApprox(catPaw.Rotation, pawRest), "cat attack swings a separate front paw");
+            check(supportPaw.GlobalPosition.IsEqualApprox(supportRest),
+                "cat attack keeps the other front paw planted during the lunge");
             Finish(player);
             check(player.CurrentAnimation == "Idle" && !human.Visible && cat.Visible,
                 "cat attack returns to cat idle without revealing human canvas");
+            var hitBody = catBody.Position;
+            var hitHead = catHeadPivot.Rotation;
+            var hitTail = catTail.Rotation;
+            var hitPaw = catPaw.Rotation;
+            Play(player, "Hit", 0.1f);
+            check(catBody.Position != hitBody && catBody.Scale.Y < 1,
+                "cat hit crouches and compresses the independent body layer");
+            check(!Mathf.IsEqualApprox(catHeadPivot.Rotation, hitHead) && !catHead.Visible && catClosed.Visible,
+                "cat hit retracts its head and closes its eyes");
+            check(!Mathf.IsEqualApprox(catTail.Rotation, hitTail) && !Mathf.IsEqualApprox(catPaw.Rotation, hitPaw),
+                "cat hit reacts with separate tail and front paw layers");
+            Finish(player);
+            check(player.CurrentAnimation == "Idle" && catBody.Scale.IsEqualApprox(Vector2.One) &&
+                catHead.Visible && !catClosed.Visible && cat.Visible && !human.Visible,
+                "cat hit returns to cat idle and clears compression, closed eyes and human visibility");
             ShenshenVisuals.SetForm(visuals, ShenshenForm.Human);
             check(human.Visible && !cat.Visible && player.CurrentAnimation == "Cast",
                 "switching back displays only human canvas and plays transformation cast");
@@ -161,5 +209,12 @@ internal static class AnimationChecks
     {
         player.Advance(2);
         player.Advance(0);
+    }
+
+    private static IEnumerable<CanvasItem> CanvasItems(Node node)
+    {
+        if (node is CanvasItem item) yield return item;
+        foreach (var child in node.GetChildren())
+            foreach (var descendant in CanvasItems(child)) yield return descendant;
     }
 }
