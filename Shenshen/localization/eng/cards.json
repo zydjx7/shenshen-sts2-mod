@@ -1,3 +1,20 @@
 {
-
+  "SHENSHEN-LITTLE_FIREBALL.title": "Little Fireball",
+  "SHENSHEN-LITTLE_FIREBALL.description": "[gold]Girl form.[/gold]\nDeal {Damage:diff()} damage.",
+  "SHENSHEN-LIGHT_SHIELD.title": "Light Shield",
+  "SHENSHEN-LIGHT_SHIELD.description": "[gold]Girl form.[/gold]\nGain {Block:diff()} [gold]Block[/gold].",
+  "SHENSHEN-CLAW_STRIKE.title": "Claw Strike",
+  "SHENSHEN-CLAW_STRIKE.description": "[gold]Cat form.[/gold]\nDeal {Damage:diff()} damage twice.",
+  "SHENSHEN-MI_DODGE.title": "Mew Guard",
+  "SHENSHEN-MI_DODGE.description": "[gold]Cat form.[/gold]\nGain {Block:diff()} [gold]Block[/gold].",
+  "SHENSHEN-I_DONT_LIKE_YOU.title": "I Don't Like You!",
+  "SHENSHEN-I_DONT_LIKE_YOU.description": "[gold]Girl form.[/gold]\nDeal {Damage:diff()} damage {Repeat:diff()} times.\nGain {StrengthPower:diff()} [gold]Strength[/gold].\nThe enemy gains {EnemyStrength:diff()} [gold]Strength[/gold].",
+  "SHENSHEN-LIGHT_MIRROR.title": "Light Mirror",
+  "SHENSHEN-LIGHT_MIRROR.description": "[gold]Girl form.[/gold]\nGain {Block:diff()} [gold]Block[/gold].\nUntil your next turn, reflect damage blocked from attacks back to the attacker.\nRepeated casts do not multiply or extend reflection.",
+  "SHENSHEN-TRANSFORMATION_MAGIC.title": "Transformation Magic",
+  "SHENSHEN-TRANSFORMATION_MAGIC.description": "Switch between girl and cat form.\nDiscard your current form's cards from hand, then draw that many cards from your owned new form deck.\nReturn this card to your hand.",
+  "SHENSHEN-LIGHT_BLESSING.title": "Light Blessing",
+  "SHENSHEN-LIGHT_BLESSING.description": "[gold]Girl form.[/gold]\nBless another player. Before their next normal draw, they choose {Cards:diff()} extra cards from their draw pile to add to hand.",
+  "SHENSHEN-FLUFFED_UP.title": "Fluffed Up",
+  "SHENSHEN-FLUFFED_UP.description": "[gold]Cat form.[/gold]\nAfter activation, gain 3 [gold]Thorns[/gold] the first time you lose HP to an enemy attack this combat; gain 1 on each later hit.\nAlso gain 1 [gold]Thorns[/gold] for each different debuff an enemy successfully applies.\nPersists across forms. Additional copies do not stack or reset the first-hit reward."
 }

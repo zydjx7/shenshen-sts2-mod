@@ -1,7 +1,7 @@
 {
   "SHENSHEN-SHENSHEN.title": "光之魔法少女深深",
   "SHENSHEN-SHENSHEN.titleObject": "光之魔法少女深深",
-  "SHENSHEN-SHENSHEN.description": "光之魔法少女深深的开发原型。\n角色设定包含人形与猫形；双形态尚未接入战斗。数值、初始内容与画面均为开发占位。",
+  "SHENSHEN-SHENSHEN.description": "光之魔法少女深深的开发原型。\n在少女与猫形态之间切换，各自使用实际拥有的牌组；变形保留资源与状态。\n美术与初始遗物仍为占位。",
   "SHENSHEN-SHENSHEN.pronounObject": "她",
   "SHENSHEN-SHENSHEN.possessiveAdjective": "她的",
   "SHENSHEN-SHENSHEN.pronounPossessive": "她的",
@@ -10,7 +10,7 @@
   "SHENSHEN-SHENSHEN.eventDeathPrevention": "【开发占位】",
   "SHENSHEN-SHENSHEN.aromaPrinciple": "【开发占位：角色故事尚未编写。】",
   "SHENSHEN-SHENSHEN.cardsModifierTitle": "深深卡牌（开发中）",
-  "SHENSHEN-SHENSHEN.cardsModifierDescription": "开发占位。尚未实装深深的原创卡牌；当前原型使用原版内容。",
+  "SHENSHEN-SHENSHEN.cardsModifierDescription": "使用深深的原创角色卡池，包含少女牌与猫牌。两种形态各自抽取所属卡牌，使用变形魔法切换。",
   "SHENSHEN-SHENSHEN.banter.alive.endTurnPing": "【开发占位】",
   "SHENSHEN-SHENSHEN.banter.dead.endTurnPing": "……"
 }

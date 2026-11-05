@@ -1,3 +1,18 @@
 {
-
+  "SHENSHEN-FORM_POWER.title": "Girl Form",
+  "SHENSHEN-FORM_POWER.description": "Draw from your owned girl deck. Transformation changes form without resetting resources or powers.",
+  "SHENSHEN-FORM_POWER.catTitle": "Cat Form",
+  "SHENSHEN-FORM_POWER.catDescription": "Draw from your owned cat deck. Transformation changes form without resetting resources or powers.",
+  "SHENSHEN-FORM_POWER.smartDescription": "Girl and cat form use separate owned card cycles. Transformation preserves resources and powers.",
+  "SHENSHEN-LIGHT_BLESSING_POWER.title": "Light Blessing",
+  "SHENSHEN-LIGHT_BLESSING_POWER.description": "Before your next normal draw, choose {Amount} extra cards from your draw pile to add to hand.",
+  "SHENSHEN-LIGHT_BLESSING_POWER.smartDescription": "Before your next normal draw, choose {Amount} extra cards from your draw pile to add to hand.",
+  "SHENSHEN-LIGHT_BLESSING_POWER.selectionScreenPrompt": "Choose {Amount} extra cards to add to hand.",
+  "SHENSHEN-CAT_DODGE_POWER.title": "Cat Dodge",
+  "SHENSHEN-CAT_DODGE_POWER.description": "Ready. While in cat form, dodge the first hit of the first enemy multi-hit attack this turn. Single-hit attacks cannot be dodged.\nThe dodged hit consumes no Block and triggers no Thorns or reflection. Refreshes before your next normal draw; transformation does not refresh it.",
+  "SHENSHEN-CAT_DODGE_POWER.usedDescription": "Used this turn. Cat dodge refreshes before your next normal draw; transformation does not refresh it.",
+  "SHENSHEN-CAT_DODGE_POWER.smartDescription": "While in cat form, dodge the first hit of the first enemy multi-hit attack this turn, without consuming Block or triggering retaliation. Refreshes before your next normal draw.",
+  "SHENSHEN-FLUFFED_UP_POWER.title": "Fluffed Up",
+  "SHENSHEN-FLUFFED_UP_POWER.description": "After activation, the first enemy attack that causes actual HP loss this combat grants 3 Thorns. Each later hit that causes HP loss grants 1.\nEach different debuff successfully applied by an enemy grants another 1 Thorns without using the first-hit reward.\nThe first-hit reward never resets with turns or transformation. Self-damage, poison damage, and status cards do not trigger it.",
+  "SHENSHEN-FLUFFED_UP_POWER.smartDescription": "After activation, the first enemy attack that causes actual HP loss this combat grants 3 Thorns. Each later hit that causes HP loss grants 1.\nEach different debuff successfully applied by an enemy grants another 1 Thorns without using the first-hit reward.\nThe first-hit reward never resets with turns or transformation. Self-damage, poison damage, and status cards do not trigger it."
 }

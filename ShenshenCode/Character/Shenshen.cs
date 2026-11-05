@@ -9,6 +9,8 @@ using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.PotionPools;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Models.RelicPools;
+using Shenshen.ShenshenCode.Cards;
+using Shenshen.ShenshenCode.CardPools;
 
 namespace Shenshen.ShenshenCode.Character;
 
@@ -20,8 +22,7 @@ public class Shenshen : PlaceholderCharacterModel
     public const string HumanFormDisplayName = "人形";
     public const string CatFormDisplayName = "猫形";
 
-    // Design facts only: no active form, switching, or combat effects exist yet.
-    public const bool FormMechanicsImplemented = false;
+    public const bool FormMechanicsImplemented = true;
 
     // White and neutral gender are template placeholders. The design now confirms 70 starting HP.
     public static readonly Color Color = new("ffffff");
@@ -30,27 +31,19 @@ public class Shenshen : PlaceholderCharacterModel
     public override CharacterGender Gender => CharacterGender.Neutral;
     public override int StartingHp => 70;
 
-    public override IEnumerable<CardModel> StartingDeck => [
-        ModelDb.Card<StrikeIronclad>(),
-        ModelDb.Card<StrikeIronclad>(),
-        ModelDb.Card<StrikeIronclad>(),
-        ModelDb.Card<StrikeIronclad>(),
-        ModelDb.Card<StrikeIronclad>(),
-        ModelDb.Card<DefendIronclad>(),
-        ModelDb.Card<DefendIronclad>(),
-        ModelDb.Card<DefendIronclad>(),
-        ModelDb.Card<DefendIronclad>(),
-        ModelDb.Card<DefendIronclad>()
-    ];
+    public override IEnumerable<CardModel> StartingDeck =>
+        Enumerable.Repeat<CardModel>(ModelDb.Card<LittleFireball>(), 5)
+            .Concat(Enumerable.Repeat(ModelDb.Card<LightShield>(), 5))
+            .Concat(Enumerable.Repeat(ModelDb.Card<ClawStrike>(), 5))
+            .Concat(Enumerable.Repeat(ModelDb.Card<MiDodge>(), 5));
 
     public override IReadOnlyList<RelicModel> StartingRelics =>
     [
         ModelDb.Relic<BurningBlood>()
     ];
 
-    // Use stock content while the original character's mechanics and content are being designed.
-    // The template's five Strikes, five Defends, and Burning Blood above are placeholders too.
-    public override CardPoolModel CardPool => ModelDb.CardPool<IroncladCardPool>();
+    // Burning Blood, relic/potion pools and visuals remain explicit prototype placeholders.
+    public override CardPoolModel CardPool => ModelDb.CardPool<ShenshenCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<IroncladRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<IroncladPotionPool>();
 

@@ -1,0 +1,18 @@
+{
+  "SHENSHEN-FORM_POWER.title": "少女形态",
+  "SHENSHEN-FORM_POWER.description": "从实际拥有的少女牌组抽牌。变形保留当前资源与状态。",
+  "SHENSHEN-FORM_POWER.catTitle": "猫形态",
+  "SHENSHEN-FORM_POWER.catDescription": "从实际拥有的猫牌组抽牌。变形保留当前资源与状态。",
+  "SHENSHEN-FORM_POWER.smartDescription": "少女与猫使用各自实际拥有的牌组循环；变形保留当前资源与状态。",
+  "SHENSHEN-LIGHT_BLESSING_POWER.title": "光之祝福",
+  "SHENSHEN-LIGHT_BLESSING_POWER.description": "下回合正常抽牌前，从自己的抽牌堆额外选择{Amount}张牌加入手牌。",
+  "SHENSHEN-LIGHT_BLESSING_POWER.smartDescription": "下回合正常抽牌前，从自己的抽牌堆额外选择{Amount}张牌加入手牌。",
+  "SHENSHEN-LIGHT_BLESSING_POWER.selectionScreenPrompt": "额外选择{Amount}张牌加入手牌。",
+  "SHENSHEN-CAT_DODGE_POWER.title": "猫形闪避",
+  "SHENSHEN-CAT_DODGE_POWER.description": "已就绪。猫形态时，闪避本回合第一次敌方多段攻击的第一段；不能闪避单段攻击。\n闪避不消耗格挡，也不触发荆棘或格挡反弹。自身下回合正常抽牌前刷新；变形不刷新。",
+  "SHENSHEN-CAT_DODGE_POWER.usedDescription": "本回合已使用闪避。自身下回合正常抽牌前刷新；变形不刷新。",
+  "SHENSHEN-CAT_DODGE_POWER.smartDescription": "猫形态时，闪避本回合第一次敌方多段攻击的第一段，不消耗格挡或触发反伤。自身下回合正常抽牌前刷新。",
+  "SHENSHEN-FLUFFED_UP_POWER.title": "炸毛",
+  "SHENSHEN-FLUFFED_UP_POWER.description": "生效后本场首次因敌人攻击实际扣血时获得3荆棘，后续每次获得1。\n敌人每次成功施加每种负面效果时另获得1荆棘，不占首次扣血奖励。\n首次奖励不随回合或变形刷新；自伤、中毒扣血及塞入状态牌不触发。",
+  "SHENSHEN-FLUFFED_UP_POWER.smartDescription": "生效后本场首次因敌人攻击实际扣血时获得3荆棘，后续每次获得1。\n敌人每次成功施加每种负面效果时另获得1荆棘，不占首次扣血奖励。\n首次奖励不随回合或变形刷新；自伤、中毒扣血及塞入状态牌不触发。"
+}

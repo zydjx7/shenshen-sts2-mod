@@ -47,7 +47,7 @@
         <Compile Remove="materials/**" />
         <Compile Remove="shaders/**" />
         <Compile Remove="images/**" />
-        <Compile Remove="local/**;work/**;dist/**" />
+        <Compile Remove="local/**;work/**;dist/**;tools/tests/**" />
         <EmbeddedResource Remove="Shenshen/**" />
         <EmbeddedResource Remove="materials/**" />
         <EmbeddedResource Remove="shaders/**" />
@@ -105,6 +105,12 @@
         <Copy SourceFiles="@(ModAsset)" DestinationFiles="@(ModAsset->'$(AssetProjectDir)/Shenshen/%(RecursiveDir)%(Filename)%(Extension)')" />
         <Copy SourceFiles="pack/project.godot;pack/export_presets.cfg" DestinationFolder="$(AssetProjectDir)" />
         <Delete Files="$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck" />
+        <!-- Complete imports before export: the combined first-import/export process
+             intermittently exited with an EditorSettings error on Windows. -->
+        <Message Text="Importing assets in the isolated Godot project" Importance="high" />
+        <Exec Command="&quot;$(GodotPath)&quot; --headless --editor --path &quot;$(AssetProjectDir)&quot; --import"
+              EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
+              ContinueOnError="false"/>
         <Message Text="Exporting assets from an isolated Godot project to local dist folder" Importance="high" />
         <Exec Command="&quot;$(GodotPath)&quot; --headless --path &quot;$(AssetProjectDir)&quot; --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;"
               EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
