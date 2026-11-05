@@ -23,7 +23,7 @@ public class Shenshen : PlaceholderCharacterModel
     // Design facts only: no active form, switching, or combat effects exist yet.
     public const bool FormMechanicsImplemented = false;
 
-    // White, neutral gender, and 70 HP are inherited development placeholders from the template.
+    // White and neutral gender are template placeholders. The design now confirms 70 starting HP.
     public static readonly Color Color = new("ffffff");
 
     public override Color NameColor => Color;

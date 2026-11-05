@@ -4,7 +4,7 @@
     <!-- macOS: /Users/you/Library/Application Support/Steam/steamapps/common/Slay the Spire 2 -->
     <!-- Windows: D:/SteamLibrary/steamapps/common/Slay the Spire 2 -->
     <Sts2Path>YOUR_STEAM_GAME_DIRECTORY</Sts2Path>
-    <Sts2Architecture>arm64</Sts2Architecture>
+    <!-- Architecture is detected automatically: arm64 on Apple Silicon, x86_64 on Windows/Intel Mac. -->
     <GodotPath>YOUR_MEGADOT_EXECUTABLE</GodotPath>
   </PropertyGroup>
 </Project>

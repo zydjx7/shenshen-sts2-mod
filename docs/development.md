@@ -2,6 +2,8 @@
 
 两台电脑同步源码、文本、素材与版本锁文件；各自安装 Steam、同一游戏版本及本项目工具链。游戏安装目录、开发工具、NuGet 缓存和本机 `local.props` 不通过 Git 同步。
 
+从 Mac 首次换到 Windows 时，先读 [Windows 接续说明](windows-handoff.md)，其中记录当前设计、代码实际进度和首次克隆命令。
+
 ## 初次准备
 
 先将同一个私有仓库克隆到本机。现有工程已经生成，无需再次安装或运行角色模板。项目使用 `global.json` 精确锁定 .NET SDK，`toolchain.lock.json` 记录 MegaDot、Godot SDK、模板、BaseLib、分析器和参考游戏版本。
