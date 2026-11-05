@@ -8,3 +8,5 @@
 - [ILSpy](https://github.com/icsharpcode/ILSpy) CLI 9.1.0.7988 通过本地 .NET 工具清单安装。按需查看本机游戏程序集，反编译输出保留在忽略的本机目录。
 
 游戏 `sts2.dll`、Harmony 等程序集均直接引用本机 Steam 安装文件，不复制进源码仓库或模组资源包。本项目不是游戏的完整源码重建。
+
+补充学习资料：[GlitchedReme/SlayTheSpire2ModdingTutorials](https://github.com/GlitchedReme/SlayTheSpire2ModdingTutorials)。当前采用范围与版本差异见 [教程参考笔记](tutorial-notes.md)。
