@@ -1,17 +1,17 @@
 # 光之魔法少女深深
 
-《杀戮尖塔 2》原创角色模组，供个人使用。内部工程、程序集及模组 ID 统一为 `Shenshen`；文件夹保留 `SpireCharacterMod`，便于两台电脑使用同一仓库。
+《杀戮尖塔 2》原创角色模组，供个人使用。内部工程、程序集及模组 ID 统一为 `Shenshen`；目录名称可不同，两台电脑使用同一仓库。
 
-角色已确定有人形、猫形两种形态，基础属性、变形换牌、猫形闪避及首批卡牌规则已写入 [角色设计](docs/character-design.md)。当前运行代码仍是模板角色，只预留形态定义与素材目录，尚未实现这些玩法。
+角色有人形、猫形两种互斥形态，规则见 [角色设计](docs/character-design.md)。Windows 接续已实现独立卡池、两套实际持有的基础牌与变形换牌。当前是开发原型；各项代码、构建与实测范围见 [Windows 验证记录](docs/windows-validation.md)。
 
 ## 当前可用内容
 
 - 可构建的 C# / Godot 角色工程，以及简体中文、英文文本。
-- 当前 Mac 已安装并验证项目内的 .NET SDK、MegaDot 和按需反编译工具。
+- Mac 交接和本轮 Windows 均已安装项目内 .NET SDK、MegaDot 和反编译工具。
 - Mac 与 Windows 的安装、构建、资源打包脚本；本机绝对路径放在忽略的 `local.props`。
 - 版本锁、NuGet 依赖锁、统一编码和换行、Git 忽略规则。
 
-初始卡组、遗物、白色界面、战斗形象等仍为原版或模板占位。原型已定 70 HP、每回合 3 能量与 5 抽牌；模板代码中的生命值已为 70，原创卡牌及机制仍待实现。资源打包使用独立临时 Godot 工程，避免导出时加载游戏程序集。
+70 HP、每回合 3 能量、正常抽牌 5 张；玩家永久持有少女 10 张与猫 10 张基础牌。变形只弃掉当前形态专属手牌，从另一形态的实际卡牌中补抽同样数量，保留原实例及其升级、费用等状态。牌堆界面暂显示两套牌总数；共享牌参与当前活跃循环是原型选择。燃烧之血、遗物/药水池、白色界面、卡图与战斗形象仍为占位。资源打包使用独立临时 Godot 工程。
 
 ## 使用
 
@@ -33,13 +33,13 @@ Windows：
 
 默认只向 `dist/` 输出，不改 Steam 设置、游戏安装目录或存档。`dist/Shenshen/` 包含本模组，`dist/BaseLib/` 包含匹配的运行依赖。游戏退出后，才可按需将这两个目录复制到游戏的 mods 目录进行测试。
 
-Mac 已通过编译、资源导出与独立资源包检查；尚未启动游戏验证角色，也未在 Windows 真机验证。首次换到 Windows 请先看 [Windows 接续说明](docs/windows-handoff.md)，每机路径及日常分支协作见 [开发说明](docs/development.md)。
+Mac 交接版本已通过编译与资源检查；本轮 Windows 已完成工具安装、编译、打包和独立资源检查。游戏内、保存和多人验证分别记录，不能由编译结果替代。首次换到 Windows 请先看 [Windows 接续说明](docs/windows-handoff.md)，日常协作见 [开发说明](docs/development.md)。
 
 ## 锁定版本
 
 | 项目 | 版本 |
 | --- | --- |
-| 参考游戏 | public / v0.107.1 / Steam Build 23811903 |
+| 本轮 API 目标游戏 | public-beta / v0.111.0 / Steam Build 24724944 |
 | .NET SDK | 9.0.320 |
 | MegaDot | 4.5.1-m.12 |
 | Godot.NET.Sdk | 4.5.1 |
@@ -52,7 +52,7 @@ Mac 已通过编译、资源导出与独立资源包检查；尚未启动游戏�
 
 ## 目录
 
-- `ShenshenCode/`：角色入口与代码，包含尚未接入战斗的 `ShenshenForm` 定义。
+- `ShenshenCode/`：角色、独立卡池、原创牌、形态与战斗机制。
 - `Shenshen/`：角色资源和 `localization/eng`、`localization/zhs` 文本。
 - `Shenshen/images/character_forms/human/`、`cat/`：预留的人形和猫形原创美术目录。
 - `tools/`：Mac / Windows 安装和构建入口。

@@ -26,7 +26,7 @@ Windows 在项目根目录用 PowerShell 运行：
 
 Bootstrap 从 [Microsoft 官方安装脚本](https://learn.microsoft.com/dotnet/core/tools/dotnet-install-script)安装锁定的 SDK，从 [MegaDot 官方下载站](https://megadot.megacrit.com/)获取指定版本并校验官方 SHA256，随后通过 `dotnet tool restore` 恢复仓库锁定的本地命令行工具。工具安装到 `local/toolchain/` 或本地工具缓存，命令使用本项目的 SDK、CLI 用户目录及 NuGet 缓存；不会写入系统 PATH。Bootstrap 不执行完整构建，已有相同版本可跳过安装。
 
-Mac 脚本只支持 macOS。Windows 使用 x64 SDK 与 x86_64 MegaDot 编辑器；Windows 脚本尚需在 Windows 真机验证。若系统限制脚本或应用运行，应按系统提示审核并允许相应文件；脚本不移除隔离标记、不更改执行策略或系统安全设置。
+Mac 脚本只支持 macOS。Windows 使用 x64 SDK 与 x86_64 MegaDot 编辑器；Windows 安装、构建与打包已在真机验证。若系统限制脚本或应用运行，应按系统提示审核并允许相应文件；脚本不移除隔离标记、不更改执行策略或系统安全设置。
 
 ## 本机路径
 
@@ -50,9 +50,13 @@ STS2_PATH="/Volumes/Games/SteamLibrary/steamapps/common/Slay the Spire 2" ./tool
 
 ## 构建与打包
 
-`build` 编译 C# 并按需恢复 NuGet 包；`pack` 使用 Release 配置执行 `dotnet publish`，通过 MegaDot 打包资源。可在动作后追加普通 dotnet 参数，例如 `./tools/build.sh build --no-restore`。优先先运行默认命令完成依赖恢复。
+`build` 使用 Release 编译 C# 并按需恢复 NuGet 包；`pack` 使用 Release 执行 `dotnet publish`，通过 MegaDot 打包资源。默认配置与现有依赖锁一致；显式 Debug 会增加 GodotSharpEditor，不在当前锁文件范围内。可在动作后追加普通 dotnet 参数，例如 `./tools/build.sh build --no-restore`。
 
 成品目录为根目录的 `dist/Shenshen/`。构建与打包不自动复制到游戏 `mods`；测试时在游戏退出后手动复制所需成品。先用专用测试档验证模组加载，再验证角色入口与双形态机制。
+
+Windows 专用测试可运行 `./tools/play-test.ps1 start`：脚本在游戏退出时备份并部署本项目产物，记录日常存档哈希，以项目内 `local/play-test/appdata` 作为独立进程 APPDATA，并传入本机已核对的 `--force-steam=off`，避免测试档接入 Steam 云存档。首次需在该测试档完成游戏的模组加载提示并重启。退出测试游戏后运行 `./tools/play-test.ps1 verify` 比较日常存档；不要把普通 Steam 启动当成隔离测试。实际路径、版本、运行限制见 [Windows 验证记录](windows-validation.md)。
+
+真实程序集自动回归运行 `./tools/test.ps1`：先打包当前源码，再将 `tools/tests/` 的原创测试工程复制到忽略的 `work/headless-tests/`，引用本机游戏程序集并在 MegaDot headless 中运行。测试的 APPDATA/LOCALAPPDATA 指向 `local/regression-*`，游戏 SaveManager 使用内置 TestMode 的内存存储；不会测试 Steam 双端网络或替代游戏界面验收。
 
 ## 日常同步
 

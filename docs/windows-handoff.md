@@ -2,6 +2,12 @@
 
 本说明用于从 Mac 切换到 Windows 后继续「光之魔法少女深深」项目。源码私有仓库为 [zydjx7/shenshen-sts2-mod](https://github.com/zydjx7/shenshen-sts2-mod)，接续分支为 `main`。
 
+## Windows 接续更新（2026-11-05）
+
+已从 `9b303ab` 在 Windows 创建本地工程 `F:\shenshen-sts2-mod`，完成 bootstrap、Release 编译和资源打包。实际安装游戏为 **public-beta / v0.111.0 / Build 24724944**，已据该机程序集实现独立卡池与双形态原型；.NET、MegaDot、BaseLib 和 NuGet 版本保持原锁定值。API 目标版本记录已更新，Mac 需更新到同版本后重新验证。本轮临时规则、源码/测试进度和剩余工作见 [Windows 验证记录](windows-validation.md)。
+
+下文保留首次换机的准备方法和交接基线；其中“仍为模板”“Windows 未验证”描述的是 `9b303ab`，不能代替当前状态。
+
 ## 在 Windows 取得工程
 
 准备 Git，以及通过 Steam 安装的《杀戮尖塔 2》。仓库是私有的，克隆时使用拥有访问权限的 GitHub 账号。选择游戏安装目录之外的本地开发目录，例如 `D:\Code`；不需要复制 Mac 的整份目录或工具缓存。
@@ -29,7 +35,7 @@ git status --short --branch
 
 Windows 脚本尚未在 Windows 真机运行。本次换机的第一个验证目标是安装、编译与打包成功；遇到错误时保留完整报错，由当前电脑上的开发会话修复。若 PowerShell 限制脚本执行，记录错误和当前策略，按系统允许的流程处理，不默认修改系统级执行策略。
 
-## 当前状态与设计依据
+## Mac 交接基线与设计依据（9b303ab）
 
 Mac 已通过模板工程编译、资源打包及独立资源包检查，尚未启动游戏验证。Windows 构建、两平台的游戏内角色入口、双形态、原创牌、保存及联机都尚未验证。
 
