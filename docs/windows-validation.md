@@ -257,3 +257,11 @@ UI 类型修复后再次完整运行 `./tools/test.ps1`，编译与打包退出 
 用户试打的前一局开局选择 HeftyTablet 后，日志出现 `CardFactory.CreateForReward` 无有效候选的托管异常，之后用户自行放弃另开一局。只读核对本机 `HeftyTablet.AfterObtained`：强制从角色池选 3 张不同 Rare 候选；当前角色 Rare=0，过滤为空。`Selected rarity` 空白是 Uniform 分支的输出，并非角色池对象丢失。本轮没有新增金卡或改动开局奖励，这是待处理的 Rare-only 奖励兼容缺口；常规白蓝卡奖励不据此判为失效。前局放弃时还记录删除不存在的 `.backup` 失败，原日志保留。
 
 代理接手后的上述动作段与仅选人进程未出现新增托管异常；返回菜单/正常退出仍有原生 RID、Shader、ObjectDB 和 resources 清理告警，headless 也保留 DummyTexture RID 告警，因此不称运行完全无告警。首次在退出动画尚未结束时过早调用 verify 被“游戏仍运行”保护拒绝；待实际进程消失后重新 verify 通过，未绕过脚本保护。
+
+## 卡牌与状态文案精简（2026-11-06）
+
+用户要求现有卡面与状态说明简洁，并提出弓背改为下一回合进攻收益。本轮仅实装中英文文案精简与必要悬浮提示，不修改数值或玩法；弓背 1 费 6／8 格挡、下回合 2／3 临时力量仍为候选，当前实际弓背保持原荆棘效果。完整短版审核表见角色设计文末。
+
+`tools/test.ps1` 中主工程 publish、打包与 Harness 编译通过，卡牌及中英文卡面检查通过；随后全量流程在 `UiResourceChecks` 的“selection portrait preserves every combat rig part's atlas, pivot, size and local transform”断言失败，日志保留在 `work/concise-copy-regression.log`。当时并行美术正在修改 rig 与选人装配，未修改这些文件来消除失败，也未把结果报告成全量通过。
+
+另将现有 Harness 复制到独立忽略目录 `work/concise-copy-tests`，仅在该测试副本省略 UI／动画入口，原测试源文件不变；使用同一本机游戏程序集和打包资源运行现有玩法、白卡与文案断言，`SHENSHEN_HEADLESS_PASS checks=314`，退出 0。日志为 `work/concise-copy-focused.log`，构建日志 `work/concise-copy-focused-build.log`；其中 40 项中英白卡基础／预览／升级格式化检查全部通过。没有新增用于迎合文案内容的镜像断言。用户检查的是候选设计与文案，因此本轮未重新部署或启动游戏。

@@ -16,7 +16,8 @@ public sealed class ArchedBack : ShenshenCard
     public ArchedBack() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
     public override ShenshenForm? Form => ShenshenForm.Cat;
     public override bool GainsBlock => true;
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<ThornsPower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [HoverTipFactory.FromPower<ThornsPower>(), HoverTipFactory.FromPower<TemporaryThornsPower>()];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new BlockVar(6m, ValueProp.Move), new PowerVar<ThornsPower>(2m)];
 

@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using Shenshen.ShenshenCode.Character;
 using Shenshen.ShenshenCode.Mechanics;
+using Shenshen.ShenshenCode.Powers;
 
 namespace Shenshen.ShenshenCode.Cards;
 
@@ -20,7 +21,8 @@ public sealed class TransformationMagic : ShenshenCard
     [
         HoverTipFactory.FromPower<StrengthPower>(),
         HoverTipFactory.FromPower<DexterityPower>(),
-        HoverTipFactory.FromPower<ThornsPower>()
+        HoverTipFactory.FromPower<ThornsPower>(),
+        HoverTipFactory.FromPower<FormPower>()
     ];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
