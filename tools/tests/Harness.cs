@@ -149,8 +149,9 @@ public partial class Harness : Node
         var dormant = state.DrawPile.Cards.Concat(state.DiscardPile.Cards).ToArray();
         Check(!(await CardPileCmd.Draw(context, 5, player)).Any() && dormant.SequenceEqual(state.DrawPile.Cards.Concat(state.DiscardPile.Cards)), "empty active deck never draws or shuffles dormant cards");
 
-        await PowerCmd.Apply<CatDodgePower>(context, player.Creature, 1, player.Creature, null);
-        player.Creature.GetPower<FormPower>()!.SetAmount(2);
+        await PowerCmd.Remove(player.Creature.GetPower<CatDodgePower>());
+        player.Creature.GetPower<FormPower>()!.SetAmount(1);
+        await Switch(context, player);
         await CreatureCmd.SetMaxAndCurrentHp(enemy, 1000);
         await CreatureCmd.LoseBlock(context, player.Creature, player.Creature.Block, player.Creature);
         int before = player.Creature.CurrentHp;
@@ -170,8 +171,9 @@ public partial class Harness : Node
         await Switch(context, player);
         await Switch(context, player);
         Check(player.Creature.GetPower<CatDodgePower>()!.Amount == 2, "same-turn transforms never refresh dodge");
-        await player.Creature.GetPower<CatDodgePower>()!.BeforeHandDraw(player, context, combat);
-        Check(player.Creature.GetPower<CatDodgePower>()!.Amount == 1, "next own hand draw refreshes one dodge");
+        await Hook.BeforeHandDraw(combat, player, context);
+        Check(player.Creature.GetPower<CatDodgePower>() == null,
+            "next own hand draw removes the shift-turn dodge instead of refreshing it");
 
         player.Creature.GetPower<FormPower>()!.SetAmount(1);
         await PowerCmd.Apply<FluffedUpPower>(context, player.Creature, 3, player.Creature, null);
@@ -184,7 +186,7 @@ public partial class Harness : Node
         Check(player.Creature.GetPower<ThornsPower>()!.Amount == thorns + 4 && enemy.CurrentHp == enemyHp - (thorns + 1),
             "first enemy HP loss awards three thorns only after this hit retaliation");
         await Switch(context, player);
-        await player.Creature.GetPower<CatDodgePower>()!.BeforeHandDraw(player, context, combat);
+        await Hook.BeforeHandDraw(combat, player, context);
         await DamageCmd.Attack(2).FromMonster(enemy.Monster!).WithNoAttackerAnim().Execute(context);
         Check(player.Creature.GetPower<ThornsPower>()!.Amount == thorns + 5,
             "first HP-loss bonus never refreshes across form and turn hooks");
@@ -223,6 +225,8 @@ public partial class Harness : Node
         duoTurn.GetType().GetProperty("IsStarting")!.SetValue(duoTurn, false);
         await Hook.BeforeHandDraw(duoCombat, heroine, context);
         var transform = heroine.PlayerCombatState!.Hand.Cards.OfType<TransformationMagic>().Single();
+        Check(heroine.Creature.GetPower<CatDodgePower>() == null,
+            "the human opening does not grant a cat-entry dodge");
         await CardPileCmd.Draw(context, 5, heroine, fromHandDraw: true);
         Check(heroine.PlayerCombatState.Hand.Cards.Count == 6 && transform.Keywords.Contains(CardKeyword.Retain) && transform.EnergyCost.Canonical == 1,
             "opening adds exactly one extra retained one-energy transformation before five normal draws");
@@ -304,6 +308,7 @@ public partial class Harness : Node
         await RunDeckDesignChecks();
         await RunUpgradeAccessChecks();
         await RunCommonCardChecks();
+        await RunFormFaceDodgeChecks();
         UiResourceChecks.Run(Check);
         AnimationChecks.Run(this, Check);
     }

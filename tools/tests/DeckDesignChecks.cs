@@ -81,9 +81,9 @@ public partial class Harness
             "the unique owned transformation has its one-energy base bonuses");
         var baseText = transform.GetDescriptionForPile(PileType.Hand);
         var upgradePreviewText = transform.GetDescriptionForUpgradePreview();
-        Check(baseText.Contains("Strength") && baseText.Contains("Dexterity") && !baseText.Contains("Thorns") &&
+        Check(baseText.Contains("Strength") && !baseText.Contains("Dexterity") && !baseText.Contains("Thorns") &&
             !baseText.Contains("fixed") && !upgradePreviewText.Contains("{IfUpgraded"),
-            "base transformation hides zero upgrade bonuses and the native upgrade-preview formatter resolves successfully");
+            "the human-held base transformation shows only cat-entry effects and resolves its upgrade preview");
         var owned = state.AllCards.ToArray();
         var retainedUpgrade = owned.OfType<LittleFireball>().First();
         retainedUpgrade.UpgradeInternal();
@@ -115,8 +115,9 @@ public partial class Harness
             transform.DynamicVars.Block.BaseValue == 4,
             "upgrading the same owned combat transformation unlocks only thorns and fixed block");
         var upgradedText = transform.GetDescriptionForPile(PileType.Hand);
-        Check(upgradedText.Contains("Thorns") && upgradedText.Contains("fixed") && !upgradedText.Contains("{IfUpgraded"),
-            "upgraded transformation text displays the thorns and fixed-block clauses through native formatting");
+        Check(upgradedText.Contains("Thorns") && !upgradedText.Contains("Dexterity") && !upgradedText.Contains("fixed") &&
+            !upgradedText.Contains("{IfUpgraded"),
+            "the human-held upgraded transformation shows strength and thorns without opposite-face rewards");
         transform.EnergyCost.SetThisCombat(0);
         await PlayPaid(transform, context);
         Check(state.Energy == 2 && heroine.Creature.GetPower<StrengthPower>()?.Amount == 2 &&

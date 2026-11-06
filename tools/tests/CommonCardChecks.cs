@@ -388,9 +388,8 @@ public partial class Harness
             "upgraded mirror reflects its eleven actual block but excludes the other eight block");
 
         await PowerCmd.Remove(f.Player.Creature.GetPower<DexterityPower>());
-        f.Player.Creature.GetPower<FormPower>()!.SetAmount(2);
-        await PowerCmd.Apply<CatDodgePower>(f.Context, f.Player.Creature, 1, f.Player.Creature, null);
         await CardCmd.AutoPlay(f.Context, CommonCard<ShatteredMirror>(f), null);
+        await Switch(f.Context, f.Player);
         hp = f.Enemy.CurrentHp;
         await CommonEnemyAttack(f, 4, 2);
         Check(f.Enemy.CurrentHp == hp - 4 && f.Player.Creature.Block == 2,
@@ -405,7 +404,18 @@ public partial class Harness
         hp = f.Enemy.CurrentHp;
         await CommonEnemyAttack(f, 10);
         Check(f.Enemy.CurrentHp == hp - 10 && f.Player.Creature.Block == 11,
-            "Light Mirror and Shattered Mirror never reflect the same consumed block twice");
+            "Light Mirror takes priority over an earlier Shattered Mirror without reflecting the same damage twice");
+        await CommonEnemyAttack(f, 8);
+        Check(f.Enemy.CurrentHp == hp - 18 && f.Player.Creature.Block == 3,
+            "full Light Mirror continues reflecting ordinary block after the finite mirror allowance is exhausted");
+        await PowerCmd.Remove(f.Player.Creature.GetPower<ReflectPower>());
+        await LoseCommonBlock(f);
+        await CardCmd.AutoPlay(f.Context, f.Combat.CreateCard<LightMirror>(f.Player), null);
+        await CardCmd.AutoPlay(f.Context, CommonCard<ShatteredMirror>(f), null);
+        hp = f.Enemy.CurrentHp;
+        await CommonEnemyAttack(f, 10);
+        Check(f.Enemy.CurrentHp == hp - 10 && f.Player.Creature.Block == 11,
+            "Light Mirror also takes priority when Shattered Mirror is cast afterwards");
         await PowerCmd.Remove(f.Player.Creature.GetPower<ReflectPower>());
         await LoseCommonBlock(f);
         await CardCmd.AutoPlay(f.Context, CommonCard<ShatteredMirror>(f), null);

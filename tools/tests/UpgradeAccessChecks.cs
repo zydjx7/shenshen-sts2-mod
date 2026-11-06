@@ -76,7 +76,7 @@ public partial class Harness
         Check(fluff.Amount == 4 && fluff.IsGrowthEnabled && fluff.HasReceivedFirstReward,
             "a later basic fluff copy neither downgrades an upgraded power nor resets its spent first reward");
         CheckFluffPacket(run, player, 4, "upgraded spent fluff flags survive the native combat packet");
-        Check(basicPowerText.Contains("No further growth") && fluff.Description.GetFormattedText().Contains("Each later hit"),
+        Check(basicPowerText.Contains("first enemy attack") && fluff.Description.GetFormattedText().Contains("Each later hit"),
             "live basic and upgraded fluff power descriptions expose their different growth rules");
 
         (player, run, combat, enemy, context) = await CreateUpgradeFixture();
