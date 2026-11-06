@@ -1,6 +1,7 @@
 extends SceneTree
 
 # Run with the project's MegaDot: --headless --path . --script tools/export-selection-portrait.gd
+# Import the project's textures first; missing sources must not overwrite a valid portrait.
 # Assemble the selected character from the same original parts and rig as combat.
 # This produces a static Godot subscene, never a separately repainted face or body.
 const ASSET_DIR = "res://Shenshen/images/character_forms/human/mystery/"
@@ -18,6 +19,11 @@ var _draw_order: Dictionary = {}
 
 func _initialize():
     _rig = JSON.parse_string(FileAccess.get_file_as_string(ASSET_DIR + "rig.json"))
+    for part in _rig.parts:
+        if not load(ASSET_DIR + part.file) is Texture2D:
+            push_error("Import the rig's source textures before exporting: " + ASSET_DIR + part.file)
+            quit(1)
+            return
     _root = Node2D.new()
     _root.name = "Rig"
     _root.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR

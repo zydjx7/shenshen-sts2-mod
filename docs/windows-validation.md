@@ -265,3 +265,21 @@ UI 类型修复后再次完整运行 `./tools/test.ps1`，编译与打包退出 
 `tools/test.ps1` 中主工程 publish、打包与 Harness 编译通过，卡牌及中英文卡面检查通过；随后全量流程在 `UiResourceChecks` 的“selection portrait preserves every combat rig part's atlas, pivot, size and local transform”断言失败，日志保留在 `work/concise-copy-regression.log`。当时并行美术正在修改 rig 与选人装配，未修改这些文件来消除失败，也未把结果报告成全量通过。
 
 另将现有 Harness 复制到独立忽略目录 `work/concise-copy-tests`，仅在该测试副本省略 UI／动画入口，原测试源文件不变；使用同一本机游戏程序集和打包资源运行现有玩法、白卡与文案断言，`SHENSHEN_HEADLESS_PASS checks=314`，退出 0。日志为 `work/concise-copy-focused.log`，构建日志 `work/concise-copy-focused-build.log`；其中 40 项中英白卡基础／预览／升级格式化检查全部通过。没有新增用于迎合文案内容的镜像断言。用户检查的是候选设计与文案，因此本轮未重新部署或启动游戏。
+
+## 站姿、双手与幼猫躯干校正（2026-11-06）
+
+用户指出上轮分件装配偏离确认稿：少女小腿形成 X，施法空掌与握杖手挤叠；幼猫身体过短、腿挤在腹下。上轮自动回归和实机触发通过不能代替外形准确性。本轮重新逐张对照 1 号帽斗篷确认稿、旧少女姿态参考和用户再次附上的 B 稿幼猫，保留当前身份/衣服/脸/毛色，不重画图集或加入玩法变更。具体定位修正见 [角色美术与动画](character-art.md#用户指出的装配偏差2026-11-06)。
+
+| 层次 | 本轮结果 |
+| --- | --- |
+| 实现 | 仅两份 rig、人形 Cast 曲线、同源选人子场景及其导出工具；双腿从衣摆下分开，两个袖口/腕/掌连续，杖与握臂短杆同轴；幼猫恢复肩臀长度、前后脚分组与髋毛遮叠。PNG 纹理和玩法源码未纳入本轮改动。 |
+| 导出故障与修复 | 首次直接在尚未导入 PNG 的根目录运行导出，脚本错误地在 load 失败后以 exit0 输出空 Atlas；失败日志 `work/pose-fix-selection-export.log` 保留。本轮增加源纹理预检：未导入时 exit1、原输出哈希不变，日志 `work/pose-fix-export-missing-source.log`。随后从已导入的独立工程正确重导，确认没有 ERROR，日志 `work/pose-fix-selection-export-valid.log`，再将有效 scene 放回源码。 |
+| 构建/打包/回归 | 首次整合 `work/pose-fix-regression.log` 382 项通过。同期文案提交 `7763bdd` 后，再运行全量 `tools/test.ps1`，主工程、PCK 和测试工程编译通过，`SHENSHEN_HEADLESS_PASS checks=382`，日志 `work/pose-fix-final-regression.log`。之前文案阶段因 rig/scene 修改时序触发的 UI 断言，在本次同源场景正确重导后也已通过。 |
+| 隔离提交基线 | `git archive 2ec7a09` 普通无 .git 副本只覆盖本轮 5 个源文件；174 个 tracked blob 审计无额外修改，Harness 保持原样。只运行一次副本 `tools/test.ps1`，382 项通过。日志与审计在 `work/pose-fix-baseline-verify/work/`，验证美术修正不依赖并行文案草稿。 |
+| GPU 视觉核对 | 少女 Idle/Cast/Attack/Hit、幼猫 Idle/Attack `.13/.24/.39`/Hit/恢复均与确认参考逐帧复看；第二双眼也复查腿线、两袖、杆轴、肩臀及后腿毛边。正式 DLL 的独立 GPU 录像为 600×760、30fps、445 帧、14.83 秒，另渲染 1920×1080 同源选人布局；不能称为游戏录像或本轮原生选人页实测。 |
+| 真实战斗 | 用专用 APPDATA 启动保留的 seed `1NX6UZBMS37H` / 第 6 层 INKLETS_NORMAL。少女自然分腿站姿完整；护盾 Cast、小火球 Attack/飞行到达、HP65→58 的 Hit；变猫保持 HP58，舒展的躯干与前后脚完整，爪击 Attack、HP58→35 的 Hit、返回 Idle；变少女保留 HP35，暂停遮罩正常。日志 `local/play-test/pose-fix-gui.log` 记录动作启动、完成及回待机，没有新增托管异常。短动作关键姿势用独立 GPU 帧核对，游戏截图不冒充完整动作录像。 |
+| 退出与隔离 | 正常保存返回菜单并确认退出，无放弃测试局。`play-test.ps1 verify` 通过，1036 个日常文件哈希未变，隔离档 162 文件，记录 `local/play-test/pose-fix-save-verification.json`；随后仅 prepare 部署最新构建，再 verify，见 `pose-fix-final-deploy-verification.json`。仍使用原版战前保存边界。 |
+
+视频与实际战斗使用 DLL `33C1B58C3A9854BA4A25531B08A3A19DCAF88D55945D7D0AAAEB253054EB547A` / PCK `36B5CFC21BE2DCB37EA419EF89324A707EC59FC7156B4C5CF928E003A907BE33`，快照留在 `local/pose-fix-tested-build`。最终在 `7763bdd` 上重编译并部署的 DLL 为 `BC4914D79FFE399FC13856C56E27BFD344AE1D383BE67C8820D2DA7AD3518328`，PCK 与上述实测一致；本轮 5 个动画/场景/工具源文件在回归、录像和实测期间保持同一哈希。隔离旧基线独立 DLL/PCK 分别为 `F935CDDF7FDD7B6613DB5A1F2DFE887B2E9F9B0D24D649F66E382167CD923779` / `1C721E03648DC0C1C317C9F6CE78D9E395938A0F5D066C08C6977ABD6AE6D460`，不混为实际游戏所载构建。
+
+本机 outputs 的 `shenshen-pose-fix-20261106` 保存原稿、修正前后图片、视频、实际游戏截图和校正记录；不提交用户截图或游戏存档。headless 退出 DummyTexture RID/ObjectDB 告警及原游戏正常退出的引擎清理告警仍保留，不称全程无告警。没有再次验证原生选人页、实际死亡/复活、长流程、Mac 或真正双端联机，也没有改变前述 Rare-only 奖励兼容缺口。本轮只提交美术装配及直接相关工具/文档。

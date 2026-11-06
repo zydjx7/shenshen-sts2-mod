@@ -248,10 +248,10 @@ public sealed class ShenshenVisuals
 
         var cast = RestAnimation(0.85f);
         Rotate(cast, "arm_staff", (0, 0), (CastDelay, -0.15f), (0.62f, -0.15f), (0.85f, 0));
-        Rotate(cast, "arm_free", (0, 0), (CastDelay, -0.15f), (0.62f, -0.15f), (0.85f, 0));
+        Rotate(cast, "arm_free", (0, 0), (CastDelay, -0.05f), (0.62f, -0.05f), (0.85f, 0));
         // Bring the normally concealed free hand out from the long cloak to cast.
-        Move(cast, "arm_free", (0, Vector2.Zero), (CastDelay, new Vector2(130, -45)),
-            (0.62f, new Vector2(130, -45)), (0.85f, Vector2.Zero));
+        Move(cast, "arm_free", (0, Vector2.Zero), (CastDelay, new Vector2(250, 20)),
+            (0.62f, new Vector2(250, 20)), (0.85f, Vector2.Zero));
         Rotate(cast, "head", (0, 0), (CastDelay, -0.035f), (0.85f, 0));
         Rotate(cast, "cape", (0, 0), (0.45f, 0.06f), (0.85f, 0));
         Rotate(cast, "ponytail", (0, 0), (0.45f, -0.09f), (0.85f, 0));

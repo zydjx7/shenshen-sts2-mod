@@ -64,13 +64,14 @@ filter_clip = true
 
 [node name="Rig" type="Node2D"]
 texture_filter = 2
-position = Vector2(-17.920921, -6.0875854)
-scale = Vector2(0.64432985, 0.64432985)
+position = Vector2(-7.296913, -5.8033524)
+scale = Vector2(0.6382423, 0.6382423)
 
 [node name="Canvas" type="Node2D" parent="."]
 
 [node name="Part_leg_back" type="Node2D" parent="Canvas"]
-position = Vector2(515, 1035)
+position = Vector2(435, 1024)
+rotation = -0.2443461
 
 [node name="Sprite" type="Sprite2D" parent="Canvas/Part_leg_back"]
 scale = Vector2(1.1464968, 1.160221)
@@ -79,7 +80,7 @@ centered = false
 offset = Vector2(-131.87999, -7.24)
 
 [node name="Part_leg_front" type="Node2D" parent="Canvas"]
-position = Vector2(510, 1017)
+position = Vector2(565, 1017)
 
 [node name="Sprite" type="Sprite2D" parent="Canvas/Part_leg_front"]
 scale = Vector2(1.2167832, 1.2138728)
@@ -158,20 +159,20 @@ centered = false
 offset = Vector2(-129.25, -13.23)
 
 [node name="Part_arm_staff" type="Node2D" parent="Canvas/Part_torso"]
-position = Vector2(75, 170)
+position = Vector2(75, 155)
 
 [node name="Part_staff" type="Node2D" parent="Canvas/Part_torso/Part_arm_staff"]
-position = Vector2(130, 33)
-rotation = 0.43633232
+position = Vector2(126, 20)
+rotation = 0.4886922
 
 [node name="Sprite" type="Sprite2D" parent="Canvas/Part_torso/Part_arm_staff/Part_staff"]
-scale = Vector2(0.8396947, 1.1627907)
+scale = Vector2(0.8778626, 0.872093)
 texture = SubResource("AtlasTexture_ki7ao")
 centered = false
 offset = Vector2(-65.5, -247.68001)
 
 [node name="Sprite" type="Sprite2D" parent="Canvas/Part_torso/Part_arm_staff"]
-scale = Vector2(1.1165049, 1.1267606)
+scale = Vector2(1.0679612, 1.084507)
 texture = SubResource("AtlasTexture_0bvo8")
 centered = false
 offset = Vector2(-57.68, -31.95)
