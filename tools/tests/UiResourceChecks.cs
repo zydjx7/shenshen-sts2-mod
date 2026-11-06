@@ -32,42 +32,66 @@ internal static class UiResourceChecks
         check(hero.IconTexture is CompressedTexture2D && hero.IconOutlineTexture is CompressedTexture2D,
             "native HUD texture and outline getters resolve the imported avatar");
 
-        // Inspect the 3-by-4 sprite-cell gutters, not just the atlas's outer corners:
-        // a regenerated atlas can otherwise leave opaque fog behind the painted parts.
-        using var atlasImage = ResourceLoader.Load<Texture2D>(ShenshenVisuals.AssetDirectory + "/parts.png").GetImage();
-        if (atlasImage.IsCompressed()) atlasImage.Decompress();
-        var gutters = Enumerable.Range(0, 4).SelectMany(column => Enumerable.Range(0, 5)
-            .Select(row => new Vector2I(Math.Min(atlasImage.GetWidth() - 1, column * atlasImage.GetWidth() / 3),
-                Math.Min(atlasImage.GetHeight() - 1, row * atlasImage.GetHeight() / 4))));
-        check(gutters.All(point => atlasImage.GetPixelv(point).A <= 0.01f),
-            "packed mystery atlas preserves transparent gutters between sprite cells");
-
         using var rig = JsonDocument.Parse(Godot.FileAccess.GetFileAsString(ShenshenVisuals.RigPath));
-        var parts = rig.RootElement.GetProperty("parts").EnumerateArray()
-            .ToDictionary(part => part.GetProperty("id").GetString()!);
-        var headPart = parts["head"];
-        var headRegion = headPart.GetProperty("region").EnumerateArray().Select(value => value.GetInt32()).ToArray();
-        var region = new Rect2I(headRegion[0], headRegion[1], headRegion[2], headRegion[3]);
+        var layout = rig.RootElement;
+        var sourcePath = ShenshenVisuals.AssetDirectory + "/" + layout.GetProperty("image").GetString();
+        var ringPath = ShenshenVisuals.AssetDirectory + "/solar-ring.tscn";
+        using var sourceImage = ReadImage(ResourceLoader.Load<Texture2D>(sourcePath));
+        var head = layout.GetProperty("head_region").EnumerateArray().Select(value => value.GetInt32()).ToArray();
+        var region = new Rect2I(head[0], head[1], head[2], head[3]);
+        var visibleBounds = VisibleBounds(sourceImage);
+        check(visibleBounds.HasArea() && TransparentBorder(sourceImage),
+            "packed approved character image retains a transparent border and visible painted content");
         var selectBackground = ResourceLoader.Load<PackedScene>(hero.CustomCharacterSelectBg).Instantiate<Control>();
+        var combatVisuals = hero.CreateVisuals();
         try
         {
-            var sharedHead = selectBackground.GetNode<Sprite2D>(PartPath("head", parts) + "/Sprite").Texture as AtlasTexture;
-            check(sharedHead != null && sharedHead.Atlas.ResourcePath == ShenshenVisuals.AssetDirectory + "/parts.png" &&
-                sharedHead.Region == (Rect2)region,
-                "selection portrait directly shares the animation rig's approved head atlas region");
-            check(parts.All(pair => MatchesPart(selectBackground, pair.Key, pair.Value, parts)),
-                "selection portrait preserves every combat rig part's atlas, pivot, size and local transform");
+            var portraitRig = selectBackground.GetNode<Node2D>("Portrait/Rig");
+            var canvas = portraitRig.GetNode<Node2D>("Canvas");
+            var portrait = canvas.GetNode<Sprite2D>("Character");
+            var combatMesh = combatVisuals.GetNode<Polygon2D>("Visuals/HumanRig/Canvas/Mesh");
+            var portraitRing = canvas.GetNode<Node2D>("SolarRing");
+            var combatRing = combatVisuals.GetNode<Node2D>("Visuals/HumanRig/Canvas/SolarRing");
+            check(portrait.Texture is CompressedTexture2D && portrait.Texture.ResourcePath == sourcePath &&
+                combatMesh.Texture.ResourcePath == sourcePath && portrait.Texture == combatMesh.Texture,
+                "selection portrait and actual combat mesh share the same approved character.png resource");
+            check(!portrait.Centered && !portrait.RegionEnabled && portrait.Position.IsZeroApprox() &&
+                portrait.Offset.IsZeroApprox() && portrait.Scale.IsEqualApprox(Vector2.One) &&
+                Mathf.IsZeroApprox(portrait.Rotation) && portraitRig.Scale.X > 0 &&
+                Mathf.IsEqualApprox(portraitRig.Scale.X, portraitRig.Scale.Y),
+                "selection portrait preserves the complete source image with only uniform frame scaling");
+            check(combatMesh.Polygon.Length == combatMesh.UV.Length &&
+                combatMesh.Polygon.Zip(combatMesh.UV).All(pair => pair.First.IsEqualApprox(pair.Second)),
+                "combat rest vertices map directly to original source pixels without reassembling body parts");
+            check(portraitRing.SceneFilePath == ringPath && combatRing.SceneFilePath == ringPath &&
+                portraitRing.Position.IsEqualApprox(combatRing.Position) &&
+                portraitRing.Scale.IsEqualApprox(combatRing.Scale) &&
+                portraitRing.GetIndex() < portrait.GetIndex() && combatRing.GetIndex() < combatMesh.GetIndex(),
+                "selection and combat instantiate the same solar-ring scene at the same local placement behind the body");
+            check(CanvasItems(portraitRig).All(item => item.ZIndex == 0 && item.ZAsRelative),
+                "selection character and every halo line keep relative Z zero");
+            var corners = new[] { visibleBounds.Position, visibleBounds.End,
+                new Vector2(visibleBounds.End.X, visibleBounds.Position.Y),
+                new Vector2(visibleBounds.Position.X, visibleBounds.End.Y) };
+            check(corners.All(point => InPortraitFrame(PortraitPoint(portrait, point))) &&
+                portraitRing.GetChildren().OfType<Line2D>().All(line =>
+                    line.Points.All(point => InPortraitFrame(PortraitPoint(line, point)))),
+                "selection frame contains the actual painted silhouette and all shared halo ticks");
         }
         finally
         {
             selectBackground.Free();
+            combatVisuals.Free();
         }
         using var avatarImage = ReadImage(hero.IconTexture);
         using var selectIconImage = ReadImage(hero.CharacterSelectIcon);
-        check(ContainsSameHead(avatarImage, atlasImage, region),
-            "HUD and map avatar preserve the approved animation head pixels with transparent padding");
-        check(ContainsSameHead(selectIconImage, atlasImage, region),
-            "character select button preserves the approved animation head pixels without stretching its face");
+        check(avatarImage.GetSize() == new Vector2I(450, 450) &&
+            selectIconImage.GetSize() == new Vector2I(450, 675),
+            "HUD and character-select PNGs retain their intended padded canvas sizes");
+        check(ContainsSameHead(avatarImage, sourceImage, region),
+            "HUD and map avatar preserve the approved head_region pixels with transparent padding");
+        check(ContainsSameHead(selectIconImage, sourceImage, region),
+            "character-select button copies the same original head pixels without stretching or repainting");
 
         // These inherited placeholder hand getters accept Texture2D in this game version.
         check(hero.ArmPointingTexture is Texture2D && hero.ArmRockTexture is Texture2D &&
@@ -92,30 +116,46 @@ internal static class UiResourceChecks
         return image;
     }
 
-    private static string PartPath(string id, IReadOnlyDictionary<string, JsonElement> parts)
+    private static Rect2 VisibleBounds(Image image)
     {
-        var part = parts[id];
-        var parent = part.TryGetProperty("parent", out var value) ? value.GetString() : null;
-        return (string.IsNullOrEmpty(parent) ? "Portrait/Rig/Canvas" : PartPath(parent, parts)) + "/Part_" + id;
+        var minimum = image.GetSize();
+        var maximum = new Vector2I(-1, -1);
+        for (var y = 0; y < image.GetHeight(); y++)
+        for (var x = 0; x < image.GetWidth(); x++)
+        {
+            if (image.GetPixel(x, y).A <= 0.04f) continue;
+            minimum = new Vector2I(Math.Min(minimum.X, x), Math.Min(minimum.Y, y));
+            maximum = new Vector2I(Math.Max(maximum.X, x), Math.Max(maximum.Y, y));
+        }
+        return maximum.X < 0 ? new Rect2() : new Rect2(minimum, maximum - minimum + Vector2I.One);
     }
 
-    private static bool MatchesPart(Node scene, string id, JsonElement part, IReadOnlyDictionary<string, JsonElement> parts)
+    private static bool TransparentBorder(Image image) =>
+        Enumerable.Range(0, image.GetWidth()).All(x =>
+            image.GetPixel(x, 0).A <= 0.04f && image.GetPixel(x, image.GetHeight() - 1).A <= 0.04f) &&
+        Enumerable.Range(0, image.GetHeight()).All(y =>
+            image.GetPixel(0, y).A <= 0.04f && image.GetPixel(image.GetWidth() - 1, y).A <= 0.04f);
+
+    // The packed portrait is outside the tree here; accumulate local transforms up to its Control frame.
+    private static Vector2 PortraitPoint(Node2D node, Vector2 point)
     {
-        var pivot = scene.GetNode<Node2D>(PartPath(id, parts));
-        var sprite = pivot.GetNode<Sprite2D>("Sprite");
-        var region = part.GetProperty("region").EnumerateArray().Select(value => value.GetSingle()).ToArray();
-        var atlas = sprite.Texture as AtlasTexture;
-        var rotation = part.TryGetProperty("rotation", out var value) ? value.GetSingle() : 0;
-        return atlas != null && atlas.Atlas.ResourcePath == ShenshenVisuals.AssetDirectory + "/" + part.GetProperty("file").GetString() &&
-            atlas.Region == new Rect2(region[0], region[1], region[2], region[3]) &&
-            pivot.Position.IsEqualApprox(Vector(part.GetProperty("position"))) &&
-            Math.Abs(pivot.RotationDegrees - rotation) < 0.001f &&
-            sprite.Offset.IsEqualApprox(-Vector(part.GetProperty("pivot")) * sprite.Texture.GetSize()) &&
-            sprite.Scale.IsEqualApprox(Vector(part.GetProperty("size")) / sprite.Texture.GetSize()) &&
-            sprite.Visible == (id is not ("head_closed" or "magic")) && sprite.ZIndex == 0;
+        while (true)
+        {
+            point = node.Transform * point;
+            if (node.GetParent() is not Node2D parent) return point;
+            node = parent;
+        }
     }
 
-    private static Vector2 Vector(JsonElement array) => new(array[0].GetSingle(), array[1].GetSingle());
+    private static bool InPortraitFrame(Vector2 point) =>
+        point.X >= -0.5f && point.Y >= -0.5f && point.X <= 633.834f && point.Y <= 950.5f;
+
+    private static IEnumerable<CanvasItem> CanvasItems(Node node)
+    {
+        if (node is CanvasItem item) yield return item;
+        foreach (var child in node.GetChildren())
+            foreach (var descendant in CanvasItems(child)) yield return descendant;
+    }
 
     private static bool ContainsSameHead(Image icon, Image atlas, Rect2I region)
     {

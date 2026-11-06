@@ -1,0 +1,12 @@
+{
+  "design_size": [1024, 1536],
+  "feet": [525, 1458],
+  "display_height": 370,
+  "image": "character.png",
+  "head_region": [275, 90, 445, 330],
+  "center": [535, 560],
+  "head": [550, 305],
+  "staff_tip": [794, 357],
+  "halo_center": [500, 294],
+  "halo_radius": 250
+}

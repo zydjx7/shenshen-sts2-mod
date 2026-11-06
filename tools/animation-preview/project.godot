@@ -1,0 +1,15 @@
+config_version=5
+[application]
+config/name="Shenshen animation art preview"
+run/main_scene="res://AnimationPreview.tscn"
+config/features=PackedStringArray("4.5", "C#")
+config/use_custom_user_dir=true
+config/custom_user_dir_name="ShenshenAnimationPreview/isolated"
+[display]
+window/size/viewport_width=600
+window/size/viewport_height=760
+[dotnet]
+project/assembly_name="AnimationPreview"
+[rendering]
+renderer/rendering_method="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.1,0.08,0.15,1)

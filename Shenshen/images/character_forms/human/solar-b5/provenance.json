@@ -1,0 +1,42 @@
+{
+  "source": "User-confirmed B5-3 static design",
+  "alpha_validation": {
+    "method": "Native Godot Sprite2D GPU composite over uniform dark gray, 1024x1536",
+    "artifact": "work/human-alpha-inspection/on-dark-gray.png",
+    "audit": "work/human-alpha-inspection/alpha-audit.json",
+    "maximum_alpha": 254,
+    "body_sample_alpha": [253, 253, 252],
+    "result": "No visible surrounding fog on GPU composite; apparent glow in raw image preview is RGB under transparent alpha. No further edits or generation applied."
+  },
+  "approved_source": "B5-3-柔和饱满.png",
+  "approved_copy": "approved-design.png",
+  "approved_sha256": "DF47053AF228BD607ED88EC0BA4643359EF5729D27D042532F84D7F554E5E17E",
+  "tool": "image_gen.imagegen (built-in)",
+  "mode": "background-extraction",
+  "prompt": "Use case: background-extraction. PRECISION CUTOUT of the single supplied approved painting. This is NOT new illustration or redesign.\nCreate a true transparent-background RGBA character asset from this exact 1024x1536 input, preserving original canvas size, character position, scale, silhouette, pose, colors, and brush detail as closely as possible.\nKEEP the entire approved witch exactly as drawn: complete wide-brim ivory/pink sun-pin hat and ribbon, platinum cream-white short hair wisps, concealed shadow face with only a small unmarked pale chin, cold porcelain-white skin, both hands and each complete original sleeve/cape connection, gold sun brooch, fully covered natural bust, long overlapping ivory/pink/gold diamond cloak/dress hems, gold sun WAND and its grasping hand, both bare feet and their newly approved softly fuller ankles. Preserve these ankles and all toes, don't thin them. Preserve all fabric contours and folds and the relaxed unchanged stance.\nREMOVE ONLY the pale lavender-white background, the top-left text \"3｜柔和饱满\", ground shadow, the LARGE circular gold sun halo and its radial geometric spokes BEHIND the head/body, and isolated floating background sparkles. Note that the SMALL solid sun ornament on the HAT, the SMALL sun BROOCH, and the solid SUN atop the WAND are parts of the character and MUST stay. Do not accidentally erase gold garment trim or wand ornament while removing the separate background ring.\nReplace removed regions with genuine transparency, no opaque white/black/checkerboard background, no colored halo fringes or ground shadow. Preserve faint hair strands and intact fingers/toes. No altered face, no new visible facial features, no new sleeve anatomy, no new limbs, no movement, no cropping of hat, staff or feet. Full body on the original unchanged 1024x1536 canvas.",
+  "transparent_background": true,
+  "generated_path": "exec-6b830d40-3afe-47cb-9a51-554899079040.png",
+  "output": "character.png",
+  "output_sha256": "6DF7C6D2C2395C0BE912E07D5CB3A64A07DBD183930A3011AAE73EFF43391C38",
+  "canvas": [
+    1024,
+    1536
+  ],
+  "inspection": {
+    "alpha_zero_pixels": 1072172,
+    "visible_bounds_alpha_above_16": [
+      250,
+      91,
+      844,
+      1458
+    ],
+    "removed_region_sample_alpha": {
+      "corner": 0,
+      "background_halo": 0,
+      "caption": 0,
+      "ground_shadow": 0
+    },
+    "visual": "Original full-body pose, connected sleeve/cape silhouette, both hands, pale skin, white-platinum hair, bare feet and fuller ankle outline are retained on visual comparison. Large background halo, caption and ground shadow removed; hat, brooch and wand sun emblems remain. AI extraction is not certified pixel-identical; fine edge/brush-color differences remain possible. No crop or deliberate resize applied.",
+    "scope": "Only new asset files prepared. No runtime code, rig, scene, old asset, animation or save changed by this preparation task."
+  }
+}

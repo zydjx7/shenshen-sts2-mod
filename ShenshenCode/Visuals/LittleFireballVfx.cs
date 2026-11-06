@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Helpers;
@@ -18,14 +17,8 @@ public static class LittleFireballVfx
         var receiver = target.GetCreatureNode();
         // Headless simulations and previews without an active battle do not wait for VFX.
         if (room == null || source == null || receiver == null || !room.IsInsideTree()) return;
-        var staff = source.Visuals.GetNodeOrNull<Sprite2D>(
-            "Visuals/HumanRig/Canvas/Part_torso/Part_arm_staff/Part_staff/Sprite");
-        var start = source.VfxSpawnPosition;
-        if (staff != null)
-        {
-            var rect = staff.GetRect();
-            start = staff.ToGlobal(rect.Position + rect.Size * new Vector2(0.5f, 0.14f));
-        }
+        var staff = source.Visuals.GetNodeOrNull<Marker2D>(ShenshenVisuals.StaffTipPath);
+        var start = staff?.GlobalPosition ?? source.VfxSpawnPosition;
         var end = receiver.VfxSpawnPosition;
         var projectile = new Node2D { Name = "ShenshenLittleFireball" };
         var flame = new Sprite2D { Texture = CreateFlameTexture() };
@@ -98,17 +91,7 @@ public static class LittleFireballVfx
 
     private static Texture2D CreateFlameTexture()
     {
-        // Read the same region as the rig, so higher resolution atlas replacements stay aligned.
-        using var rig = JsonDocument.Parse(Godot.FileAccess.GetFileAsString(ShenshenVisuals.RigPath));
-        var part = rig.RootElement.GetProperty("parts").EnumerateArray()
-            .Single(value => value.GetProperty("id").GetString() == "magic");
-        var region = part.GetProperty("region").EnumerateArray().Select(value => value.GetSingle()).ToArray();
-        return new AtlasTexture
-        {
-            Atlas = ResourceLoader.Load<Texture2D>(ShenshenVisuals.AssetDirectory + "/" + part.GetProperty("file").GetString()),
-            Region = new Rect2(region[0], region[1], region[2], region[3]),
-            FilterClip = true
-        };
+        return ResourceLoader.Load<Texture2D>(MainFile.ResPath + "/images/vfx/little-fireball.tres");
     }
 
     private static Node2D CreateImpact()

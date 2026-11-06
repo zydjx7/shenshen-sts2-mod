@@ -1,0 +1,158 @@
+[gd_scene format=3]
+
+[node name="SolarRing" type="Node2D"]
+z_index = 0
+z_as_relative = true
+
+[node name="Circle" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(250, 0, 249.698864, 12.266919, 248.796182, 24.504285, 247.294127, 36.682619, 245.19632, 48.772581, 242.507813, 60.745045, 239.235084, 72.571169, 235.386016, 84.222463, 230.969883, 95.670858, 225.997323, 106.888773, 220.480316, 117.849184, 214.432153, 128.525686, 207.867403, 138.892558, 200.801883, 148.924826, 193.252613, 158.598321, 185.237781, 167.889739, 176.776695, 176.776695, 167.889739, 185.237781, 158.598321, 193.252613, 148.924826, 200.801883, 138.892558, 207.867403, 128.525686, 214.432153, 117.849184, 220.480316, 106.888773, 225.997323, 95.670858, 230.969883, 84.222463, 235.386016, 72.571169, 239.235084, 60.745045, 242.507813, 48.772581, 245.19632, 36.682619, 247.294127, 24.504285, 248.796182, 12.266919, 249.698864, 0, 250, -12.266919, 249.698864, -24.504285, 248.796182, -36.682619, 247.294127, -48.772581, 245.19632, -60.745045, 242.507813, -72.571169, 239.235084, -84.222463, 235.386016, -95.670858, 230.969883, -106.888773, 225.997323, -117.849184, 220.480316, -128.525686, 214.432153, -138.892558, 207.867403, -148.924826, 200.801883, -158.598321, 193.252613, -167.889739, 185.237781, -176.776695, 176.776695, -185.237781, 167.889739, -193.252613, 158.598321, -200.801883, 148.924826, -207.867403, 138.892558, -214.432153, 128.525686, -220.480316, 117.849184, -225.997323, 106.888773, -230.969883, 95.670858, -235.386016, 84.222463, -239.235084, 72.571169, -242.507813, 60.745045, -245.19632, 48.772581, -247.294127, 36.682619, -248.796182, 24.504285, -249.698864, 12.266919, -250, 0, -249.698864, -12.266919, -248.796182, -24.504285, -247.294127, -36.682619, -245.19632, -48.772581, -242.507813, -60.745045, -239.235084, -72.571169, -235.386016, -84.222463, -230.969883, -95.670858, -225.997323, -106.888773, -220.480316, -117.849184, -214.432153, -128.525686, -207.867403, -138.892558, -200.801883, -148.924826, -193.252613, -158.598321, -185.237781, -167.889739, -176.776695, -176.776695, -167.889739, -185.237781, -158.598321, -193.252613, -148.924826, -200.801883, -138.892558, -207.867403, -128.525686, -214.432153, -117.849184, -220.480316, -106.888773, -225.997323, -95.670858, -230.969883, -84.222463, -235.386016, -72.571169, -239.235084, -60.745045, -242.507813, -48.772581, -245.19632, -36.682619, -247.294127, -24.504285, -248.796182, -12.266919, -249.698864, 0, -250, 12.266919, -249.698864, 24.504285, -248.796182, 36.682619, -247.294127, 48.772581, -245.19632, 60.745045, -242.507813, 72.571169, -239.235084, 84.222463, -235.386016, 95.670858, -230.969883, 106.888773, -225.997323, 117.849184, -220.480316, 128.525686, -214.432153, 138.892558, -207.867403, 148.924826, -200.801883, 158.598321, -193.252613, 167.889739, -185.237781, 176.776695, -176.776695, 185.237781, -167.889739, 193.252613, -158.598321, 200.801883, -148.924826, 207.867403, -138.892558, 214.432153, -128.525686, 220.480316, -117.849184, 225.997323, -106.888773, 230.969883, -95.670858, 235.386016, -84.222463, 239.235084, -72.571169, 242.507813, -60.745045, 245.19632, -48.772581, 247.294127, -36.682619, 248.796182, -24.504285, 249.698864, -12.266919)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = true
+antialiased = true
+
+[node name="Tick00" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(242, 0, 274, 0)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = false
+antialiased = true
+
+[node name="Diamond00" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(272, 0, 262, 3.5, 252, 0, 262, -3.5)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = true
+antialiased = true
+
+[node name="Tick01" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(213.042249, 123, 222.568529, 128.5)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = false
+antialiased = true
+
+[node name="Tick02" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(123, 213.042249, 128.5, 222.568529)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = false
+antialiased = true
+
+[node name="Tick03" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(0, 242, 0, 274)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = false
+antialiased = true
+
+[node name="Diamond03" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(0, 272, -3.5, 262, 0, 252, 3.5, 262)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = true
+antialiased = true
+
+[node name="Tick04" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(-123, 213.042249, -128.5, 222.568529)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = false
+antialiased = true
+
+[node name="Tick05" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(-213.042249, 123, -222.568529, 128.5)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = false
+antialiased = true
+
+[node name="Tick06" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(-242, 0, -274, 0)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = false
+antialiased = true
+
+[node name="Diamond06" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(-272, 0, -262, -3.5, -252, 0, -262, 3.5)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = true
+antialiased = true
+
+[node name="Tick07" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(-213.042249, -123, -222.568529, -128.5)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = false
+antialiased = true
+
+[node name="Tick08" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(-123, -213.042249, -128.5, -222.568529)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = false
+antialiased = true
+
+[node name="Tick09" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(0, -242, 0, -274)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = false
+antialiased = true
+
+[node name="Diamond09" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(0, -272, 3.5, -262, 0, -252, -3.5, -262)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = true
+antialiased = true
+
+[node name="Tick10" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(123, -213.042249, 128.5, -222.568529)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = false
+antialiased = true
+
+[node name="Tick11" type="Line2D" parent="."]
+z_index = 0
+z_as_relative = true
+points = PackedVector2Array(213.042249, -123, 222.568529, -128.5)
+width = 1.6
+default_color = Color(0.898039, 0.717647, 0.364706, 1)
+closed = false
+antialiased = true

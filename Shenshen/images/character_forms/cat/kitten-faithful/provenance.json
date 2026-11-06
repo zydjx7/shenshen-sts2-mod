@@ -1,0 +1,46 @@
+{
+  "asset": "kitten-faithful/character.png",
+  "status": "透明整猫网格动画准备，未接入游戏",
+  "method": "内置 image_gen，背景提取和高分辨率细化后仅修订留白；未拆分重组四肢",
+  "reference": {
+    "source": "已选幼猫-指定参考.png",
+    "exact_copy": "approved-design.png",
+    "role": "用户指定的唯一幼猫原稿"
+  },
+  "attempts": [
+    {
+      "prompt": "Use case: background-extraction, identity-preserving restoration.\nInput image is the exact APPROVED kitten drawing. Make a high-resolution, genuinely transparent RGBA cutout of this SAME WHOLE KITTEN, for continuous 2D mesh animation. This is background removal and careful high-quality upscale ONLY, not a new illustration, not a redesigned cat, not separate parts.\n\nRemove the warm tan paper background and remove the ground/cast shadow under the paws. Retain all of the kitten, including fine whiskers, ear tips, fur tufts, rounded small paws, and curled fluffy tail. Maintain the precise approved silhouette and relative placements of every feature: head size and tilt, both ears, attentive golden eyes looking up-right, muzzle, pink nose, expression, shoulder-to-hip length, rounded belly, back slope, exact cream and silver-gray fur markings and colors, and tail's shape and curl. Preserve the kitten's ORIGINAL POSE, four-legged stance, spacing and perspective: the rear paw pair remains beneath its hips, and the front paw pair beneath its shoulders; preserve their exact distances, foot directions and paw lengths. Do not push feet together, lengthen legs, shorten the torso, crouch, or make the body a ball. Do not change to a different breed, an adult cat, photorealistic fur, or humanoid proportions.\n\nRestore only details already suggested by the tiny source, keeping the same hand-painted angular brush-facet fantasy game-art style and delicate soft edges. No glossy 3D, no anime redesign, no heavy outlines, no costume, collar, bow, accessories, magic, new markings, extra limbs, or added objects. No text.\n\nCanvas: horizontal approximately 4:3, ideally 1536×1152 pixels. Center the original whole-cat silhouette with about 8 percent TRANSPARENT breathing room on all sides. Preserve the cat's internal aspect ratio exactly; only uniform enlargement. The background and space between all four feet must be genuinely transparent alpha, not white, black, a checkerboard pattern, or colored haze. No ground shadow or platform at all.",
+      "transparent_background": true,
+      "source": "exec-abac31ef-61db-4c0b-b574-a6153634d5bf.png",
+      "observation": "保持整猫形态，但上方留白过少；透明像素检测为真RGBA，存在很低alpha残余。",
+      "selected": false
+    },
+    {
+      "prompt": "Minimal production cleanup of this exact whole-cat PNG, NOT a redesign or rerender. Preserve the kitten's drawing, head/body ratio, whole silhouette, all four feet and their distances, markings, expression and painterly texture absolutely unchanged.\nUniformly shrink the entire cat inside the SAME horizontal 4:3 canvas so that its total ear-tip-to-paw height occupies 80 percent of the canvas height, giving 10 percent clear transparent padding above and below. Preserve internal aspect ratio with a single uniform scale. Keep it centered. The entire tail, ear tips and whiskers must be inside the padded frame.\nMake the interior of the drawn cat fully opaque RGBA alpha 255, with smooth natural anti-aliasing only at the fur and whisker boundary. All space outside the cat must be true alpha 0. Remove isolated stray translucent pixels, colored matte fringes, faint haze and all ground shadow, without trimming legitimate fur or whiskers. No outlines and no background color. Do not modify anatomy, pose, colors or proportions. Return one high-resolution transparent RGBA full-cat production asset on a horizontal 4:3 canvas.",
+      "transparent_background": true,
+      "source": "exec-a8ddb63c-0a71-4cfc-bb0f-0b9d250c5de5.png",
+      "selected": true
+    }
+  ],
+  "output": {
+    "file": "character.png",
+    "width": 1448,
+    "height": 1086,
+    "mode": "RGBA",
+    "visible_bounds_alpha_gt16": [
+      260,
+      98,
+      1239,
+      972
+    ],
+    "fully_transparent_pixels": 1025321,
+    "fully_opaque_pixels": 58,
+    "partial_alpha_pixels": 547149
+  },
+  "review": {
+    "observed": "全貌保持奶油灰银长毛、原头部神态与尾卷，后足组位于臀下、前足组位于肩下，躯干未压缩或拆分重组；整体留白约符合准备要求。",
+    "faithfulness_limit": "生成式放大不是逐像素缩放，不声称毛纹每个笔触与197×171原图完全一致；姿态和轮廓以肉眼对照保留，最终仍需用户与整合画面审看。",
+    "alpha_limit": "背景有真实alpha=0，不是假棋盘格。主体alpha多为252/253，仍有极低alpha=1零散残余，图像查看器可能夸大显示边缘彩点；不声称已达到逐像素0/255遮罩。未用代码重绘或擦除。",
+    "validation_scope": "只生成与文件检查，未写rig/运行代码，未启动游戏，未覆盖旧素材。"
+  }
+}

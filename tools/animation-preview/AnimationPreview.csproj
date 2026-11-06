@@ -1,0 +1,16 @@
+<Project Sdk="Godot.NET.Sdk/4.5.1">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>AnimationPreview</AssemblyName>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestoreLockedMode>true</RestoreLockedMode>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="sts2"><HintPath>$(GameData)/sts2.dll</HintPath></Reference>
+    <Reference Include="BaseLib"><HintPath>dependencies/BaseLib.dll</HintPath></Reference>
+    <Reference Include="Shenshen"><HintPath>dependencies/Shenshen.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>
