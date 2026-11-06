@@ -11,8 +11,8 @@ namespace Shenshen.ShenshenCode.Cards;
 
 public sealed class LightMirror : ShenshenCard
 {
-    // Common, normal discard, and non-stacking reflection are prototype choices.
-    public LightMirror() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    // Normal discard and non-stacking reflection retain the current prototype rules.
+    public LightMirror() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
     public override ShenshenForm? Form => ShenshenForm.Human;
     public override bool GainsBlock => true;

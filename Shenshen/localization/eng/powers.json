@@ -21,5 +21,20 @@
   "SHENSHEN-FLUFFED_UP_POWER.title": "Fluffed Up",
   "SHENSHEN-FLUFFED_UP_POWER.description": "After activation, gain 3 Thorns the first time you lose HP to an enemy attack this combat. No further growth.\nThe reward never resets with turns or transformation. Debuffs, self-damage, poison damage, and status cards do not trigger it.",
   "SHENSHEN-FLUFFED_UP_POWER.smartDescription": "After activation, gain 3 Thorns on the first enemy attack hit that causes HP loss this combat. No further growth; the reward can occur only once this combat.",
-  "SHENSHEN-FLUFFED_UP_POWER.upgradedDescription": "After activation, the first enemy attack that causes actual HP loss this combat grants 3 Thorns. Each later hit that causes HP loss grants 1.\nEach different debuff successfully applied by an enemy grants another 1 Thorns without using the first-hit reward.\nThe first-hit reward never resets with turns or transformation. Self-damage, poison damage, and status cards do not trigger it."
+  "SHENSHEN-FLUFFED_UP_POWER.upgradedDescription": "After activation, the first enemy attack that causes actual HP loss this combat grants 3 Thorns. Each later hit that causes HP loss grants 1.\nEach different debuff successfully applied by an enemy grants another 1 Thorns without using the first-hit reward.\nThe first-hit reward never resets with turns or transformation. Self-damage, poison damage, and status cards do not trigger it.",
+  "SHENSHEN-SHATTERED_MIRROR_POWER.title": "Shattered Mirror",
+  "SHENSHEN-SHATTERED_MIRROR_POWER.description": "{Amount} mirror Block remains. Only this portion of Block reflects the attack damage it absorbs. Other Block does not increase it. Expires at your next turn.",
+  "SHENSHEN-SHATTERED_MIRROR_POWER.smartDescription": "{Amount} mirror Block remains. Only this portion of Block reflects the attack damage it absorbs. Other Block does not increase it. Expires at your next turn.",
+  "SHENSHEN-TEMPORARY_DEXTERITY_POWER.title": "Temporary Dexterity",
+  "SHENSHEN-TEMPORARY_DEXTERITY_POWER.description": "Lose the {Amount} temporary Dexterity before your next normal draw. Permanent Dexterity remains.",
+  "SHENSHEN-TEMPORARY_DEXTERITY_POWER.smartDescription": "Lose the {Amount} temporary Dexterity before your next normal draw. Permanent Dexterity remains.",
+  "SHENSHEN-TEMPORARY_THORNS_POWER.title": "Temporary Thorns",
+  "SHENSHEN-TEMPORARY_THORNS_POWER.description": "Lose the {Amount} temporary Thorns before your next normal draw. Permanent Thorns remain.",
+  "SHENSHEN-TEMPORARY_THORNS_POWER.smartDescription": "Lose the {Amount} temporary Thorns before your next normal draw. Permanent Thorns remain.",
+  "SHENSHEN-CURIOUS_PEEK_POWER.title": "Curious Echo",
+  "SHENSHEN-CURIOUS_PEEK_POWER.description": "After your next transformation this turn, draw {Amount} additional card(s) from your new form. Expires at the end of this turn if unused.",
+  "SHENSHEN-CURIOUS_PEEK_POWER.smartDescription": "After your next transformation this turn, draw {Amount} additional card(s) from your new form. Expires at the end of this turn if unused.",
+  "SHENSHEN-CATNAP_POWER.title": "Catnap",
+  "SHENSHEN-CATNAP_POWER.description": "Gain {Amount} additional Energy before your next normal draw.",
+  "SHENSHEN-CATNAP_POWER.smartDescription": "Gain {Amount} additional Energy before your next normal draw."
 }

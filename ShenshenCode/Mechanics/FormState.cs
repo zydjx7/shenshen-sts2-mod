@@ -51,6 +51,7 @@ internal static class FormState
         }
         ShenshenVisuals.SetForm(player.Creature.GetCreatureNode()?.Visuals, GetForm(player));
         await CardPileCmd.Draw(context, replaced.Length, player);
+        await CuriousPeekPower.AfterShift(context, player);
         MainFile.Logger.Info($"Form switched to {GetForm(player)}; replaced {replaced.Length} owned cards.");
     }
 

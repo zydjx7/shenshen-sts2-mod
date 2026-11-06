@@ -12,8 +12,7 @@ namespace Shenshen.ShenshenCode.Cards;
 
 public sealed class IDontLikeYou : ShenshenCard
 {
-    // Common is a prototype reward-pool choice, not a confirmed rarity.
-    public IDontLikeYou() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
+    public IDontLikeYou() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
 
     public override ShenshenForm? Form => ShenshenForm.Human;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];

@@ -21,5 +21,20 @@
   "SHENSHEN-FLUFFED_UP_POWER.title": "炸毛",
   "SHENSHEN-FLUFFED_UP_POWER.description": "生效后本场首次因敌人攻击实际扣血时获得3荆棘，之后不再增长。\n首次奖励不随回合或变形刷新；负面效果、自伤、中毒扣血及塞入状态牌不触发。",
   "SHENSHEN-FLUFFED_UP_POWER.smartDescription": "生效后本场首次因敌人攻击实际扣血时获得3荆棘，之后不再增长。首次奖励整场只触发一次。",
-  "SHENSHEN-FLUFFED_UP_POWER.upgradedDescription": "生效后本场首次因敌人攻击实际扣血时获得3荆棘，后续每次获得1。\n敌人每次成功施加每种负面效果时另获得1荆棘，不占首次扣血奖励。\n首次奖励不随回合或变形刷新；自伤、中毒扣血及塞入状态牌不触发。"
+  "SHENSHEN-FLUFFED_UP_POWER.upgradedDescription": "生效后本场首次因敌人攻击实际扣血时获得3荆棘，后续每次获得1。\n敌人每次成功施加每种负面效果时另获得1荆棘，不占首次扣血奖励。\n首次奖励不随回合或变形刷新；自伤、中毒扣血及塞入状态牌不触发。",
+  "SHENSHEN-SHATTERED_MIRROR_POWER.title": "碎光镜",
+  "SHENSHEN-SHATTERED_MIRROR_POWER.description": "剩余{Amount}点镜面格挡。仅这部分格挡抵挡敌方攻击时反弹等量伤害；其他来源的格挡不增加额度。至自身下回合开始失效。",
+  "SHENSHEN-SHATTERED_MIRROR_POWER.smartDescription": "剩余{Amount}点镜面格挡。仅这部分格挡抵挡敌方攻击时反弹等量伤害；其他来源的格挡不增加额度。至自身下回合开始失效。",
+  "SHENSHEN-TEMPORARY_DEXTERITY_POWER.title": "临时敏捷",
+  "SHENSHEN-TEMPORARY_DEXTERITY_POWER.description": "下次自身正常抽牌前移除临时获得的{Amount}敏捷。其他常驻敏捷保留。",
+  "SHENSHEN-TEMPORARY_DEXTERITY_POWER.smartDescription": "下次自身正常抽牌前移除临时获得的{Amount}敏捷。其他常驻敏捷保留。",
+  "SHENSHEN-TEMPORARY_THORNS_POWER.title": "临时荆棘",
+  "SHENSHEN-TEMPORARY_THORNS_POWER.description": "下次自身正常抽牌前移除临时获得的{Amount}荆棘。其他常驻荆棘保留。",
+  "SHENSHEN-TEMPORARY_THORNS_POWER.smartDescription": "下次自身正常抽牌前移除临时获得的{Amount}荆棘。其他常驻荆棘保留。",
+  "SHENSHEN-CURIOUS_PEEK_POWER.title": "好奇余韵",
+  "SHENSHEN-CURIOUS_PEEK_POWER.description": "本回合下一次变形完成后，从新形态牌组额外抽{Amount}张牌。未触发则回合结束失效。",
+  "SHENSHEN-CURIOUS_PEEK_POWER.smartDescription": "本回合下一次变形完成后，从新形态牌组额外抽{Amount}张牌。未触发则回合结束失效。",
+  "SHENSHEN-CATNAP_POWER.title": "小憩",
+  "SHENSHEN-CATNAP_POWER.description": "下次自身正常抽牌前获得{Amount}点额外能量。",
+  "SHENSHEN-CATNAP_POWER.smartDescription": "下次自身正常抽牌前获得{Amount}点额外能量。"
 }

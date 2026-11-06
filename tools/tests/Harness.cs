@@ -303,6 +303,7 @@ public partial class Harness : Node
         File.WriteAllText(Path.Combine(Environment.GetEnvironmentVariable("SHENSHEN_REPO_ROOT")!, "work", "headless-tests", "roundtrip.save"), saveJson);
         await RunDeckDesignChecks();
         await RunUpgradeAccessChecks();
+        await RunCommonCardChecks();
         UiResourceChecks.Run(Check);
         AnimationChecks.Run(this, Check);
     }

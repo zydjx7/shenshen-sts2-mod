@@ -12,8 +12,8 @@ namespace Shenshen.ShenshenCode.Cards;
 
 public sealed class FluffedUp : ShenshenCard
 {
-    // Common remains a prototype rarity. Additional copies never reset the first reward.
-    public FluffedUp() : base(1, CardType.Power, CardRarity.Common, TargetType.Self) { }
+    // Additional copies never reset the combat-wide first reward.
+    public FluffedUp() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
     public override ShenshenForm? Form => ShenshenForm.Cat;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<ThornsPower>()];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
