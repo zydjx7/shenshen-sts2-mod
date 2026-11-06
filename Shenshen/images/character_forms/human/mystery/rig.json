@@ -1,0 +1,299 @@
+{
+  "design_size": [
+    1000,
+    1500
+  ],
+  "feet": [
+    500,
+    1450
+  ],
+  "display_height": 340,
+  "parts": [
+    {
+      "id": "cape",
+      "file": "parts.png",
+      "region": [
+        357,
+        373,
+        298,
+        397
+      ],
+      "position": [
+        -2,
+        0
+      ],
+      "size": [
+        430,
+        730
+      ],
+      "pivot": [
+        0.55,
+        0.035
+      ],
+      "z": -30,
+      "parent": "torso"
+    },
+    {
+      "id": "leg_back",
+      "file": "parts.png",
+      "region": [
+        74,
+        1150,
+        157,
+        362
+      ],
+      "position": [
+        515,
+        1035
+      ],
+      "size": [
+        180,
+        420
+      ],
+      "pivot": [
+        0.84,
+        0.02
+      ],
+      "z": -15
+    },
+    {
+      "id": "leg_front",
+      "file": "parts.png",
+      "region": [
+        449,
+        1158,
+        143,
+        346
+      ],
+      "position": [
+        510,
+        1017
+      ],
+      "size": [
+        174,
+        420
+      ],
+      "pivot": [
+        0.3,
+        0.02
+      ],
+      "z": -12
+    },
+    {
+      "id": "torso",
+      "file": "parts.png",
+      "region": [
+        726,
+        18,
+        235,
+        441
+      ],
+      "position": [
+        500,
+        350
+      ],
+      "size": [
+        500,
+        938.3
+      ],
+      "pivot": [
+        0.55,
+        0.03
+      ],
+      "z": 0
+    },
+    {
+      "id": "skirt",
+      "file": "parts.png",
+      "region": [
+        168,
+        520,
+        1,
+        1
+      ],
+      "parent": "torso",
+      "position": [
+        0,
+        0
+      ],
+      "size": [
+        1,
+        1
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": -2
+    },
+    {
+      "id": "head",
+      "file": "parts.png",
+      "region": [
+        21,
+        32,
+        323,
+        271
+      ],
+      "parent": "torso",
+      "position": [
+        0,
+        35
+      ],
+      "size": [
+        420,
+        352.4
+      ],
+      "pivot": [
+        0.62,
+        0.96
+      ],
+      "z": -3
+    },
+    {
+      "id": "head_closed",
+      "file": "parts.png",
+      "region": [
+        21,
+        32,
+        323,
+        271
+      ],
+      "parent": "head",
+      "position": [
+        0,
+        0
+      ],
+      "size": [
+        420,
+        352.4
+      ],
+      "pivot": [
+        0.62,
+        0.96
+      ],
+      "z": 0
+    },
+    {
+      "id": "ponytail",
+      "file": "parts.png",
+      "region": [
+        720,
+        457,
+        206,
+        292
+      ],
+      "parent": "head",
+      "position": [
+        -188,
+        -145
+      ],
+      "size": [
+        200,
+        283.5
+      ],
+      "pivot": [
+        0.75,
+        0.11
+      ],
+      "z": -4
+    },
+    {
+      "id": "arm_free",
+      "file": "parts.png",
+      "region": [
+        404,
+        785,
+        250,
+        352
+      ],
+      "parent": "torso",
+      "position": [
+        -130,
+        180
+      ],
+      "size": [
+        250,
+        352
+      ],
+      "pivot": [
+        0.13,
+        0.1
+      ],
+      "z": -1
+    },
+    {
+      "id": "arm_staff",
+      "file": "parts.png",
+      "region": [
+        76,
+        788,
+        206,
+        355
+      ],
+      "parent": "torso",
+      "position": [
+        75,
+        170
+      ],
+      "size": [
+        230,
+        400
+      ],
+      "pivot": [
+        0.28,
+        0.09
+      ],
+      "z": 4
+    },
+    {
+      "id": "staff",
+      "file": "parts.png",
+      "region": [
+        787,
+        776,
+        131,
+        344
+      ],
+      "parent": "arm_staff",
+      "position": [
+        130,
+        33
+      ],
+      "size": [
+        110,
+        400
+      ],
+      "pivot": [
+        0.5,
+        0.72
+      ],
+      "rotation": 25,
+      "z": -1
+    },
+    {
+      "id": "magic",
+      "file": "parts.png",
+      "region": [
+        762,
+        1165,
+        171,
+        315
+      ],
+      "parent": "arm_free",
+      "position": [
+        180,
+        -25
+      ],
+      "size": [
+        110,
+        150
+      ],
+      "pivot": [
+        0.5,
+        0.8
+      ],
+      "z": 8
+    }
+  ]
+}

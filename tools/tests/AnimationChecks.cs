@@ -34,6 +34,9 @@ internal static class AnimationChecks
             var torso = human.GetNode<Node2D>("Part_torso");
             var head = torso.GetNode<Sprite2D>("Part_head/Sprite");
             var closed = torso.GetNode<Sprite2D>("Part_head/Part_head_closed/Sprite");
+            check(head.Texture is AtlasTexture openHead && closed.Texture is AtlasTexture alternateHead &&
+                openHead.Atlas == alternateHead.Atlas && openHead.Region == alternateHead.Region,
+                "concealed human face uses the exact same head pixels during idle and hit alternates");
             var ponytail = torso.GetNode<Node2D>("Part_head/Part_ponytail");
             var arm = torso.GetNode<Node2D>("Part_arm_staff");
             var freeArm = torso.GetNode<Node2D>("Part_arm_free");
@@ -42,13 +45,16 @@ internal static class AnimationChecks
             var magic = freeArm.GetNode<Node2D>("Part_magic");
             check(CanvasItems(visuals).All(item => item.ZIndex == 0 && item.ZAsRelative),
                 "all character layers inherit the combat scene Z without negative or positive global escapes");
-            check(human.GetNode<Node2D>("Part_cape").GetIndex() < human.GetNode<Node2D>("Part_leg_back").GetIndex() &&
+            check(torso.GetNode<Node2D>("Part_cape").GetParent() == torso &&
+                torso.GetNode<Node2D>("Part_cape").GetIndex() < torso.GetNode<Sprite2D>("Sprite").GetIndex() &&
+                torso.GetNode<Node2D>("Part_skirt").GetIndex() < torso.GetNode<Sprite2D>("Sprite").GetIndex() &&
                 human.GetNode<Node2D>("Part_leg_back").GetIndex() < torso.GetIndex() &&
                 human.GetNode<Node2D>("Part_leg_front").GetIndex() < torso.GetIndex(),
-                "human cape and both legs draw behind the torso using local sibling order");
+                "long cape follows the torso while cape, skirt and bare legs keep their local back layers");
             check(freeArm.GetIndex() < torso.GetNode<Sprite2D>("Sprite").GetIndex() &&
-                arm.GetIndex() > torso.GetNode<Sprite2D>("Sprite").GetIndex() && headPivot.GetIndex() > arm.GetIndex(),
-                "human back arm, torso, staff arm and head keep their local front to back order");
+                headPivot.GetIndex() < torso.GetNode<Sprite2D>("Sprite").GetIndex() &&
+                arm.GetIndex() > torso.GetNode<Sprite2D>("Sprite").GetIndex(),
+                "human collar covers the head's neck root while the staff arm stays in front");
             check(cat.GetNode<Node2D>("Part_cat_tail").GetIndex() < cat.GetNode<Node2D>("Part_cat_body").GetIndex() &&
                 cat.GetNode<Node2D>("Part_cat_front_back").GetIndex() < cat.GetNode<Node2D>("Part_cat_body").GetIndex() &&
                 cat.GetNode<Node2D>("Part_cat_rear_back").GetIndex() < cat.GetNode<Node2D>("Part_cat_body").GetIndex(),
@@ -61,11 +67,11 @@ internal static class AnimationChecks
             var tailRest = ponytail.Rotation;
             player.Advance(1.1);
             check(torso.Position != torsoRest && !Mathf.IsEqualApprox(ponytail.Rotation, tailRest),
-                "idle breathes body and sways a separate ponytail layer");
+                "idle breathes body and sways the separate hat ribbon layer");
             player.Seek(2.5, true);
-            check(!head.Visible && closed.Visible, "idle blink swaps matching full head layers");
+            check(!head.Visible && closed.Visible, "idle alternate swaps identical concealed head layers");
             player.Seek(2.7, true);
-            check(head.Visible && !closed.Visible, "idle blink reopens eyes");
+            check(head.Visible && !closed.Visible, "idle alternate restores the concealed resting head");
             var armRest = arm.Rotation;
             var freeArmRest = freeArm.Rotation;
             var headRest = headPivot.Rotation;
@@ -87,7 +93,7 @@ internal static class AnimationChecks
             check(visuals.GetNode<Node2D>("Visuals/HumanRig").Position != Vector2.Zero,
                 "hit visibly recoils the rig");
             check(!Mathf.IsEqualApprox(headPivot.Rotation, headRest) && !head.Visible && closed.Visible,
-                "girl hit independently tilts the head back and closes her eyes");
+                "girl hit independently tilts her concealed head back without revealing facial features");
             Finish(player);
             check(player.CurrentAnimation == "Idle", "hit completion returns to idle");
             Play(player, "Dead", ShenshenVisuals.DeathDuration + 0.1f);

@@ -13,9 +13,9 @@ namespace Shenshen.ShenshenCode.Visuals;
 /// </summary>
 public sealed class ShenshenVisuals
 {
-    public const string AssetDirectory = MainFile.ResPath + "/images/character_forms/human/p1";
+    public const string AssetDirectory = MainFile.ResPath + "/images/character_forms/human/mystery";
     public const string RigPath = AssetDirectory + "/rig.json";
-    public const string CatAssetDirectory = MainFile.ResPath + "/images/character_forms/cat/p1";
+    public const string CatAssetDirectory = MainFile.ResPath + "/images/character_forms/cat/kitten";
     public const string CatRigPath = CatAssetDirectory + "/rig.json";
     public const float AttackDelay = 0.24f;
     public const float CastDelay = 0.28f;
@@ -123,14 +123,19 @@ public sealed class ShenshenVisuals
         // actual body rather than the full human-sized canvas height.
         var cat = _catCanvas.Visible;
         if (_sprites.TryGetValue(cat ? "cat_body" : "torso", out var body))
-            _root.GetNode<Marker2D>("CenterPos").Position = PartCenter(body);
+            // The human front gown extends to her calves; impact effects stay on the upper body.
+            _root.GetNode<Marker2D>("CenterPos").Position = PartPoint(body,
+                cat ? new Vector2(0.5f, 0.5f) : new Vector2(0.5f, 0.2f));
         if (_sprites.TryGetValue(cat ? "cat_head" : "head", out var head))
             _root.GetNode<Marker2D>("TalkPos").Position = PartCenter(head);
     }
 
-    private Vector2 PartCenter(Sprite2D sprite)
+    private Vector2 PartCenter(Sprite2D sprite) => PartPoint(sprite, new Vector2(0.5f, 0.5f));
+
+    private Vector2 PartPoint(Sprite2D sprite, Vector2 normalizedPosition)
     {
-        var point = sprite.GetRect().GetCenter();
+        var rect = sprite.GetRect();
+        var point = rect.Position + rect.Size * normalizedPosition;
         // SetForm can run before AddChildSafely has inserted these nodes into the tree.
         for (Node2D node = sprite; node != _root; node = (Node2D)node.GetParent())
             point = node.Transform * point;
@@ -209,6 +214,7 @@ public sealed class ShenshenVisuals
         var idle = RestAnimation(3.6f, loop: true);
         Rotate(idle, "torso", (0, -0.008f), (1.8f, 0.008f), (3.6f, -0.008f));
         Rotate(idle, "head", (0, 0.012f), (1.8f, -0.012f), (3.6f, 0.012f));
+        // The historical ponytail part now contains the chosen hat's trailing ribbon.
         Rotate(idle, "ponytail", (0, -0.06f), (1.1f, 0.045f), (2.5f, -0.035f), (3.6f, -0.06f));
         Rotate(idle, "cape", (0, -0.025f), (1.8f, 0.03f), (3.6f, -0.025f));
         Rotate(idle, "arm_free", (0, -0.018f), (1.8f, 0.018f), (3.6f, -0.018f));
@@ -227,7 +233,7 @@ public sealed class ShenshenVisuals
         Rotate(attack, "arm_free", (0, 0), (AttackDelay, -0.18f), (0.62f, 0));
         Rotate(attack, "head", (0, 0), (AttackDelay, -0.04f), (0.62f, 0));
         Rotate(attack, "ponytail", (0, 0), (0.3f, -0.14f), (0.62f, 0));
-        Rotate(attack, "cape", (0, 0), (0.3f, -0.12f), (0.62f, 0));
+        Rotate(attack, "cape", (0, 0), (0.3f, -0.06f), (0.62f, 0));
         Track(attack, "HumanRig:position", (0, Vector2.Zero), (AttackDelay, new Vector2(35, 0)), (0.62f, Vector2.Zero));
         Magic(attack, 0.16f, 0.38f);
         // Lift and swipe the near paw forward; the other three feet keep supporting the body.
@@ -243,8 +249,11 @@ public sealed class ShenshenVisuals
         var cast = RestAnimation(0.85f);
         Rotate(cast, "arm_staff", (0, 0), (CastDelay, -0.15f), (0.62f, -0.15f), (0.85f, 0));
         Rotate(cast, "arm_free", (0, 0), (CastDelay, -0.15f), (0.62f, -0.15f), (0.85f, 0));
+        // Bring the normally concealed free hand out from the long cloak to cast.
+        Move(cast, "arm_free", (0, Vector2.Zero), (CastDelay, new Vector2(130, -45)),
+            (0.62f, new Vector2(130, -45)), (0.85f, Vector2.Zero));
         Rotate(cast, "head", (0, 0), (CastDelay, -0.035f), (0.85f, 0));
-        Rotate(cast, "cape", (0, 0), (0.45f, 0.09f), (0.85f, 0));
+        Rotate(cast, "cape", (0, 0), (0.45f, 0.06f), (0.85f, 0));
         Rotate(cast, "ponytail", (0, 0), (0.45f, -0.09f), (0.85f, 0));
         Magic(cast, 0.18f, 0.7f);
         Scale(cast, "magic", (0, new Vector2(0.8f, 0.8f)), (CastDelay, Vector2.One),

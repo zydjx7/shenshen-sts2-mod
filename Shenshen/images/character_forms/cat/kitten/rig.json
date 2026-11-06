@@ -1,0 +1,201 @@
+{
+  "design_size": [
+    1400,
+    1100
+  ],
+  "feet": [
+    700,
+    1000
+  ],
+  "display_height": 210,
+  "parts": [
+    {
+      "id": "cat_tail",
+      "file": "parts.png",
+      "region": [
+        96,
+        612,
+        332,
+        330
+      ],
+      "position": [
+        500,
+        700
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "pivot": [
+        0.6,
+        0.9
+      ],
+      "z": -20
+    },
+    {
+      "id": "cat_rear_back",
+      "file": "parts.png",
+      "region": [
+        1130,
+        650,
+        268,
+        283
+      ],
+      "position": [
+        730,
+        779
+      ],
+      "size": [
+        200,
+        240
+      ],
+      "pivot": [
+        0.5,
+        0.05
+      ],
+      "z": -15
+    },
+    {
+      "id": "cat_front_back",
+      "file": "parts.png",
+      "region": [
+        636,
+        666,
+        230,
+        267
+      ],
+      "position": [
+        860,
+        795
+      ],
+      "size": [
+        170,
+        235
+      ],
+      "pivot": [
+        0.65,
+        0.05
+      ],
+      "z": -15,
+      "rotation": -20
+    },
+    {
+      "id": "cat_body",
+      "file": "parts.png",
+      "region": [
+        40,
+        180,
+        455,
+        309
+      ],
+      "position": [
+        880,
+        655
+      ],
+      "size": [
+        480,
+        405
+      ],
+      "pivot": [
+        0.85,
+        0.45
+      ],
+      "z": 0
+    },
+    {
+      "id": "cat_rear",
+      "file": "parts.png",
+      "region": [
+        1130,
+        650,
+        268,
+        283
+      ],
+      "position": [
+        615,
+        774
+      ],
+      "size": [
+        210,
+        245
+      ],
+      "pivot": [
+        0.5,
+        0.05
+      ],
+      "z": 2
+    },
+    {
+      "id": "cat_front",
+      "file": "parts.png",
+      "region": [
+        636,
+        666,
+        230,
+        267
+      ],
+      "position": [
+        860,
+        784
+      ],
+      "size": [
+        180,
+        235
+      ],
+      "pivot": [
+        0.65,
+        0.05
+      ],
+      "z": -1,
+      "rotation": -4
+    },
+    {
+      "id": "cat_head",
+      "file": "parts.png",
+      "region": [
+        540,
+        24,
+        472,
+        464
+      ],
+      "parent": "cat_body",
+      "position": [
+        10,
+        -30
+      ],
+      "size": [
+        480,
+        472
+      ],
+      "pivot": [
+        0.52,
+        0.75
+      ],
+      "z": 10
+    },
+    {
+      "id": "cat_head_closed",
+      "file": "parts.png",
+      "region": [
+        1050,
+        24,
+        474,
+        464
+      ],
+      "parent": "cat_head",
+      "position": [
+        0,
+        0
+      ],
+      "size": [
+        480,
+        472
+      ],
+      "pivot": [
+        0.52,
+        0.75
+      ],
+      "z": 0
+    }
+  ]
+}

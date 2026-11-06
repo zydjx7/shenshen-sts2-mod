@@ -1,17 +1,6 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=6 format=3]
 
-[ext_resource type="Texture2D" path="res://Shenshen/images/character_forms/human/p1/select-body.png" id="1_body"]
-[ext_resource type="Texture2D" path="res://Shenshen/images/character_forms/human/p1/parts.png" id="2_parts"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_shared_head"]
-atlas = ExtResource("2_parts")
-region = Rect2(36, 21, 294, 311)
-filter_clip = true
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_collar"]
-atlas = ExtResource("1_body")
-region = Rect2(392, 236, 164, 104)
-filter_clip = true
+[ext_resource type="PackedScene" path="res://Shenshen/scenes/character_select/shenshen_portrait.tscn" id="1_portrait"]
 
 [sub_resource type="Gradient" id="Gradient_background"]
 offsets = PackedFloat32Array(0, 0.5, 1)
@@ -83,38 +72,4 @@ offset_right = 316.667
 offset_bottom = 475.0
 mouse_filter = 2
 
-[node name="Body" type="TextureRect" parent="Portrait"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("1_body")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Head" type="TextureRect" parent="Portrait"]
-texture_filter = 2
-layout_mode = 0
-offset_left = 191.732
-offset_top = 15.462
-offset_right = 344.474
-offset_bottom = 177.036
-mouse_filter = 2
-texture = SubResource("AtlasTexture_shared_head")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Collar" type="TextureRect" parent="Portrait"]
-texture_filter = 2
-layout_mode = 0
-offset_left = 242.448
-offset_top = 145.963
-offset_right = 343.88
-offset_bottom = 210.286
-mouse_filter = 2
-texture = SubResource("AtlasTexture_collar")
-expand_mode = 1
-stretch_mode = 5
+[node name="Rig" parent="Portrait" instance=ExtResource("1_portrait")]

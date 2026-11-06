@@ -1,0 +1,177 @@
+[gd_scene load_steps=14 format=3]
+
+[ext_resource type="Texture2D" path="res://Shenshen/images/character_forms/human/mystery/parts.png" id="1_atotg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gwsw"]
+atlas = ExtResource("1_atotg")
+region = Rect2(74, 1150, 157, 362)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxr1a"]
+atlas = ExtResource("1_atotg")
+region = Rect2(449, 1158, 143, 346)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mp0g0"]
+atlas = ExtResource("1_atotg")
+region = Rect2(357, 373, 298, 397)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmnuk"]
+atlas = ExtResource("1_atotg")
+region = Rect2(720, 457, 206, 292)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30cwc"]
+atlas = ExtResource("1_atotg")
+region = Rect2(21, 32, 323, 271)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fw76i"]
+atlas = ExtResource("1_atotg")
+region = Rect2(21, 32, 323, 271)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bxb3"]
+atlas = ExtResource("1_atotg")
+region = Rect2(168, 520, 1, 1)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3sxl3"]
+atlas = ExtResource("1_atotg")
+region = Rect2(404, 785, 250, 352)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yseje"]
+atlas = ExtResource("1_atotg")
+region = Rect2(762, 1165, 171, 315)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pqoss"]
+atlas = ExtResource("1_atotg")
+region = Rect2(726, 18, 235, 441)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ki7ao"]
+atlas = ExtResource("1_atotg")
+region = Rect2(787, 776, 131, 344)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0bvo8"]
+atlas = ExtResource("1_atotg")
+region = Rect2(76, 788, 206, 355)
+filter_clip = true
+
+[node name="Rig" type="Node2D"]
+texture_filter = 2
+position = Vector2(-17.920921, -6.0875854)
+scale = Vector2(0.64432985, 0.64432985)
+
+[node name="Canvas" type="Node2D" parent="."]
+
+[node name="Part_leg_back" type="Node2D" parent="Canvas"]
+position = Vector2(515, 1035)
+
+[node name="Sprite" type="Sprite2D" parent="Canvas/Part_leg_back"]
+scale = Vector2(1.1464968, 1.160221)
+texture = SubResource("AtlasTexture_2gwsw")
+centered = false
+offset = Vector2(-131.87999, -7.24)
+
+[node name="Part_leg_front" type="Node2D" parent="Canvas"]
+position = Vector2(510, 1017)
+
+[node name="Sprite" type="Sprite2D" parent="Canvas/Part_leg_front"]
+scale = Vector2(1.2167832, 1.2138728)
+texture = SubResource("AtlasTexture_fxr1a")
+centered = false
+offset = Vector2(-42.9, -6.92)
+
+[node name="Part_torso" type="Node2D" parent="Canvas"]
+position = Vector2(500, 350)
+
+[node name="Part_cape" type="Node2D" parent="Canvas/Part_torso"]
+position = Vector2(-2, 0)
+
+[node name="Sprite" type="Sprite2D" parent="Canvas/Part_torso/Part_cape"]
+scale = Vector2(1.442953, 1.8387909)
+texture = SubResource("AtlasTexture_mp0g0")
+centered = false
+offset = Vector2(-163.90001, -13.895)
+
+[node name="Part_head" type="Node2D" parent="Canvas/Part_torso"]
+position = Vector2(0, 35)
+
+[node name="Part_ponytail" type="Node2D" parent="Canvas/Part_torso/Part_head"]
+position = Vector2(-188, -145)
+
+[node name="Sprite" type="Sprite2D" parent="Canvas/Part_torso/Part_head/Part_ponytail"]
+scale = Vector2(0.9708738, 0.9708904)
+texture = SubResource("AtlasTexture_tmnuk")
+centered = false
+offset = Vector2(-154.5, -32.12)
+
+[node name="Sprite" type="Sprite2D" parent="Canvas/Part_torso/Part_head"]
+scale = Vector2(1.3003095, 1.300369)
+texture = SubResource("AtlasTexture_30cwc")
+centered = false
+offset = Vector2(-200.26, -260.16)
+
+[node name="Part_head_closed" type="Node2D" parent="Canvas/Part_torso/Part_head"]
+
+[node name="Sprite" type="Sprite2D" parent="Canvas/Part_torso/Part_head/Part_head_closed"]
+visible = false
+scale = Vector2(1.3003095, 1.300369)
+texture = SubResource("AtlasTexture_fw76i")
+centered = false
+offset = Vector2(-200.26, -260.16)
+
+[node name="Part_skirt" type="Node2D" parent="Canvas/Part_torso"]
+
+[node name="Sprite" type="Sprite2D" parent="Canvas/Part_torso/Part_skirt"]
+texture = SubResource("AtlasTexture_1bxb3")
+centered = false
+offset = Vector2(-0.5, -0.5)
+
+[node name="Part_arm_free" type="Node2D" parent="Canvas/Part_torso"]
+position = Vector2(-130, 180)
+
+[node name="Sprite" type="Sprite2D" parent="Canvas/Part_torso/Part_arm_free"]
+texture = SubResource("AtlasTexture_3sxl3")
+centered = false
+offset = Vector2(-32.5, -35.2)
+
+[node name="Part_magic" type="Node2D" parent="Canvas/Part_torso/Part_arm_free"]
+position = Vector2(180, -25)
+
+[node name="Sprite" type="Sprite2D" parent="Canvas/Part_torso/Part_arm_free/Part_magic"]
+visible = false
+scale = Vector2(0.64327484, 0.47619048)
+texture = SubResource("AtlasTexture_yseje")
+centered = false
+offset = Vector2(-85.5, -252)
+
+[node name="Sprite" type="Sprite2D" parent="Canvas/Part_torso"]
+scale = Vector2(2.1276596, 2.1276643)
+texture = SubResource("AtlasTexture_pqoss")
+centered = false
+offset = Vector2(-129.25, -13.23)
+
+[node name="Part_arm_staff" type="Node2D" parent="Canvas/Part_torso"]
+position = Vector2(75, 170)
+
+[node name="Part_staff" type="Node2D" parent="Canvas/Part_torso/Part_arm_staff"]
+position = Vector2(130, 33)
+rotation = 0.43633232
+
+[node name="Sprite" type="Sprite2D" parent="Canvas/Part_torso/Part_arm_staff/Part_staff"]
+scale = Vector2(0.8396947, 1.1627907)
+texture = SubResource("AtlasTexture_ki7ao")
+centered = false
+offset = Vector2(-65.5, -247.68001)
+
+[node name="Sprite" type="Sprite2D" parent="Canvas/Part_torso/Part_arm_staff"]
+scale = Vector2(1.1165049, 1.1267606)
+texture = SubResource("AtlasTexture_0bvo8")
+centered = false
+offset = Vector2(-57.68, -31.95)

@@ -2,7 +2,7 @@ extends SceneTree
 
 # Run with the project's MegaDot: --headless --path . --script tools/export-head-icons.gd
 # Copy the rig's actual open-eye head pixels; never redraw, rescale or recolor the face.
-const ASSET_DIR = "res://Shenshen/images/character_forms/human/p1/"
+const ASSET_DIR = "res://Shenshen/images/character_forms/human/mystery/"
 
 func _initialize():
     var rig = JSON.parse_string(FileAccess.get_file_as_string(ASSET_DIR + "rig.json"))
@@ -16,7 +16,7 @@ func _initialize():
     source.convert(Image.FORMAT_RGBA8)
     var avatar_side = maxi(320, maxi(region.size.x, region.size.y))
     var avatar_size = Vector2i(avatar_side, avatar_side)
-    var button_size = Vector2i(region.size.x, ceili(region.size.x * 1.5))
+    var button_size = Vector2i(region.size.x, maxi(region.size.y, ceili(region.size.x * 1.5)))
     for target in [["avatar.png", avatar_size], ["select-icon.png", button_size]]:
         var canvas_size: Vector2i = target[1]
         var offset = Vector2i((canvas_size.x - region.size.x) / 2, (canvas_size.y - region.size.y) / 2)

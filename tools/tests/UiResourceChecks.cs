@@ -32,31 +32,31 @@ internal static class UiResourceChecks
         check(hero.IconTexture is CompressedTexture2D && hero.IconOutlineTexture is CompressedTexture2D,
             "native HUD texture and outline getters resolve the imported avatar");
 
-        // Inspect gutters inside the atlas, not just its outer corners: a recolor can
-        // leave opaque fog around otherwise correctly imported sprite regions.
+        // Inspect the 3-by-4 sprite-cell gutters, not just the atlas's outer corners:
+        // a regenerated atlas can otherwise leave opaque fog behind the painted parts.
         using var atlasImage = ResourceLoader.Load<Texture2D>(ShenshenVisuals.AssetDirectory + "/parts.png").GetImage();
         if (atlasImage.IsCompressed()) atlasImage.Decompress();
-        var gutters = new[] { new Vector2I(0, 0), new Vector2I(340, 400), new Vector2I(670, 800),
-            new Vector2I(340, 1100), new Vector2I(15, 700), new Vector2I(1023, 1000) };
+        var gutters = Enumerable.Range(0, 4).SelectMany(column => Enumerable.Range(0, 5)
+            .Select(row => new Vector2I(Math.Min(atlasImage.GetWidth() - 1, column * atlasImage.GetWidth() / 3),
+                Math.Min(atlasImage.GetHeight() - 1, row * atlasImage.GetHeight() / 4))));
         check(gutters.All(point => atlasImage.GetPixelv(point).A <= 0.01f),
-            "packed human atlas preserves transparent gutters after skin recoloring");
+            "packed mystery atlas preserves transparent gutters between sprite cells");
 
         using var rig = JsonDocument.Parse(Godot.FileAccess.GetFileAsString(ShenshenVisuals.RigPath));
-        var headPart = rig.RootElement.GetProperty("parts").EnumerateArray()
-            .Single(part => part.GetProperty("id").GetString() == "head");
+        var parts = rig.RootElement.GetProperty("parts").EnumerateArray()
+            .ToDictionary(part => part.GetProperty("id").GetString()!);
+        var headPart = parts["head"];
         var headRegion = headPart.GetProperty("region").EnumerateArray().Select(value => value.GetInt32()).ToArray();
         var region = new Rect2I(headRegion[0], headRegion[1], headRegion[2], headRegion[3]);
         var selectBackground = ResourceLoader.Load<PackedScene>(hero.CustomCharacterSelectBg).Instantiate<Control>();
         try
         {
-            var sharedHead = selectBackground.GetNode<TextureRect>("Portrait/Head").Texture as AtlasTexture;
+            var sharedHead = selectBackground.GetNode<Sprite2D>(PartPath("head", parts) + "/Sprite").Texture as AtlasTexture;
             check(sharedHead != null && sharedHead.Atlas.ResourcePath == ShenshenVisuals.AssetDirectory + "/parts.png" &&
                 sharedHead.Region == (Rect2)region,
                 "selection portrait directly shares the animation rig's approved head atlas region");
-            using var body = ReadImage(selectBackground.GetNode<TextureRect>("Portrait/Body").Texture);
-            check(new[] { new Vector2I(450, 80), new Vector2I(475, 160), new Vector2I(490, 220) }
-                .All(point => body.GetPixelv(point).A <= 0.01f),
-                "selection body base removes the old independently drawn face behind the shared head");
+            check(parts.All(pair => MatchesPart(selectBackground, pair.Key, pair.Value, parts)),
+                "selection portrait preserves every combat rig part's atlas, pivot, size and local transform");
         }
         finally
         {
@@ -91,6 +91,31 @@ internal static class UiResourceChecks
         if (image.IsCompressed()) image.Decompress();
         return image;
     }
+
+    private static string PartPath(string id, IReadOnlyDictionary<string, JsonElement> parts)
+    {
+        var part = parts[id];
+        var parent = part.TryGetProperty("parent", out var value) ? value.GetString() : null;
+        return (string.IsNullOrEmpty(parent) ? "Portrait/Rig/Canvas" : PartPath(parent, parts)) + "/Part_" + id;
+    }
+
+    private static bool MatchesPart(Node scene, string id, JsonElement part, IReadOnlyDictionary<string, JsonElement> parts)
+    {
+        var pivot = scene.GetNode<Node2D>(PartPath(id, parts));
+        var sprite = pivot.GetNode<Sprite2D>("Sprite");
+        var region = part.GetProperty("region").EnumerateArray().Select(value => value.GetSingle()).ToArray();
+        var atlas = sprite.Texture as AtlasTexture;
+        var rotation = part.TryGetProperty("rotation", out var value) ? value.GetSingle() : 0;
+        return atlas != null && atlas.Atlas.ResourcePath == ShenshenVisuals.AssetDirectory + "/" + part.GetProperty("file").GetString() &&
+            atlas.Region == new Rect2(region[0], region[1], region[2], region[3]) &&
+            pivot.Position.IsEqualApprox(Vector(part.GetProperty("position"))) &&
+            Math.Abs(pivot.RotationDegrees - rotation) < 0.001f &&
+            sprite.Offset.IsEqualApprox(-Vector(part.GetProperty("pivot")) * sprite.Texture.GetSize()) &&
+            sprite.Scale.IsEqualApprox(Vector(part.GetProperty("size")) / sprite.Texture.GetSize()) &&
+            sprite.Visible == (id is not ("head_closed" or "magic")) && sprite.ZIndex == 0;
+    }
+
+    private static Vector2 Vector(JsonElement array) => new(array[0].GetSingle(), array[1].GetSingle());
 
     private static bool ContainsSameHead(Image icon, Image atlas, Rect2I region)
     {

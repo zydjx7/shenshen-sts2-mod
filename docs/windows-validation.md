@@ -1,6 +1,6 @@
 # Windows 接续验证（2026-11-05）
 
-最新状态见本文末尾“确认稿实机复验”：少女 v5 白皙肤色与自然猫 v2 已在真实游戏验证主要动作，108 项回归通过。前文按阶段保留旧占位与旧美术的记录，不能用它们代替最新范围。
+最新状态见本文末尾的追加记录：当前外形为神秘斗篷少女「1 号帽身比例版」与长毛幼猫；此前少女 v5 与成年猫 v2 的实测属于历史版本，不能代替新外形的验收。玩法、构建、独立 GPU 录制和真实游戏窗口分别记录。
 
 ## 环境与版本
 
@@ -229,3 +229,31 @@ UI 类型修复后再次完整运行 `./tools/test.ps1`，编译与打包退出 
 部署 DLL SHA256：`FBC494A9E4F44077BB11B0D31628EEE384D4744170F5CF9D32A5D2ABC4336DB2`；PCK SHA256：`299414CFDC0C1EB7C91957D7FA8867AAB3563BAB643CCD972151972E3C8BFEE7`。本轮工作区同时有并行美术迭代，打包与回归使用当时工作区资源；本次卡牌提交只纳入卡牌、文案、相关机制／测试与文档，不纳入这些并行美术源文件。
 
 首轮行为回归 342 项通过，日志 `work/common-card-regression-first.log`。补充文案检查时曾因原生 `CardKeywordExtensions` 为 internal 导致测试工程 CS1061，失败日志保留在 `work/common-card-regression-final.log`；仅在测试内通过反射调用原生关键词格式后完成最终 382 项。最终 headless 退出仍有资源缓存提示和 1 个 DummyTexture RID／ObjectDB 清理告警，没有将“检查通过”描述成完全无运行告警。
+
+## 神秘斗篷少女 1 号与幼猫：动画及实机验收（2026-11-06）
+
+用户选择修长候选 1，承接此前已确认的粉白金斗篷、太阳帽/法杖、裸足、白金发、帽影遮脸只露下巴及完整衣物下自然胸部轮廓；猫形采用用户指定的 B 稿长毛幼猫。没有重开玩法设计或将制作提示中的人体比例当作确认规则。新资源放在 `human/mystery` 与 `cat/kitten`，旧 p1 素材保留；原照片未进入仓库。
+
+少女正面服装改为连续分件，消除腰部拼接横边；完整帽/下巴原件由衣领遮住颈根，Idle 与 Hit 仍为同一遮脸像素。幼猫采用短身大头、独立四爪、尾巴和头部。战斗继续使用当前安装 BaseLib 的非 Spine 桥接；所有实际部件 CanvasItem Z=0，rig.z 仅控制内部排列。选人场景由战斗 rig 直接导出，头像/按钮为同一头部 RGBA 原像素导出 PNG，不重新画脸。
+
+| 验证层次 | 本轮结果与范围 |
+| --- | --- |
+| 本机兼容 | 再核对安装游戏 public-beta v0.111.0、Build 24724944、运行 MegaDot m.14；`sts2.dll` SHA256 为 `0861BFA1DF347538D932F22D580E75420F08082792EB914E53B4882764ACDBE9`。工具链仍为锁定 .NET 9.0.320 / MegaDot 4.5.1-m.12 / BaseLib 3.4.7，不套用其他教程版本。 |
+| 主工作区构建与回归 | `tools/test.ps1` 退出 0，Release publish、PCK 导入/导出、测试工程编译通过；`SHENSHEN_HEADLESS_PASS checks=382`，日志 `work/mystery-animation-regression.log`。此工作区包含同期白卡实现，后者另提交为 `14b879a`，本轮不将其计作美术新增功能。 |
+| 独立基线核对 | 从 `git archive 7f6f3e0` 建普通忽略副本，只覆盖本轮动画/选人/资源/测试文件，不复制新增白卡或新版 Harness；`tools/test.ps1` 退出 0，213 项通过。Harness blob 与基线一致，逐文件审计无意外变化。日志 `work/mystery-baseline-verify/work/mystery-art-baseline-regression.log`，审计 `work/mystery-baseline-verify/work/verification-summary.json`。 |
+| 独立 GPU | 使用正式 dist DLL，RTX 4090 Laptop / OpenGL Compatibility，录制 600×760、30fps、445 帧、14.83 秒预览，覆盖双形态主要动作和暂停层序。该视频不包含战斗房间或火球飞行，不称为游戏录像。 |
+| 代码复核 | 独立只读复核新资源、rig、选人导出、层序、复位及按杖尖位置发射火球路径，未发现明确 P1/P2。 |
+| 实际游戏窗口 | 用 `play-test.ps1 start` 的独立 APPDATA 和 `--force-steam=off --shenshen-test`。用户试打后，代理接续 seed `1NX6UZBMS37H` 第 6 层 INKLETS_NORMAL 战前保存点，未放弃该局。少女光之护盾触发 Cast→Idle；小火球 Attack→发射→到达→Idle，截到杖端出火；敌方攻击使 HP 65→58，Hit 完成返待机。变猫保持 58 HP，爪击触发 Attack 并结算，敌方攻击使 HP 58→35，多次 Hit 完成返待机；反向变少女保持 35 HP。每次切换替换 5 张实际持有的形态牌。暂停时所有部件统一变暗。 |
+| 选人页 | 战斗保存并退出后，将隔离档 `current_run.save` / `.backup` 临时移至 `local/play-test/mystery-selection-held-run`；另开进程只进原生选人页，目视确认神秘少女完整帽、下巴、前衣、法杖、裸足及同源按钮，没有新建/放弃游戏。正常退出后恢复两文件并逐个核对原 SHA256。 |
+| 存档隔离 | 两次正常退出后 `play-test.ps1 verify` 均通过，1036 个日常文件哈希未变，最终隔离档 162 文件。记录 `local/play-test/mystery-combat-save-verification.json` 与 `mystery-final-save-verification.json`。测试局按原版战前保存规则保留，不声称保存了本次战斗中途状态。 |
+| 尚未验证 | 新美术的实际死亡/复活、长流程、真正双端联机/重连和 Mac；休息点/商店角色等仍有历史占位，不在本轮已完成范围。 |
+
+最终 dist、游戏部署与 GPU 预览 DLL SHA256 一致：`FBC494A9E4F44077BB11B0D31628EEE384D4744170F5CF9D32A5D2ABC4336DB2`；正式 PCK 为 `299414CFDC0C1EB7C91957D7FA8867AAB3563BAB643CCD972151972E3C8BFEE7`。隔离旧基线副本独立产物 DLL 为 `92B946EAD41F3B7D085909AFDAC15350DE10BCC7E72E32677E62AAD946A778A1`，PCK 为 `640FDC66D417F831A846C010B96EA9CE765EB5F356A53B7B2BA0362C6FDDB0DF`，不与正式部署混用。
+
+实际日志 `local/play-test/mystery-combat-gui.log` 保留整段用户试打与代理测试；代理接手时以 743 行为边界另导出 `mystery-agent-combat-actions.log`。选人日志为 `mystery-selection-gui.log`。正式预览与真实游戏截图在本机 outputs 的 `shenshen-mystery-animation-20261106`，录像及来源/时间线/哈希见同目录 `动画验证记录.json`；输出属于本机验收证据，不随 Git 同步。
+
+### 本轮发现的非美术限制与告警
+
+用户试打的前一局开局选择 HeftyTablet 后，日志出现 `CardFactory.CreateForReward` 无有效候选的托管异常，之后用户自行放弃另开一局。只读核对本机 `HeftyTablet.AfterObtained`：强制从角色池选 3 张不同 Rare 候选；当前角色 Rare=0，过滤为空。`Selected rarity` 空白是 Uniform 分支的输出，并非角色池对象丢失。本轮没有新增金卡或改动开局奖励，这是待处理的 Rare-only 奖励兼容缺口；常规白蓝卡奖励不据此判为失效。前局放弃时还记录删除不存在的 `.backup` 失败，原日志保留。
+
+代理接手后的上述动作段与仅选人进程未出现新增托管异常；返回菜单/正常退出仍有原生 RID、Shader、ObjectDB 和 resources 清理告警，headless 也保留 DummyTexture RID 告警，因此不称运行完全无告警。首次在退出动画尚未结束时过早调用 verify 被“游戏仍运行”保护拒绝；待实际进程消失后重新 verify 通过，未绕过脚本保护。
