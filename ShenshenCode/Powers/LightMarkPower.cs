@@ -35,7 +35,7 @@ public sealed class LightMarkPower : CustomPowerModel
     }
 
     public static async Task ApplyMark(PlayerChoiceContext choiceContext, Creature target,
-        Creature applier, int burnDamage, int turns, CardModel cardSource)
+        Creature applier, int burnDamage, int turns, CardModel? cardSource)
     {
         if (target.IsDead) return;
 
@@ -57,7 +57,12 @@ public sealed class LightMarkPower : CustomPowerModel
         Flash();
         // Unpowered damage uses ordinary block, ignores attack scaling and cannot
         // re-enter this mark's powered-attack trigger.
-        await CreatureCmd.Damage(choiceContext, Owner, BurnDamage, ValueProp.Unpowered, Applier);
+        if (cardSource?.TargetType == MegaCrit.Sts2.Core.Entities.Cards.TargetType.AnyEnemy &&
+            Applier.GetPower<SpreadingSparksPower>() is { } sparks)
+            await CreatureCmd.Damage(choiceContext, Applier.CombatState!.HittableEnemies.ToArray(),
+                BurnDamage + sparks.Amount, ValueProp.Unpowered, Applier);
+        else
+            await CreatureCmd.Damage(choiceContext, Owner, BurnDamage, ValueProp.Unpowered, Applier);
     }
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)

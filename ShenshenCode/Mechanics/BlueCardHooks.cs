@@ -37,11 +37,7 @@ internal static class BlueCardHooks
         {
             if (target != power.Owner || dealer == null ||
                 (!props.IsPoweredAttack() && cardSource is not Omnislice)) return;
-            var multiplier = power.Owner.GetPower<DandelionPuffPower>() == null ? 1 : 2;
-            var results = await CreatureCmd.Damage(context, dealer, power.Amount * multiplier,
-                ValueProp.Unpowered | ValueProp.SkipHurtAnim, power.Owner, null, null);
-            if (results.Any(result => result.TotalDamage > 0))
-                await ThornyPurrPower.AfterThornsDamage(context, power.Owner);
+            await RareCombat.ThornHit(context, power.Owner, RareCombat.CounterTarget(power.Owner, dealer));
         }
     }
 
@@ -61,10 +57,9 @@ internal static class BlueCardHooks
         {
             if (target != power.Owner || result.BlockedDamage <= 0 ||
                 !props.IsPoweredAttack() || dealer == null) return;
-            var reflected = await CreatureCmd.Damage(context, dealer, result.BlockedDamage,
+            var reflected = await CreatureCmd.Damage(context, RareCombat.CounterTarget(power.Owner, dealer), result.BlockedDamage,
                 ValueProp.Unpowered, power.Owner);
-            if (reflected.Any(hit => hit.TotalDamage > 0))
-                await AfterReflection(context, power.Owner);
+            await RareCombat.AfterRetaliation(context, power.Owner, reflected, thorns: false);
         }
     }
 

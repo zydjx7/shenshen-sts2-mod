@@ -13,7 +13,7 @@ public static class TransformationCardFace
     public static async Task Refresh(Player player, bool animate = true)
     {
         if (player.PlayerCombatState == null) return;
-        var cards = player.PlayerCombatState.AllCards.OfType<TransformationMagic>().ToArray();
+        var cards = player.PlayerCombatState.AllCards.Where(card => card is TransformationMagic or OtherSideOfTheSun).ToArray();
         await Task.WhenAll(cards.Select(card => RefreshCard(card, animate)));
     }
 

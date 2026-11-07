@@ -17,10 +17,14 @@ public sealed class TemporaryThornsPower : CustomPowerModel
     public override string CustomPackedIconPath => $"{MainFile.ResPath}/images/powers/power.png";
     public override string CustomBigIconPath => $"{MainFile.ResPath}/images/powers/big/power.png";
 
-    public static async Task Grant(PlayerChoiceContext context, Creature target, int amount, CardModel source)
+    internal static readonly AsyncLocal<bool> GrantInProgress = new();
+    public static async Task Grant(PlayerChoiceContext context, Creature target, int amount, CardModel? source)
     {
         var previous = target.GetPower<ThornsPower>()?.Amount ?? 0;
-        await PowerCmd.Apply<ThornsPower>(context, target, amount, target, source);
+        var previousGrant = GrantInProgress.Value;
+        GrantInProgress.Value = true;
+        try { await PowerCmd.Apply<ThornsPower>(context, target, amount, target, source); }
+        finally { GrantInProgress.Value = previousGrant; }
         var gained = (target.GetPower<ThornsPower>()?.Amount ?? 0) - previous;
         if (gained > 0)
             await PowerCmd.Apply<TemporaryThornsPower>(context, target, gained, target, source);

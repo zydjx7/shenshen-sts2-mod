@@ -34,7 +34,8 @@ internal static class FormState
             .OfType<ShenshenCard>().Where(card => card.Form == current).ToArray();
         await CardCmd.Discard(context, replaced);
         power.SetAmount(current == ShenshenForm.Human ? 2 : 1);
-        if (!HasShiftedThisTurn(player))
+        bool firstShift = !HasShiftedThisTurn(player);
+        if (firstShift)
             await PowerCmd.Apply<FormShiftPower>(context, player.Creature, 1, player.Creature, null);
         if (current == ShenshenForm.Human)
         {
@@ -51,6 +52,7 @@ internal static class FormState
                 await CreatureCmd.GainBlock(player.Creature, 4m, ValueProp.Unpowered, null);
         }
         ShenshenVisuals.SetForm(player.Creature.GetCreatureNode()?.Visuals, GetForm(player));
+        await RareCombat.OnShift(context, player, firstShift);
         await CardPileCmd.Draw(context, replaced.Length, player);
         await CuriousPeekPower.AfterShift(context, player);
         await LightShadowHandoffPower.AfterShift(context, player);

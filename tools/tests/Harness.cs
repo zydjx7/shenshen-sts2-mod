@@ -305,6 +305,7 @@ public partial class Harness : Node
             loadedHeroine.Deck.Cards.OfType<LittleFireball>().Count(c => c.IsUpgraded) == 1,
             "permanent save reload preserves both nine-card owned decks, the shared transformation and the original upgrade");
         File.WriteAllText(Path.Combine(Environment.GetEnvironmentVariable("SHENSHEN_REPO_ROOT")!, "work", "headless-tests", "roundtrip.save"), saveJson);
+        await RunRareCardChecks();
         await RunDeckDesignChecks();
         await RunUpgradeAccessChecks();
         await RunCommonCardChecks();

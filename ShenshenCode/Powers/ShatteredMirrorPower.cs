@@ -28,11 +28,11 @@ public sealed class ShatteredMirrorPower : CustomPowerModel
         var before = creature.Block;
         var mirrorBefore = creature.GetPower<ShatteredMirrorPower>()?.Amount ?? 0;
         var gained = await CreatureCmd.GainBlock(creature, card.DynamicVars.Block, play);
-        var mirrorBlock = Math.Min((int)gained, Math.Max(0, creature.Block - before));
-        // Mirror Vestments may already have converted part of this same gain.
+        // Include nested fixed mirror gains (Thorn Crown) in both deltas. A quota from
+        // Mirror Vestments covers part of the original gain without adding extra Block.
         var alreadyConverted = Math.Max(0,
             (creature.GetPower<ShatteredMirrorPower>()?.Amount ?? 0) - mirrorBefore);
-        var remaining = Math.Max(0, mirrorBlock - alreadyConverted);
+        var remaining = Math.Clamp(creature.Block - before - alreadyConverted, 0, (int)gained);
         if (remaining > 0)
             await PowerCmd.Apply<ShatteredMirrorPower>(context, creature, remaining, creature, card);
     }
@@ -46,9 +46,8 @@ public sealed class ShatteredMirrorPower : CustomPowerModel
         if (reflected > 0 && props.IsPoweredAttack() && dealer?.Side == CombatSide.Enemy &&
             dealer.IsAlive && Owner.GetPower<ReflectPower>() == null)
         {
-            var results = await CreatureCmd.Damage(context, dealer, reflected, ValueProp.Unpowered, Owner);
-            if (results.Any(hit => hit.TotalDamage > 0))
-                await BlueCardHooks.AfterReflection(context, Owner);
+            var results = await CreatureCmd.Damage(context, RareCombat.CounterTarget(Owner, dealer), reflected, ValueProp.Unpowered, Owner);
+            await RareCombat.AfterRetaliation(context, Owner, results, thorns: false);
         }
 
         if (Amount <= 0) await PowerCmd.Remove(this);
@@ -56,6 +55,7 @@ public sealed class ShatteredMirrorPower : CustomPowerModel
 
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext context, ICombatState combatState)
     {
-        if (player == Owner.Player) await PowerCmd.Remove(this);
+        if (player == Owner.Player && (Amount == 0 || Owner.GetPower<LightInGlassPower>() == null))
+            await PowerCmd.Remove(this);
     }
 }

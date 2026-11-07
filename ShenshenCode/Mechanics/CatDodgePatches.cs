@@ -58,28 +58,30 @@ internal static class CatDodgePatches
             typeof(Creature), typeof(CardModel), typeof(CardPlay)])]
     private static class DamagePatch
     {
-        private static void Prefix(ref IEnumerable<Creature>? targets, ValueProp props, Creature? dealer)
+        private static bool Prefix(PlayerChoiceContext choiceContext, ref IEnumerable<Creature>? targets,
+            decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay,
+            ref Task<IEnumerable<DamageResult>> __result)
         {
             var frame = Current.Value;
-            if (targets == null || frame == null || frame.HitCount <= 1 ||
-                frame.Command.Results.Any() || dealer?.Side != CombatSide.Enemy || dealer.IsDead ||
-                frame.Command.Attacker != dealer || props != frame.Command.DamageProps) return;
+            if (targets == null || frame == null || dealer?.Side != CombatSide.Enemy || dealer.IsDead ||
+                frame.Command.Attacker != dealer || props != frame.Command.DamageProps || RareControl.IsResolving(dealer)) return true;
+            if (RareControl.Handles(dealer, targets))
+            {
+                __result = RareControl.Resolve(choiceContext, targets, dealer, amount, props, cardSource, cardPlay,
+                    Math.Max(1, (int)frame.HitCount), frame.Command.Results.Count());
+                return false;
+            }
+            if (frame.HitCount <= 1 || frame.Command.Results.Any()) return true;
 
             var remaining = new List<Creature>();
             foreach (var target in targets)
             {
-                var dodge = target.GetPower<CatDodgePower>();
-                if (target.IsAlive && target.Player is { } player && dodge?.Amount == 1 &&
-                    FormState.GetForm(player) == ShenshenForm.Cat)
-                {
-                    dodge.ConsumeDodge();
-                    MainFile.Logger.Info("Cat dodge avoided the first segment of an enemy multi-hit attack.");
-                }
-                else remaining.Add(target);
+                if (!target.IsAlive || !RareControl.Dodge(target)) remaining.Add(target);
             }
             // Do not turn damage into zero: removing the target bypasses the entire
             // reception pipeline, including Thorns, block loss, and Reflect.
             targets = remaining;
+            return true;
         }
     }
 }

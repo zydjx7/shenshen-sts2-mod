@@ -132,7 +132,7 @@ public partial class Harness
                 var strength = language == "eng" ? "Strength" : "力量";
                 var dexterity = language == "eng" ? "Dexterity" : "敏捷";
                 var thorns = language == "eng" ? "Thorns" : "荆棘";
-                var fixedBlock = language == "eng" ? "fixed" : "固定";
+                var fixedBlock = language == "eng" ? "fixed" : "不受敏捷影响";
                 Check(text.Contains(dexterity) && !text.Contains(strength) && !text.Contains(thorns) && !text.Contains(fixedBlock) && !text.Contains('{'),
                     language + " cat-held base transformation displays only the girl-entry reward");
                 Check(preview.Contains(dexterity) && preview.Contains(fixedBlock) && !preview.Contains(strength) &&
@@ -160,7 +160,7 @@ public partial class Harness
                 localization.SetLanguage(language);
                 var text = transform.GetDescriptionForPile(PileType.Hand);
                 Check(text.Contains(language == "eng" ? "Dexterity" : "敏捷") &&
-                    text.Contains(language == "eng" ? "fixed" : "固定") &&
+                    text.Contains(language == "eng" ? "fixed" : "不受敏捷影响") &&
                     !text.Contains(language == "eng" ? "Strength" : "力量") && !text.Contains('{'),
                     language + " upgraded girl destination face excludes all cat-entry effects");
             }
