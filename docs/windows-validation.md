@@ -372,7 +372,7 @@ UI 类型修复后再次完整运行 `./tools/test.ps1`，编译与打包退出 
 - Windows Release 编译通过，0 警告、0 错误。实际游戏程序集和 MegaDot headless 全套回归通过 668 项。测试覆盖 42 张的双语牌面与升级预览、实际出牌（含弃牌后自动打出的联动）、奖励池、两种先古奖励、变身与 X 费、印记扩散、穿盾、魅惑分段、迷舞、冻住敌人的同一招、变羊、魂匣三连击、迟滞结界和多人倒地队友的原卡实例及消耗堆恢复。
 - 用户要求先审图再更新。试玩包以部署前的神秘斗篷版本 PCK 为底，逐项校验 251 个资源，仅 5 份中英文卡牌、状态和角色文本发生变化。其余 246 项资源内容相同。普通新增牌使用现有占位图，共享牌借用现有少女、猫双面，独立美术在原卡图对话审核。
 - 完整试玩 ZIP 为 `dist/Shenshen-rare-cards-20261107.zip`。最终试玩 PCK 另行挂载运行同一回归，结果为 `SHENSHEN_HEADLESS_PASS checks=668`。本机忽略目录的两次日志为 `work/headless-tests/run.log` 与 `work/headless-tests/rare-run.log`。
-- 首个 42 牌版本已部署到本机 Steam 的 `mods/Shenshen`，先前文件备份于 `local/mod-backups/pre-rare-cards-20261107-202135-490/`。补齐「拨落」弃牌联动并精简状态提示后，最终包等待游戏自然退出再部署。Mac 与真实双端联机仍待实测。此次验证由 headless 程序执行，未启动实际游戏窗口。
+- 42 张牌的首发版及补齐「拨落」弃牌联动的最终包均已部署到本机 Steam 的 `mods/Shenshen`。最终版在游戏自然退出后完成覆盖，核对已安装的 7 个文件与试玩 ZIP 全部一致。两次覆盖前的备份分别在 `local/mod-backups/pre-rare-cards-20261107-202135-490/` 和 `local/mod-backups/pre-rare-final-20261107-212029-995/`。Mac 与真实双端联机仍待实测。
 - 用户运行的 Windows 游戏日志记录了战斗胜利后从卡牌奖励取得 `CARD.SHENSHEN-UNCERTAIN_HAND`（深深的不确定之手）。该日志确认了实际游戏里的金卡奖励入口。
 
 DLL SHA256 为 `2D97C43CF6164B4B9F386FFBA6F2D4EFE4717348CD0B4734FC78C838D2B4C148`。PCK SHA256 为 `67543DD853E1B5A5157E335EE6A3AD14D9FBB30E668642BCFFDBC0856B086997`。ZIP SHA256 为 `4662D13D62A216DF0B6ACCB4E928794FCDD73B03346796C2B3E2B45BBD44B675`。
