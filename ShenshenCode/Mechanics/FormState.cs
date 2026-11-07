@@ -53,6 +53,9 @@ internal static class FormState
         ShenshenVisuals.SetForm(player.Creature.GetCreatureNode()?.Visuals, GetForm(player));
         await CardPileCmd.Draw(context, replaced.Length, player);
         await CuriousPeekPower.AfterShift(context, player);
+        await LightShadowHandoffPower.AfterShift(context, player);
+        await ChaseTheLightPower.AfterShift(context, player);
+        await RetrieveTheStaffPower.AfterShift(context, player);
         player.Creature.GetPower<CatDodgePower>()?.RefreshVisibility();
         await TransformationCardFace.Refresh(player);
         MainFile.Logger.Info($"Form switched to {GetForm(player)}; replaced {replaced.Length} owned cards.");
@@ -74,6 +77,7 @@ internal static class FormState
             await previous;
             if (player.Creature.GetPower<FormPower>() != null) return;
             await PowerCmd.Apply<FormPower>(context, player.Creature, 1, player.Creature, null);
+            await PowerCmd.Apply<ReturningClawMemoryPower>(context, player.Creature, 1, player.Creature, null);
             // Move the owned card's real combat instance before the normal five-card draw.
             var transformation = player.PlayerCombatState!.AllCards.OfType<TransformationMagic>().FirstOrDefault();
             if (transformation != null)

@@ -26,10 +26,15 @@ public sealed class ShatteredMirrorPower : CustomPowerModel
     {
         var creature = card.Owner.Creature;
         var before = creature.Block;
+        var mirrorBefore = creature.GetPower<ShatteredMirrorPower>()?.Amount ?? 0;
         var gained = await CreatureCmd.GainBlock(creature, card.DynamicVars.Block, play);
         var mirrorBlock = Math.Min((int)gained, Math.Max(0, creature.Block - before));
-        if (mirrorBlock > 0)
-            await PowerCmd.Apply<ShatteredMirrorPower>(context, creature, mirrorBlock, creature, card);
+        // Mirror Vestments may already have converted part of this same gain.
+        var alreadyConverted = Math.Max(0,
+            (creature.GetPower<ShatteredMirrorPower>()?.Amount ?? 0) - mirrorBefore);
+        var remaining = Math.Max(0, mirrorBlock - alreadyConverted);
+        if (remaining > 0)
+            await PowerCmd.Apply<ShatteredMirrorPower>(context, creature, remaining, creature, card);
     }
 
     public override async Task AfterDamageReceived(PlayerChoiceContext context, Creature target,
@@ -40,7 +45,11 @@ public sealed class ShatteredMirrorPower : CustomPowerModel
         // The native full-turn mirror already returns this same blocked damage.
         if (reflected > 0 && props.IsPoweredAttack() && dealer?.Side == CombatSide.Enemy &&
             dealer.IsAlive && Owner.GetPower<ReflectPower>() == null)
-            await CreatureCmd.Damage(context, dealer, reflected, ValueProp.Unpowered, Owner);
+        {
+            var results = await CreatureCmd.Damage(context, dealer, reflected, ValueProp.Unpowered, Owner);
+            if (results.Any(hit => hit.TotalDamage > 0))
+                await BlueCardHooks.AfterReflection(context, Owner);
+        }
 
         if (Amount <= 0) await PowerCmd.Remove(this);
     }

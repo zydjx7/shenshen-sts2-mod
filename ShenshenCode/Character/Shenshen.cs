@@ -6,7 +6,6 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.PotionPools;
-using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using Shenshen.ShenshenCode.Cards;
 using Shenshen.ShenshenCode.CardPools;
@@ -15,7 +14,7 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 
 namespace Shenshen.ShenshenCode.Character;
 
-public class Shenshen : PlaceholderCharacterModel
+public class Shenshen : PlaceholderCharacterModel, ISceneConversions
 {
     public const string CharacterId = "Shenshen";
     public const string ChineseDisplayName = "光之魔法少女深深";
@@ -40,12 +39,9 @@ public class Shenshen : PlaceholderCharacterModel
             .Append(ModelDb.Card<CatTailSweep>())
             .Append(ModelDb.Card<TransformationMagic>());
 
-    public override IReadOnlyList<RelicModel> StartingRelics =>
-    [
-        ModelDb.Relic<BurningBlood>()
-    ];
+    public override IReadOnlyList<RelicModel> StartingRelics => [];
 
-    // Burning Blood and the relic/potion pools remain explicit prototype placeholders.
+    // Relic and potion reward pools remain prototype placeholders.
     public override CardPoolModel CardPool => ModelDb.CardPool<ShenshenCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<IroncladRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<IroncladPotionPool>();
@@ -54,6 +50,13 @@ public class Shenshen : PlaceholderCharacterModel
     public override float AttackAnimDelay => ShenshenVisuals.AttackDelay;
     public override float CastAnimDelay => ShenshenVisuals.CastDelay;
     public override float DeathAnimTime => ShenshenVisuals.DeathDuration;
+    public override string CustomMerchantAnimPath => ShenshenMerchantVisuals.ScenePath;
+
+    void ISceneConversions.RegisterSceneConversions()
+    {
+        base.RegisterSceneConversions();
+        ShenshenMerchantVisuals.Register();
+    }
 
     // Character-select and combat art use separate resources.
     public override Control CustomIcon
