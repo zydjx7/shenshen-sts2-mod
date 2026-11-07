@@ -348,3 +348,20 @@ UI 类型修复后再次完整运行 `./tools/test.ps1`，编译与打包退出 
 - 存档及范围：`tools/play-test.ps1 verify` 通过，**1045 个日常文件哈希不变**，changes=[]，隔离档 162 文件；记录 `work/apricot-dawn-gold/deploy-save-verification.json`。本轮未启动实际游戏；用户下一次启动后验收选人页。Mac 与真正双端多人未实测，不以构建或独立 GPU 代替游戏内验收。
 
 最终产物 SHA256：DLL `DDE544575E01D7EB47D50CB072181F2C3ABDFD4B9A9BCD6392776FD8FDC74299`；PCK `0BCCCB463A5B773D7D1F70D3D81843E7BE023FF6A8D33356F1EE48F333F0F8D2`；ZIP `C829941239F8C893201DC76A5A29FB9CE7C337066412FF7B9BE63821BA1B538E`。
+
+## 宽斗篷、圆脸与指定淡唇：形象定稿（2026-11-07）
+
+用户最终确认 `mystery-roundface-soft-lips-v1`，要求实装并固定为深深当前形象，后续卡牌风格再调整。唯一视觉依据为 [形象基准](shenshen-appearance-baseline.md)；配色继续使用杏桃晨金，宽松闭合斗篷弱化身体曲线，眉眼鼻保持遮挡，露出较短圆润下半脸和指定淡唇。
+
+- 确认图：1672×941，SHA256 `C7544FDCB9BD69C16057F8FF25DAF1DC3DBC60107BA25C9DC2936D596DA62F75`。嘴唇 `[1164,356,34,16]` 与指定参考原像素一致，矩形外与最终圆脸附件原像素一致；下巴外缘未重画。正式背景逐字节复制此图，小卡面从 `[946,0,440,650]` 原像素重导。
+- 实装范围：选人背景和同源小卡面；记录为今后角色与卡图制作基准。本轮没有批量重绘卡图；战斗全身动画、HUD／地图和商店仍为旧 B5，后续适配范围已在形象基准中明确。
+- 构建隔离：主工作区首次资源导入遇到原有偶发 EditorSettings 退出，第二次因并行未完成的 `AncientCardRewards` 引用缺失 `DualLightSigil` 无法编译。未修改或回退并行源码，改用稳定归档快照，仅覆盖本轮四个选人资产后沿用快照 `tools/build.ps1` 构建。交付前发现护住肚皮提示修复刚完成提交和部署，最终基线推进到 `f37f3387f7f0f6889940cf0e71ccf900fd992a18`，保留 `1aaa44a` 修复，再构建、核对并覆盖最终包。工具链和 NuGet 缓存通过项目内目录联接复用，CLI、临时目录均在项目内。
+- 源码审计：最终归档 346 个文件均匹配 f37f338；快照除四个约定资产外，其余 342 个版本化文件完全一致。129 个 C# 和 11 个本地化文件均保持稳定提交，没有混入并行新卡或文案稿。审计和构建副本位于忽略的 `work/appearance-baseline-20261107/`。
+- 编译打包：稳定快照 Windows Release publish、MegaDot 导入与 PCK 导出成功，退出 0，日志 `stable-pack-final.log`。NuGet 审计网络不可达产生 NU1900 警告，不称全程无警告；没有运行全量玩法回归。
+- 真实程序集／Godot UI：读取同一稳定快照 DLL 与最终 PCK 的专项 Harness **36 项通过**，日志 `ui-tests/run-final.log`。覆盖原生 PNG getter、同图小卡面原像素、旧 HUD 保留及三种视口的实际布局。另用锁定 ILSpy 读取最终 DLL，确认护住肚皮悬停提示仍传入 Recovery（基础 6、升级 8），记录 `guard-tooltip-final-il.txt`。
+- 独立 GPU：同一最终 PCK 的正式场景，**47 项通过**；1920×1080、1736×977、1600×1200 和连续 resize 均通过，逐张目视确认圆脸、淡唇、宽斗篷、双手、法杖及 UI 遮盖层级。`gpu-check/error.log` 为空，PCK 运行前后哈希一致。最终加入提示修复后的 PCK 与已渲染的 PCK 哈希完全相同，因此复用同一 47 项 GPU 证据，不重复渲染。该证据不是游戏实录。
+- 交付包：`dist/Shenshen-appearance-baseline-20261107.zip`，131,404,165 字节，包含稳定 Shenshen 与 BaseLib。主工作区的并行代码保持原样；本轮交付来源为上面的稳定快照，不以主工作区其他构建输出替代。
+- 备份与覆盖：确认游戏已退出，通过稳定快照原有 `tools/play-test.ps1 prepare` 备份并覆盖 7 个文件；将旧模组备份保留到主项目 `local/play-test/mod-backups/20261107T104114511/`。旧 7 个备份文件与部署前哈希逐一相同，安装后 7 个文件与稳定快照 dist 哈希逐一相同，该备份含本轮开始前已部署的提示修复。最终覆盖前另备份到 `local/play-test/mod-backups/20261107T104734697/`，清单 `deployment-final.json`。最终安装已保留提示修复，没有用首轮旧代码包作为最终交付。
+- 存档与实际游戏：`play-test.ps1 verify` 通过，**1047 个日常文件哈希不变**，changes=[]，记录 `save-verification-final.json`。本轮没有启动实际游戏，Mac 与真正双端多人未实测。
+
+本轮 SHA256：DLL `D18CBD0558F922FDE6854B3DCF45DD98FF9E76CB84E5D45F552F9BEA6CCF489C`；PCK `CA0878CAE8757E878C156EFD6123F4ACB9A29EF57277D14618CDD39219416F88`；ZIP `9ADCF1184698A449F07B73432ED862D0819635D628CE7639BD9488B0664D49C7`。

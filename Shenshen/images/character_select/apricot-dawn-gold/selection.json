@@ -2,11 +2,22 @@
   "palette_id": "apricot-dawn-gold",
   "palette_name_zh": "杏桃晨金",
   "image": "background.png",
-  "design_size": [1672, 941],
-  "select_icon_region": [946, 0, 440, 650],
+  "design_size": [
+    1672,
+    941
+  ],
+  "select_icon_region": [
+    946,
+    0,
+    440,
+    650
+  ],
   "palette_reference": {
     "apricot_peach": "#EFB89D",
     "peach_highlight": "#F8D4B5",
     "cream_gold": "#FFF0CD"
-  }
+  },
+  "appearance_id": "mystery-roundface-soft-lips-v1",
+  "appearance_baseline": "background.png",
+  "approved_image_sha256": "C7544FDCB9BD69C16057F8FF25DAF1DC3DBC60107BA25C9DC2936D596DA62F75"
 }
