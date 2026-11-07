@@ -16,7 +16,7 @@
   "SHENSHEN-LIGHT_MIRROR.title": "光之镜",
   "SHENSHEN-LIGHT_MIRROR.description": "[gold]少女牌。[/gold]\n获得{Block:diff()}[gold]格挡[/gold]。本回合，反弹所有格挡掉的攻击伤害。",
   "SHENSHEN-TRANSFORMATION_MAGIC.title": "变形魔法",
-  "SHENSHEN-TRANSFORMATION_MAGIC.description": "{ToCat:cond:变成猫。获得{StrengthPower:diff()}[gold]力量[/gold]{IfUpgraded:show:和{ThornsPower:diff()}[gold]荆棘[/gold]}。|变回少女。获得{DexterityPower:diff()}[gold]敏捷[/gold]{IfUpgraded:show:和{Block:diff()}固定[gold]格挡[/gold]}。}\n{ToCat:cond:弃掉手中的少女牌，抽取相同数量的猫牌。|弃掉手中的猫牌，抽取相同数量的少女牌。}\n本牌回手。",
+  "SHENSHEN-TRANSFORMATION_MAGIC.description": "{ToCat:cond:变成猫。获得{StrengthPower:diff()}[gold]力量[/gold]{IfUpgraded:show:和{ThornsPower:diff()}[gold]荆棘[/gold]}。|变回少女。获得{DexterityPower:diff()}[gold]敏捷[/gold]{IfUpgraded:show:和{Block:diff()}固定[gold]格挡[/gold]}。}\n{ToCat:cond:弃掉手中的少女牌，抽取相同数量的猫牌。|弃掉手中的猫牌，抽取相同数量的少女牌。}\n将这张牌放回你的手牌。",
   "SHENSHEN-LIGHT_BLESSING.title": "光之祝福",
   "SHENSHEN-LIGHT_BLESSING.description": "[gold]少女牌。[/gold]\n另一名队友下回合抽牌前，从自己的抽牌堆额外选{Cards:diff()}张加入手牌。",
   "SHENSHEN-FLUFFED_UP.title": "炸毛",

@@ -101,7 +101,20 @@ G13 点燃火种通过原生战斗牌堆和位置跟踪所选攻击原实例，�
 
 交付目录为 `dist/Shenshen/` 和 `dist/BaseLib/`，压缩包为 `dist/Shenshen-blue-cards-20261107.zip`，大小 **121,792,720 字节**，包含上述两个目录。代码接入、Windows 编译和资源打包已完成；用户实测仍待定。本轮未运行任何自动测试或启动游戏，不以静态检查、图片预览或构建成功替代游戏运行结论。
 
-最终产物 SHA256：
+首轮蓝卡交付产物 SHA256：
 
 - `dist/Shenshen/Shenshen.dll`：`9346DA916E8C86F31CD47573A81251A8C5DE988895E2C501516143E35679E3EF`
 - `dist/Shenshen/Shenshen.pck`：`A75DF5AB945018BDD25EB3B780B59011AD644AE023160EAEAE60B01D75E11D98`
+
+## 后续文案与选图调整（2026-11-07）
+
+用户要求将变形卡不熟悉的“本牌回手”改成玩家更熟悉的完整表述。中文两面末句现为“将这张牌放回你的手牌。”，英文同步为“Return this card to your hand.”。只修改本地化，目标形态、换牌数量、保留、升级收益与原卡实例的结算位置均未改变。
+
+用户最终指定采用附图中的张指 `firm` 版本。正式 `i_dont_like_you.png` 已与指定版本一致，继续保留同一原图；后续 `calm` 稿仅作预览，没有替换游戏资源。
+
+沿用 `tools/build.ps1 pack --no-restore` 完成 Release 编译、资源导入和 PCK 导出，退出码 0，日志为 `work/blue-cards-copy-r2-pack-20261107.log`；未运行自动测试或启动游戏，由用户实测。新交付包 `dist/Shenshen-blue-cards-20261107-r2.zip` 包含 `Shenshen/` 与 `BaseLib/`，大小 121,792,720 字节。原交付 ZIP 保留。
+
+r2 产物 SHA256：
+
+- `dist/Shenshen/Shenshen.dll`：`0D5AA5457C9A53A7FB6A298999C0047D74EF6F4BD467A0193E284D493FFE4D96`
+- `dist/Shenshen/Shenshen.pck`：`954DEDC6924AA516466F9EE94F295E993E03EFD972C9AD492B590B8A803840EC`

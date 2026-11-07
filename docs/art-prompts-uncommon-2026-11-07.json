@@ -3,7 +3,7 @@
   "tool": "built-in image_gen.imagegen",
   "scope": "40张蓝卡的原始生成提示；玩法设计状态为预览时记录，不表示所有细则已逐项确认。正式目标路径均相对仓库根目录。",
   "selected_count": 40,
-  "g01_edit_history": "原始生成后有三次局部手部修订：拇指纠正、细长化、firm手势强化；仅最新firm稿用于正式target，前两次仅留生成文件名与退稿说明。",
+  "g01_edit_history": "原始生成后有三次局部手部修订：拇指纠正、细长化、firm手势强化。后续calm稿仅供预览，用户最终指定继续采用附图对应的firm稿；正式target保持firm原图，前两次仅留生成文件名与退稿说明。",
   "cards": [
     {
       "id": "G01",
