@@ -8,7 +8,7 @@ namespace Shenshen.ShenshenCode.Cards;
 
 public sealed class DayNightCycle : RareCard
 {
-    public DayNightCycle() : base(2, CardType.Power, TargetType.Self, ShenshenForm.Human) { }
+    public DayNightCycle() : base(2, CardType.Power, TargetType.Self, ShenshenForm.Human, CardRarity.Uncommon) { }
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Uses", 2m)];
 
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay play) =>

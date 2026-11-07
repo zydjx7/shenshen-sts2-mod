@@ -22,8 +22,10 @@ public partial class Harness
         var pool = ModelDb.CardPool<ShenshenCardPool>();
         var solo = pool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.SingleplayerOnly).OfType<RareCard>().ToArray();
         var all = pool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.MultiplayerOnly).OfType<RareCard>().ToArray();
-        Check(solo.Count(c => c.Rarity == CardRarity.Rare) == 39 && !solo.OfType<Resurrection>().Any() &&
-            all.Length == 42 && all.Count(c => c.Rarity == CardRarity.Ancient) == 2, "39 solo rares, one co-op rare and two Ancients in native pools");
+        Check(solo.Count(c => c.Rarity == CardRarity.Rare) == 36 && !solo.OfType<Resurrection>().Any() &&
+            all.Length == 42 && all.Count(c => c.Rarity == CardRarity.Uncommon) == 3 &&
+            all.Count(c => c.Rarity == CardRarity.Ancient) == 2,
+            "36 solo rares, one co-op rare, two Ancients and three former rares now uncommon in native pools");
         var f = await CreateCommonFixture();
         CheckCommonCardDescriptions(f, all);
         foreach (var canonical in all)
@@ -110,12 +112,15 @@ public partial class Harness
         Check(Hook.ModifyHandDraw(f.Combat, f.Player, 5, out _) == 4, "crafting costs one normal draw");
         await Hook.AfterPlayerTurnStart(f.Combat, f.Context, f.Player);
         await CreatureCmd.SetCurrentHp(owner, 6);
-        for (int i = 0; i < 3; i++) await CreatureCmd.Damage(f.Context, owner, 7, ValueProp.Move, f.Enemy);
+        await CreatureCmd.Damage(f.Context, owner, 7, ValueProp.Move, f.Enemy);
+        Check(owner.CurrentHp == 1 && owner.Block == 0 && owner.GetPower<PhylacteryReadyPower>() == null,
+            "phylactery prevents the lethal hit without granting Block and consumes its ready charge");
+        for (int i = 0; i < 2; i++) await CreatureCmd.Damage(f.Context, owner, 7, ValueProp.Move, f.Enemy);
         Check(owner.CurrentHp == 1 && owner.Block == 0 && owner.GetPower<PhylacteryGuardPower>() != null, "phylactery survives all three incoming hits");
         await CreatureCmd.Heal(owner, 10);
         Check(owner.CurrentHp == 1, "phylactery fixes HP at one throughout its protection");
         await Hook.AfterPlayerTurnStart(f.Combat, f.Context, f.Player);
-        Check(owner.GetPower<PhylacteryGuardPower>() == null, "phylactery ends when the next turn can act");
+        Check(owner.GetPower<PhylacteryGuardPower>() == null, "phylactery ends after the next turn's start effects, at its play phase");
         await CreatureCmd.SetCurrentHp(owner, 5);
         await PlayRare<TemporalWard>(f);
         await CreatureCmd.Damage(f.Context, owner, 12, ValueProp.Move, f.Enemy);

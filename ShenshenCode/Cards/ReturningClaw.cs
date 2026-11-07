@@ -17,13 +17,15 @@ public sealed class ReturningClaw : ShenshenCard
 {
     public ReturningClaw() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
     public override ShenshenForm? Form => ShenshenForm.Cat;
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(9m, ValueProp.Move), new CardsVar(2)];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DamageVar(4m, ValueProp.Move), new RepeatVar(2), new CardsVar(2)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
         var reflected = Owner.Creature.GetPower<ReturningClawMemoryPower>()?.ReflectedLastEnemyTurn == true;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, play).Targeting(play.Target).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(DynamicVars.Repeat.IntValue)
+            .FromCard(this, play).Targeting(play.Target).Execute(context);
         if (reflected) await CardPileCmd.Draw(context, DynamicVars.Cards.IntValue, Owner);
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
 }

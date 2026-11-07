@@ -111,7 +111,7 @@
   "SHENSHEN-SCRATCH_THE_LIGHT.title": "Scratch the Light",
   "SHENSHEN-SCRATCH_THE_LIGHT.description": "[gold]Cat card.[/gold]\nDeal {Damage:diff()} damage {Repeat:diff()} times. If the target has your [gold]Light Mark[/gold], attack once more.",
   "SHENSHEN-RETURNING_CLAW.title": "Returning Claw",
-  "SHENSHEN-RETURNING_CLAW.description": "[gold]Cat card.[/gold]\nDeal {Damage:diff()} damage. If you dealt reflected damage during the last enemy turn, draw {Cards:diff()} cards.",
+  "SHENSHEN-RETURNING_CLAW.description": "[gold]Cat card.[/gold]\nDeal {Damage:diff()} damage {Repeat:diff()} times. If you dealt reflected damage during the last enemy turn, draw {Cards:diff()} cards.",
   "SHENSHEN-DANDELION_PUFF.title": "Dandelion Puff",
   "SHENSHEN-DANDELION_PUFF.description": "[gold]Cat card.[/gold]\nGain {Block:diff()} [gold]Block[/gold]. Your Thorns deal double damage this turn.",
   "SHENSHEN-CATCH_THE_LIGHT.title": "Catch the Light",
@@ -127,7 +127,7 @@
   "SHENSHEN-TEASING.title": "Teasing",
   "SHENSHEN-TEASING.description": "[gold]Cat card.[/gold]\nDeal {Damage:diff()} damage {Repeat:diff()} times. The target gains {EnemyStrength:diff()} [gold]Strength[/gold].",
   "SHENSHEN-ROOMWIDE_POUNCE.title": "Roomwide Pounce",
-  "SHENSHEN-ROOMWIDE_POUNCE.description": "[gold]Cat card.[/gold]\nGain {Block:diff()} [gold]Block[/gold] for each enemy with your [gold]Light Mark[/gold]. Then deal {Damage:diff()} damage to all enemies {Repeat:diff()} times.",
+  "SHENSHEN-ROOMWIDE_POUNCE.description": "[gold]Cat card.[/gold]\nDeal {Damage:diff()} damage to all enemies {Repeat:diff()} times.",
   "SHENSHEN-HISS.title": "Hiss!",
   "SHENSHEN-HISS.description": "[gold]Cat card.[/gold]\nApply {WeakPower:diff()} [gold]Weak[/gold] to all enemies. Gain {ThornsPower:diff()} temporary [gold]Thorns[/gold].",
   "SHENSHEN-PRETEND_SLEEP.title": "Pretend Sleep",
@@ -178,7 +178,7 @@
   "SHENSHEN-ATOMIC_FISSION.title": "Atomic Fission",
   "SHENSHEN-ATOMIC_FISSION.description": "[gold]Girl card.[/gold]\nDeal {Damage:diff()} damage. Killed enemies explode for 12 damage to all remaining enemies. Explosions can chain.",
   "SHENSHEN-LICH_PHYLACTERY.title": "Lich Phylactery",
-  "SHENSHEN-LICH_PHYLACTERY.description": "[gold]Girl card.[/gold]\nDraw 1 fewer card on each of your next {Turns:diff()} turns. Once complete, the next time you would die, gain 12 Block and stay at 1 HP until you can play next turn.",
+  "SHENSHEN-LICH_PHYLACTERY.description": "[gold]Girl card.[/gold]\nDraw 1 fewer card on each of your next {Turns:diff()} turns. Once complete, the next time you would die, keep HP fixed at 1 until your next turn's play phase.",
   "SHENSHEN-TEMPORAL_WARD.title": "Temporal Ward",
   "SHENSHEN-TEMPORAL_WARD.description": "[gold]Girl card.[/gold]\nDefer unblocked damage this round until the end of your next turn. Healing pays the debt first, then Block at expiry. Lose the remaining HP.",
   "SHENSHEN-SEVENFOLD_MIRROR.title": "Sevenfold Mirror",
@@ -231,5 +231,7 @@
   "SHENSHEN-DUAL_LIGHT_SIGIL.description": "[gold]Girl card.[/gold]\nDeal {Damage:diff()} damage to ALL enemies, then apply Light Mark for {Turns:diff()} turns, burning for {Burn:diff()} per hit.",
   "SHENSHEN-ORBITING_STAR_CHART.title": "Orbiting Star Chart",
   "SHENSHEN-ORBITING_STAR_CHART.description": "[gold]Girl card.[/gold]\nFor each Energy spent, gain 1 Thorns in cat form or 1 Dexterity in girl form.",
-  "SHENSHEN-RARE_INTENT.label": "{Text}"
+  "SHENSHEN-RARE_INTENT.label": "{Text}",
+  "SHENSHEN-LIGHT_SHADOW_TRACE.title": "Light and Shadow Traces",
+  "SHENSHEN-LIGHT_SHADOW_TRACE.description": "[gold]Shared card.[/gold]\nAt the end of each turn, if you transformed this turn, choose up to {Cards:diff()} card(s) in your Hand to [gold]Retain[/gold] until next turn."
 }

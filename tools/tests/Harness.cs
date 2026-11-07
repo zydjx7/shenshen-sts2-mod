@@ -309,6 +309,7 @@ public partial class Harness : Node
         await RunDeckDesignChecks();
         await RunUpgradeAccessChecks();
         await RunCommonCardChecks();
+        await RunCardBalanceChecks();
         await RunFormFaceDodgeChecks();
         UiResourceChecks.Run(Check);
         await UiResourceChecks.RunLayout(this, Check);

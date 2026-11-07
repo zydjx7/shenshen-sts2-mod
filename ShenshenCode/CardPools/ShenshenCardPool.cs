@@ -3,6 +3,7 @@ using Godot;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Unlocks;
+using Shenshen.ShenshenCode.Cards;
 
 namespace Shenshen.ShenshenCode.CardPools;
 
@@ -17,5 +18,8 @@ public sealed class ShenshenCardPool : CustomCardPoolModel
 
     protected override IEnumerable<CardModel> FilterThroughEpochs(UnlockState unlockState,
         IEnumerable<CardModel> cards) => base.FilterThroughEpochs(unlockState, cards)
-        .Where(card => card.Rarity != CardRarity.Token);
+        // Retain model IDs and behavior for old saves; exclude retired cards from
+        // the unlocked pool used by rewards, merchants and card generation.
+        .Where(card => card.Rarity != CardRarity.Token && card is not
+            (LightShadowHandoff or ShatteredMirrorFlames or MoltenLightPierce or Kneading or Teasing));
 }

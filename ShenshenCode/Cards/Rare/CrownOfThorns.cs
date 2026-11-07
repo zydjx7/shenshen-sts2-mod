@@ -9,7 +9,7 @@ namespace Shenshen.ShenshenCode.Cards;
 
 public sealed class CrownOfThorns : RareCard
 {
-    public CrownOfThorns() : base(2, CardType.Power, TargetType.Self, ShenshenForm.Human) { }
+    public CrownOfThorns() : base(2, CardType.Power, TargetType.Self, ShenshenForm.Human, CardRarity.Uncommon) { }
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Ratio", 3m)];
 
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay play) =>

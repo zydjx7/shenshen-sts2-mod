@@ -9,7 +9,7 @@ namespace Shenshen.ShenshenCode.Cards;
 
 public sealed class SilentCasting : RareCard
 {
-    public SilentCasting() : base(1, CardType.Skill, TargetType.Self, ShenshenForm.Human) { }
+    public SilentCasting() : base(1, CardType.Skill, TargetType.Self, ShenshenForm.Human, CardRarity.Uncommon) { }
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
