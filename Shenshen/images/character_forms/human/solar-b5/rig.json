@@ -4,6 +4,7 @@
   "display_height": 370,
   "image": "character.png",
   "head_region": [275, 90, 445, 330],
+  "select_icon_region": [375, 90, 308, 455],
   "center": [535, 560],
   "head": [550, 305],
   "staff_tip": [794, 357],

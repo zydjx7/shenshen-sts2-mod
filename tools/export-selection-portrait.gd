@@ -10,7 +10,6 @@ const FRAME_SIZE = Vector2(633.334, 950)
 const CONTENT_PADDING = Vector2(8, 24)
 const ALPHA_THRESHOLD = 0.04
 const AVATAR_SIZE = Vector2i(450, 450)
-const SELECT_ICON_SIZE = Vector2i(450, 675)
 
 func _initialize():
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(ASSET_DIR + "rig.json"))
@@ -31,8 +30,15 @@ func _initialize():
 		return
 	var head: Array = rig.head_region
 	var region = Rect2i(int(head[0]), int(head[1]), int(head[2]), int(head[3]))
+	# Native buttons fit the entire texture: use an edge-to-edge 44:65 close-up,
+	# matching the official 132x195 icons, instead of padding a horizontal head crop.
+	var select: Array = rig.select_icon_region
+	var select_region = Rect2i(int(select[0]), int(select[1]), int(select[2]), int(select[3]))
 	if not Rect2i(Vector2i.ZERO, source.get_size()).encloses(region) or region.size.x <= 0 or region.size.y <= 0:
 		_fail("head_region must be a nonempty region inside the approved image")
+		return
+	if not Rect2i(Vector2i.ZERO, source.get_size()).encloses(select_region) or select_region.size.x <= 0 or select_region.size.y <= 0:
+		_fail("select_icon_region must be a nonempty region inside the approved image")
 		return
 	if region.size.x > AVATAR_SIZE.x or region.size.y > AVATAR_SIZE.y:
 		_fail("head_region must fit the avatar without scaling approved pixels")
@@ -80,13 +86,13 @@ func _initialize():
 	if error == OK:
 		error = _save_icon(source, region, AVATAR_SIZE, ASSET_DIR + "avatar.png")
 	if error == OK:
-		error = _save_icon(source, region, SELECT_ICON_SIZE, ASSET_DIR + "select-icon.png")
+		error = _save_icon(source, select_region, select_region.size, ASSET_DIR + "select-icon.png")
 	root.free()
 	if error != OK:
 		_fail("Cannot export solar portrait or icons: " + str(error))
 		return
 	print("SHENSHEN_SELECTION_PORTRAIT ", OUTPUT, " bounds=", bounds, " scale=", fit_scale)
-	print("SHENSHEN_SELECTION_ICONS head_region=", region, " avatar=", AVATAR_SIZE, " select=", SELECT_ICON_SIZE)
+	print("SHENSHEN_SELECTION_ICONS head_region=", region, " avatar=", AVATAR_SIZE, " select_region=", select_region)
 	quit(0)
 
 func _alpha_bounds(source: Image) -> Rect2:

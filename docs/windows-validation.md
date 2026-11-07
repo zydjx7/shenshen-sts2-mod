@@ -320,3 +320,16 @@ UI 类型修复后再次完整运行 `./tools/test.ps1`，编译与打包退出 
 用户确认小火球、光之护盾、光之印记、爪击、咪挡和猫之甩尾六张新图，并要求直接实装、打包和覆盖游戏 mods，不用测试。正式 PNG 已复制到 `Shenshen/images/card_portraits/basic/`，保持确认原图的字节与 1438×1093 尺寸；已有肖像 switch 增加六条映射，替换初始牌共用占位图的情况。白卡、蓝卡以及现有双面变形保持原有图像引用，玩法与数值未改。
 
 `tools/build.ps1 pack --no-restore` 的 Release publish、独立 MegaDot 资源导入与 PCK 导出成功，交付 `dist/Shenshen-starter-art-20261107.zip`。确认游戏退出后，先备份旧模组，再将 Shenshen 与 BaseLib 共 7 个交付文件覆盖到游戏 mods；安装后文件哈希全部与 dist 一致。部署与备份记录保存在忽略目录 `local/mod-backups/20261107-174502-starter-art/`。本轮未运行自动回归或游戏，显示与玩法由用户实测。逐卡素材、提示、产物哈希及边界见 [初始牌卡图接入记录](art-starter-cards-2026-11-07.md)。
+
+## 选人小卡面比例修复（2026-11-07）
+
+用户指出深深在底部选人竖卡中只占中央一小块。本机原生头像区域为 88×130、`KeepAspectCentered`，五名官方角色贴图均为 132×195；原深深 PNG 为 450×675，却仅居中放入 445×330 的横向头部区域，上下透明留白导致人物显小。
+
+在 B5 rig 中单独记录 `select_icon_region=[375,90,308,455]`，导出工具直接复制原立绘这一近景区域，输出 308×455、比例与官方完全一致的选人图。帽沿自然出边，保留遮脸、白金发、肩部与胸前太阳饰；没有拉伸、重绘或新增透明留白。HUD／地图头像、完整选人立绘和战斗外形未改，原有 `avatar.png` 哈希保持一致。普通与锁定选人入口共用修正后的 PNG。
+
+- Windows Release publish 与 PCK 导出通过，日志 `work/select-icon-fix/pack-retry.log`。首次导出因沙箱临时目录的 safe-save 失败而退出；将该进程的 `TEMP`／`TMP` 指向项目内 `local/pack-temp` 后成功，没有修改系统设置。
+- 仅运行现有 `UiResourceChecks` 的隔离 Harness，加载实际游戏、BaseLib 与最终模组资源包，**25 项通过**。覆盖原生 PNG getter、44:65 比例、无补边的原像素裁切、原 HUD 和完整立绘资源。日志 `work/select-icon-fix/ui-tests/run.log`；不将其表述为全量玩法回归。测试工程编译有 NuGet 审计网络不可达的 NU1900 警告，headless 退出仍有原有 DummyTexture RID／ObjectDB 清理告警。
+- 已目视检查新 PNG；独立复核确认与指定原图裁切逐像素一致，可见范围覆盖整幅。未启动实际游戏，未验证 Mac 或双端多人。
+- 整合包 `dist/Shenshen-selection-icon-20261107.zip` 包含 Shenshen 与 BaseLib，131,529,305 字节。游戏仍在运行，部署脚本在任何复制前停止，等待正常退出后再备份覆盖。
+
+最终 DLL SHA256：`931AF3DDBCDDC3A9D22733688093B2FA24AF19C3DC094854297B209AF7283273`；PCK：`1C387C244932AF2CDC267E2606C569EDDCB0EBF2CEED31DB688FB0431641A468`；ZIP：`3FCADD6965A77BF06C2DD55A3AC839DB5204A4BE4C92BE6D03DAA3D235E242A1`。

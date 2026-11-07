@@ -39,6 +39,8 @@ internal static class UiResourceChecks
         using var sourceImage = ReadImage(ResourceLoader.Load<Texture2D>(sourcePath));
         var head = layout.GetProperty("head_region").EnumerateArray().Select(value => value.GetInt32()).ToArray();
         var region = new Rect2I(head[0], head[1], head[2], head[3]);
+        var select = layout.GetProperty("select_icon_region").EnumerateArray().Select(value => value.GetInt32()).ToArray();
+        var selectRegion = new Rect2I(select[0], select[1], select[2], select[3]);
         var visibleBounds = VisibleBounds(sourceImage);
         check(visibleBounds.HasArea() && TransparentBorder(sourceImage),
             "packed approved character image retains a transparent border and visible painted content");
@@ -86,12 +88,13 @@ internal static class UiResourceChecks
         using var avatarImage = ReadImage(hero.IconTexture);
         using var selectIconImage = ReadImage(hero.CharacterSelectIcon);
         check(avatarImage.GetSize() == new Vector2I(450, 450) &&
-            selectIconImage.GetSize() == new Vector2I(450, 675),
-            "HUD and character-select PNGs retain their intended padded canvas sizes");
-        check(ContainsSameHead(avatarImage, sourceImage, region),
+            selectIconImage.GetWidth() * 65 == selectIconImage.GetHeight() * 44,
+            "HUD keeps its square canvas and selection matches the native 132:195 portrait ratio");
+        check(ContainsSameRegion(avatarImage, sourceImage, region),
             "HUD and map avatar preserve the approved head_region pixels with transparent padding");
-        check(ContainsSameHead(selectIconImage, sourceImage, region),
-            "character-select button copies the same original head pixels without stretching or repainting");
+        check(selectIconImage.GetSize() == selectRegion.Size &&
+            ContainsSameRegion(selectIconImage, sourceImage, selectRegion),
+            "character-select close-up fills its canvas with approved source pixels and no added padding");
 
         // These inherited placeholder hand getters accept Texture2D in this game version.
         check(hero.ArmPointingTexture is Texture2D && hero.ArmRockTexture is Texture2D &&
@@ -157,7 +160,7 @@ internal static class UiResourceChecks
             foreach (var descendant in CanvasItems(child)) yield return descendant;
     }
 
-    private static bool ContainsSameHead(Image icon, Image atlas, Rect2I region)
+    private static bool ContainsSameRegion(Image icon, Image atlas, Rect2I region)
     {
         if (icon.GetWidth() < region.Size.X || icon.GetHeight() < region.Size.Y) return false;
         var offset = new Vector2I((icon.GetWidth() - region.Size.X) / 2, (icon.GetHeight() - region.Size.Y) / 2);
