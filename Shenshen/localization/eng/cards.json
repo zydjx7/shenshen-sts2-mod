@@ -196,7 +196,7 @@
   "SHENSHEN-POLYMORPH.title": "Polymorph",
   "SHENSHEN-POLYMORPH.description": "[gold]Girl card.[/gold]\nTurn an enemy into a sheep. It spends its next action grazing. Taking damage breaks the spell.",
   "SHENSHEN-UNCERTAIN_HAND.title": "Shenshen’s Uncertain Hand",
-  "SHENSHEN-UNCERTAIN_HAND.description": "[gold]Girl card.[/gold]\nHarness microscopic uncertainty. Your Attacks have a {Chance:diff()}% chance to pierce enemy Block.",
+  "SHENSHEN-UNCERTAIN_HAND.description": "[gold]Girl card.[/gold]\nGain [gold]Quantum Effect[/gold]: Your Attacks have a {Chance:diff()}% chance to ignore enemy Block.",
   "SHENSHEN-GRAND_DISJUNCTION.title": "Grand Disjunction",
   "SHENSHEN-GRAND_DISJUNCTION.description": "[gold]Girl card.[/gold]\nRemove ALL enemies’ Block and Artifact. Apply Light Mark for {Turns:diff()} turns, burning for {Burn:diff()} per hit.",
   "SHENSHEN-POSITRON_CANNON.title": "Positron Cannon",
@@ -231,6 +231,5 @@
   "SHENSHEN-DUAL_LIGHT_SIGIL.description": "[gold]Girl card.[/gold]\nDeal {Damage:diff()} damage to ALL enemies, then apply Light Mark for {Turns:diff()} turns, burning for {Burn:diff()} per hit.",
   "SHENSHEN-ORBITING_STAR_CHART.title": "Orbiting Star Chart",
   "SHENSHEN-ORBITING_STAR_CHART.description": "[gold]Girl card.[/gold]\nFor each Energy spent, gain 1 Thorns in cat form or 1 Dexterity in girl form.",
-  "SHENSHEN-UNCERTAIN_HAND.piercing": "[gold]Piercing: All hits of this card ignore Block.[/gold]",
   "SHENSHEN-RARE_INTENT.label": "{Text}"
 }

@@ -6,7 +6,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Hooks;
-using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using Shenshen.ShenshenCode.Character;
@@ -157,16 +156,6 @@ internal static class RareControl
         {
             if (cardSource != null && props.IsPoweredAttack() && dealer?.GetPower<UncertainHandPower>()?.Pierces(cardSource) == true)
                 props |= ValueProp.Unblockable;
-        }
-    }
-
-    [HarmonyPatch(typeof(CardModel), nameof(CardModel.GetDescriptionForPile), [typeof(PileType), typeof(Creature)])]
-    private static class ShowPiercing
-    {
-        private static void Postfix(CardModel __instance, PileType pileType, ref string __result)
-        {
-            if (pileType == PileType.Hand && __instance.IsMutable && __instance.Owner?.Creature.GetPower<UncertainHandPower>()?.Pierces(__instance) == true)
-                __result += "\n" + new LocString("cards", "SHENSHEN-UNCERTAIN_HAND.piercing").GetFormattedText();
         }
     }
 }

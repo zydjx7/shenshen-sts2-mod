@@ -196,7 +196,7 @@
   "SHENSHEN-POLYMORPH.title": "变形术",
   "SHENSHEN-POLYMORPH.description": "[gold]少女牌。[/gold]\n将一名敌人变为绵羊。它的下次行动改为吃草。受伤时提前恢复。",
   "SHENSHEN-UNCERTAIN_HAND.title": "深深的不确定之手",
-  "SHENSHEN-UNCERTAIN_HAND.description": "[gold]少女牌。[/gold]\n利用微观世界的不确定性，使你的攻击有{Chance:diff()}%概率直接穿透敌人的格挡。",
+  "SHENSHEN-UNCERTAIN_HAND.description": "[gold]少女牌。[/gold]\n获得[gold]量子效应[/gold]：你的攻击有{Chance:diff()}%概率无视敌人的格挡。",
   "SHENSHEN-GRAND_DISJUNCTION.title": "豪华大裂解",
   "SHENSHEN-GRAND_DISJUNCTION.description": "[gold]少女牌。[/gold]\n移除全体敌人的格挡和人工制品，施加{Turns:diff()}回合光之印记，每段追加{Burn:diff()}灼烧。",
   "SHENSHEN-POSITRON_CANNON.title": "阳电子炮",
@@ -231,6 +231,5 @@
   "SHENSHEN-DUAL_LIGHT_SIGIL.description": "[gold]少女牌。[/gold]\n对全体造成{Damage:diff()}伤害，施加{Turns:diff()}回合光之印记，每段追加{Burn:diff()}灼烧。",
   "SHENSHEN-ORBITING_STAR_CHART.title": "回环星图",
   "SHENSHEN-ORBITING_STAR_CHART.description": "[gold]少女牌。[/gold]\n每实付1能量，猫形态获得1荆棘，少女形态获得1敏捷。",
-  "SHENSHEN-UNCERTAIN_HAND.piercing": "[gold]贯穿：本牌的所有攻击段无视格挡。[/gold]",
   "SHENSHEN-RARE_INTENT.label": "{Text}"
 }

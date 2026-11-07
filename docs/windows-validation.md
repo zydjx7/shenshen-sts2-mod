@@ -376,3 +376,13 @@ UI 类型修复后再次完整运行 `./tools/test.ps1`，编译与打包退出 
 - 用户运行的 Windows 游戏日志记录了战斗胜利后从卡牌奖励取得 `CARD.SHENSHEN-UNCERTAIN_HAND`（深深的不确定之手）。该日志确认了实际游戏里的金卡奖励入口。
 
 DLL SHA256 为 `2D97C43CF6164B4B9F386FFBA6F2D4EFE4717348CD0B4734FC78C838D2B4C148`。PCK SHA256 为 `67543DD853E1B5A5157E335EE6A3AD14D9FBB30E668642BCFFDBC0856B086997`。ZIP SHA256 为 `4662D13D62A216DF0B6ACCB4E928794FCDD73B03346796C2B3E2B45BBD44B675`。
+
+## 量子效应：不确定之手的状态显示（2026-11-07）
+
+- 按用户截图反馈，移除向攻击牌描述追加“贯穿”文字的 Harmony 补丁。角色增益状态改名为「量子效应」／Quantum Effect，状态说明显示实际 60%／80% 概率和同张牌各攻击段共用判定的规则；能力牌本身的名称仍为「深深的不确定之手」。沿用原模型 ID、概率、入手判定及无视格挡效果。
+- Windows Release 编译、资源导入与打包成功。NuGet 在线审计不可达产生 NU1900 警告，编译 0 错误。首次导入因默认用户缓存目录不可写失败，改用项目内 `local/pack-*` 的进程缓存目录后完成；未更改系统环境。
+- 最终交付 PCK 以当时已安装的模组资源包为基线，逐项校验 251 个资源，只有中英文 `cards.json`、`powers.json` 4 份文本发生变化，其余 247 项原资源内容相同。未混入工作区待审美术。核对清单在忽略目录 `work/quantum-effect-delivery/manifest.json`。
+- 真实游戏程序集／MegaDot headless 最终包回归 **671 项通过**，退出码 0。覆盖中英文原生状态悬浮提示的名称和 80% 概率格式化、攻击牌原描述不被追加、多段攻击仍使用同次判定穿过 50 格挡等。最终日志为 `work/headless-tests/quantum-effect-final.log`。本轮未启动游戏窗口，macOS 与真实双端联机未实测。
+- 交付包为 `dist/Shenshen-quantum-effect-20261107.zip`。部署前检测到游戏进程正在运行，保护检查在备份／覆盖之前退出。用户随后明确“先不部署，之后一起部署”；本轮不再尝试覆盖游戏目录，待后续统一部署，不能将打包与回归通过写成已在游戏内生效。
+
+本轮 DLL SHA256：`3DF63ED60837480611385A01F5C8F1734B6BBE64ECA00BB831107DDF0D3EC4D2`；PCK：`A150529F559029514C6399A6EB58C6F0BBCCF740BEF3A772452A5F5F41AD5E57`；ZIP：`624D9803B44AD81B0B37993998CC4F25BC59B353BA5CA83E93791C6D84C5A6C8`。

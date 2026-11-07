@@ -53,7 +53,21 @@ public partial class Harness
         Check(f.Enemy.GetPower<LightMarkPower>() == null, "Burn the Mark consumes the target’s own remaining mark before attacking");
 
         f = await CreateCommonFixture();
+        var normalClawText = CommonCard<ClawStrike>(f).GetDescriptionForPile(PileType.Hand);
         await PlayRare<UncertainHand>(f, upgraded: true);
+        var quantum = f.Player.Creature.GetPower<UncertainHandPower>()!;
+        try
+        {
+            foreach (var (language, title) in new[] { ("eng", "Quantum Effect"), ("zhs", "量子效应") })
+            {
+                MegaCrit.Sts2.Core.Localization.LocManager.Instance.SetLanguage(language);
+                var tip = quantum.HoverTips.OfType<MegaCrit.Sts2.Core.HoverTips.HoverTip>().Single();
+                Check(quantum.IsVisible && quantum.Amount == 80 && tip.Title == title &&
+                    tip.Description.Contains("80%") && !tip.Description.Contains('{'),
+                    language + " Quantum Effect status displays its localized name and actual upgraded chance");
+            }
+        }
+        finally { MegaCrit.Sts2.Core.Localization.LocManager.Instance.SetLanguage("eng"); }
         var held = new List<ClawStrike>();
         for (int i = 0; i < 8; i++)
         {
@@ -61,8 +75,12 @@ public partial class Harness
             await CardPileCmd.AddGeneratedCardToCombat(c, PileType.Hand, f.Player);
             held.Add(c);
         }
-        var pierced = held.FirstOrDefault(c => c.GetDescriptionForPile(PileType.Hand).Contains("Piercing:"));
-        Check(pierced != null, "seeded hand displays the actual piercing result before play");
+        Check(held.All(c => c.GetDescriptionForPile(PileType.Hand) == normalClawText),
+            "Quantum Effect does not append the rolled effect to attack card descriptions");
+        var pierces = typeof(UncertainHandPower).GetMethod("Pierces",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!;
+        var pierced = held.FirstOrDefault(c => (bool)pierces.Invoke(quantum, [c])!);
+        Check(pierced != null, "seeded hand still contains an attack affected by Quantum Effect");
         await CreatureCmd.GainBlock(f.Enemy, 50, ValueProp.Unpowered, null);
         hp = f.Enemy.CurrentHp;
         await CardCmd.AutoPlay(f.Context, pierced!, f.Enemy, skipCardPileVisuals: true);
