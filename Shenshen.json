@@ -2,7 +2,7 @@
   "id": "Shenshen",
   "name": "光之魔法少女深深",
   "author": "zydjx7",
-  "description": "光之魔法少女深深的双形态开发原型。使用独立卡池与实际拥有的少女、猫两套牌；美术和初始遗物仍为占位。",
+  "description": "深深拥有少女与猫两套牌。施展变身魔法，在光与火的法术、荆棘和连击之间切换。",
   "version": "v0.1.0",
   "min_game_version": "0.111.0",
   "has_pck": true,

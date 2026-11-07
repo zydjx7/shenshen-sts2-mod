@@ -13,9 +13,8 @@ public sealed class LightShadowTrace : ShenshenCard
     public LightShadowTrace() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
 
     public override ShenshenForm? Form => null;
-    // Reuse approved art until this replacement receives its own illustration.
     public override string CustomPortraitPath =>
-        $"{MainFile.ResPath}/images/card_portraits/uncommon/light_shadow_handoff.png";
+        $"{MainFile.ResPath}/images/card_portraits/uncommon/light_shadow_trace.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromKeyword(CardKeyword.Retain)];

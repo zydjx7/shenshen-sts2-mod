@@ -10,6 +10,8 @@ namespace Shenshen.ShenshenCode.Cards;
 public sealed class BriarGrowth : RareCard
 {
     public BriarGrowth() : base(1, CardType.Power, TargetType.Self, ShenshenForm.Cat) { }
+    public override string CustomPortraitPath =>
+        $"{MainFile.ResPath}/images/card_portraits/rare/briar_growth.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<ThornsPower>(2m)];
 
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay play) =>

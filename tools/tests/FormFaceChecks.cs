@@ -5,7 +5,9 @@ using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Unlocks;
 using MegaCrit.Sts2.Core.ValueProps;
+using Shenshen.ShenshenCode.CardPools;
 using Shenshen.ShenshenCode.Cards;
 using Shenshen.ShenshenCode.Powers;
 
@@ -15,6 +17,40 @@ public partial class Harness
     {
         await CheckShiftTurnDodge();
         await CheckTransformationFaces();
+        await CheckActiveCardPortraits();
+    }
+
+    private async Task CheckActiveCardPortraits()
+    {
+        var f = await CreateCommonFixture();
+        var pool = ModelDb.CardPool<ShenshenCardPool>();
+        var active = pool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.SingleplayerOnly)
+            .Union(pool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.MultiplayerOnly));
+        var seen = new HashSet<string>();
+        foreach (var canonical in active)
+        {
+            var card = f.Combat.CreateCard(canonical, f.Player);
+            var paths = card.AllPortraitPaths.ToArray();
+            var doubled = card is TransformationMagic or OtherSideOfTheSun;
+            Check(paths.Length == (doubled ? 2 : 1) && paths.All(path =>
+                path.StartsWith("res://Shenshen/images/card_portraits/", StringComparison.Ordinal) &&
+                !path.EndsWith("/card.png", StringComparison.Ordinal) && seen.Add(path) &&
+                ResourceLoader.Load<Texture2D>(path) is { } texture && texture.GetWidth() > 0 && texture.GetHeight() > 0),
+                canonical.Id.Entry + " has its own loadable portrait for each face");
+            var normal = card.Portrait.ResourcePath;
+            CardCmd.Upgrade(card);
+            Check(card.Portrait.ResourcePath == normal && paths.Contains(normal),
+                canonical.Id.Entry + " keeps its dedicated illustration on upgrade");
+        }
+        var sun = f.Combat.CreateCard<OtherSideOfTheSun>(f.Player);
+        await CardPileCmd.AddGeneratedCardToCombat(sun, PileType.Hand, f.Player);
+        const string sunArt = "res://Shenshen/images/card_portraits/rare/other_side_sun_";
+        Check(sun.Portrait.ResourcePath == sunArt + "girl.png", "the human Sun face loads its own illustration");
+        await Switch(f.Context, f.Player);
+        Check(sun.Pile?.Type == PileType.Hand && sun.Portrait.ResourcePath == sunArt + "cat.png",
+            "the same held Sun card changes to its own cat illustration");
+        await Switch(f.Context, f.Player);
+        Check(sun.Portrait.ResourcePath == sunArt + "girl.png", "returning to human restores the Sun's own human face");
     }
 
     private async Task CheckShiftTurnDodge()

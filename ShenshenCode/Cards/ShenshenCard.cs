@@ -118,6 +118,22 @@ public abstract class ShenshenCard : CustomCardModel
                 SheathedClaws => "rare/sheathed_claws.png",
                 SwiftPounce => "rare/swift_pounce.png",
                 TailtipMark => "rare/tailtip_mark.png",
+                CrownOfThorns => "uncommon/crown_of_thorns.png",
+                DayNightCycle => "uncommon/day_night_cycle.png",
+                ReturningSunblade => "rare/returning_sunblade.png",
+                TemporalWard => "rare/temporal_ward.png",
+                RoseInBloom => "rare/rose_in_bloom.png",
+                RuneLogic => "rare/rune_logic.png",
+                StopTime => "rare/stop_time.png",
+                Polymorph => "rare/polymorph.png",
+                UncertainHand => "rare/uncertain_hand.png",
+                GrandDisjunction => "rare/grand_disjunction.png",
+                PositronCannon => "rare/positron_cannon.png",
+                SeizeTheOpening => "rare/seize_the_opening.png",
+                FixedGaze => "rare/fixed_gaze.png",
+                Resurrection => "rare/resurrection.png",
+                DualLightSigil => "ancient/dual_light_sigil.png",
+                OrbitingStarChart => "ancient/orbiting_star_chart.png",
                 _ => "card.png"
             };
             return $"{MainFile.ResPath}/images/card_portraits/{portrait}";

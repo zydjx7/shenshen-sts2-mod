@@ -1,0 +1,230 @@
+{
+  "cards": [
+    {
+      "name": "荆棘之冕",
+      "model": "CrownOfThorns",
+      "file": "Shenshen/images/card_portraits/uncommon/crown_of_thorns.png",
+      "sha256": "11eb917247c0bfe71b6a7ac32cd8d628cbc1c9500f476768fee152672293b559",
+      "scene": "Low, three-quarter bust composed with the hat silhouette low on the left. Suspended in front of the mage, above her open forearm at right, a sculptural circlet of real rose-gold briars is the large hero object. Its most prominent three thorns branch outward and support one luminous translucent mirror facet that has caught a falling stone chip. The peaches and soft coral reflected by the small mirror play across the off-white wool cloak. Read as a crown voluntarily conjured into protective mirror Block. Keep the thorn circlet free of her face and skin. A subdued ruined cloister in cool shadow beneath a bright dawn sky.",
+      "references": [
+        "common-thorn_prayer.png",
+        "shenshen-approved.png"
+      ],
+      "last_edit_prompt": null,
+      "final_source": "generated illustration"
+    },
+    {
+      "name": "昼夜轮转",
+      "model": "DayNightCycle",
+      "file": "Shenshen/images/card_portraits/uncommon/day_night_cycle.png",
+      "sha256": "ddca6f3aa3e856d447065d85bc4fd054d770bc2cd977937def94d1ec27ead290",
+      "scene": "Invent a new overhead composition: Shenshen steps across a stone sundial at the instant its sweeping shadow passes from the sunlit half to the moonlit half. The cloaked figure casts one clearly recognizable long fluffy kitten shadow on the dial. A single gradual arc of dawn and dusk follows the circular inlaid groove, a warm sun at one end and a pale crescent at the other. This is a single moment in one circular courtyard, not two panels. Show motion in one rose ribbon following the orbit. Include no numerals. Keep the figure tall with natural limb proportions.",
+      "references": [
+        "rare-made_real.png",
+        "shenshen-approved.png",
+        "cat-approved.png"
+      ],
+      "last_edit_prompt": null,
+      "final_source": "generated illustration"
+    },
+    {
+      "name": "光影留痕",
+      "model": "LightShadowTrace",
+      "file": "Shenshen/images/card_portraits/uncommon/light_shadow_trace.png",
+      "sha256": "e3060943d3db01b4e4329cb0edb4fb11e4e4faccc3309d9becd016558e2ac3f0",
+      "scene": "A poetic close view inside a threshold, after an actual transformation. The cream-and-silver kitten looks back over one shoulder on the right as it pads away. Its amber pawprints end in the shape of a tall traveling mage's long hat-and-cloak shadow across the sunlit flagstones on the left. One folded blank ivory spell-leaf from that earlier form hangs suspended at the boundary, preserved by a single thread of gold. Make one physical cat and one cast shadow, a memory of the preceding form, not two independent party members. Oblique afternoon light and a narrow rose-purple shadow band make that preservation legible at thumbnail size.",
+      "references": [
+        "rare-sheathed_claws.png",
+        "shenshen-approved.png",
+        "cat-approved.png"
+      ],
+      "last_edit_prompt": null,
+      "final_source": "generated illustration"
+    },
+    {
+      "name": "回旋光刃",
+      "model": "ReturningSunblade",
+      "file": "Shenshen/images/card_portraits/rare/returning_sunblade.png",
+      "sha256": "f0be0a2ee13cf131bd9c3f05fc4a414788ebf1d573709f45c0409fe4110a43f6",
+      "scene": "Dynamic over-the-shoulder view of the cloaked mage with the shoulder low on the right. A single sharp crescent blade of condensed cream-gold sunlight curves home toward her outstretched, anatomically correct receiving hand; one broad curved trail wraps behind a broken sunlit column and back from the far left. The crescent is the clear silhouette, with a pointed leading edge; no multiple knives, no suns spinning in place. A rose cloth ribbon echoes the return path. Use bold diagonal movement, dusty peach masonry and a cool shadow in the lower plane.",
+      "references": [
+        "rare-made_real.png",
+        "shenshen-approved.png"
+      ],
+      "last_edit_prompt": "Edit IMAGE 1, the horizontal Returning Sunblade illustration. Use IMAGE 2 (the approved human face of The Other Side of the Sun) as the reference for THE ADULT MAGE'S SHOULDER WIDTH, NECK-TO-SHOULDER DISTANCE, BODY VOLUME AND CARRYING OF THE CLOAK. The body in image 1 reads too small and narrow next to its head and hat. Construct the whole underlying upper torso with a natural adult skeletal shoulder span (about 2 to 2.2 bare head widths in three-quarter view, ignoring the very large hat). Widen the actual upper torso and move the visible shoulder joint further OUT from the neck, lower the shoulder slightly, and reconnect the already-reaching arm to that actual shoulder. The broad high-collared ivory mantle should hang down over those two shoulders in a continuous dignified adult silhouette; do not merely inflate fabric or tack on shoulder pads. If needed move the framing a little to show both shoulders, more of the torso, and balanced head-to-body proportions; the small amount of additional torso is more important than copying the crop. Keep the person of ambiguous gender with no chest/waist definition; not a short child, not muscular. Leave Image 1's natural reaching right hand small and delicately fingered, thumb on its screen-right edge, the full reach from shoulder to elbow and the slightly fuller forearm, and the crescent of light returning from the left. The blade, outdoor ruins, gold arc and approximate composition stay recognizable. No staff or extra hand from image 2, no second character, spell-specific redesign only. One small brooch on cloak and one on hat. Keep the original Apricot Dawn Gold brushwork and 250:190 full-bleed landscape.",
+      "final_source": "generated illustration"
+    },
+    {
+      "name": "迟滞结界",
+      "model": "TemporalWard",
+      "file": "Shenshen/images/card_portraits/rare/temporal_ward.png",
+      "sha256": "0e9aa2bae0e792d58951d0c9c1e5e1e60b974bd2d5ea3ce7c8dbbb0098065acf",
+      "scene": "An atmospheric close spell study, centered on an oblong translucent hourglass with no stand held between Shenshen's spread fingers in the foreground. An incoming jagged shard seems to enter its upper chamber; its impact is caught and distilled into bright suspended grains waiting to fall onto the still-dark lower chamber. A faint sun-shaped catch at the narrow waist can hold back the grains. The sharp world behind the glass stays in motion with sweeping dust, so only damage inside this small ward has been deferred. Glimpse the mage's hat shadow at one side. No clock face or columns of numbers.",
+      "references": [
+        "rare-made_real.png",
+        "shenshen-approved.png"
+      ],
+      "last_edit_prompt": "Create an entirely new card painting for Temporal Ward by reinterpreting the approved Shenshen character reference and matching the second image's gouache finish. This is a NEW composition of the ward, not a patch to the hourglass illustration. Use image 1 for exact costume and identity; image 2 only for brush style and card aspect. Full-bleed 250:190 landscape, no border, text or UI.\nTwo clear silhouettes: a medium-size hourglass hovering on the LEFT of the artwork and a normally proportioned MAGE on the RIGHT, shown from her hips up, head and hat wholly inside the frame. The camera is at eye level, sees her in a calm three-quarter side view from enough distance that her BODILY ANATOMY is unmistakable. Draw an ordinary physically convincing person first. Both shoulders arise from the torso BELOW the hat/neck. BOTH elbows are below shoulder height. No hands or arms above the shoulders or next to the brim. Show a clean uninterrupted sleeve line from the visible near shoulder through its upper arm to the gently bent elbow at waist height; from there, a normal adult forearm extends a little left and slightly upwards out of the cuff, ending in a single small open hand angled toward the hourglass from a distance, palm normal size, fingers naturally long and delicate with a proportionate thumb. The hand must not touch, cup or lift the hourglass. The far arm relaxes naturally down along her body and its ONE hand holds a simple sun staff low at her side, near hip height, partially concealed by fabric if natural. No distant limb arising from the head/hat, no arm wrapping above the glass, no hands poking from the top or edges of the canvas. Head, shoulders, upper arms and elbows must read as ONE connected silhouette. Normal adult proportions, arm lengths appropriate to her frame, no huge hands or child proportions.\nThe concept is postponement of damage. A small jagged projectile and warm flash dissolve into suspended grains ONLY inside the upper chamber of the hovering hourglass, above a narrow catch that holds the impact. The lower chamber stays mostly clear, waiting. Arc of dust beyond it is in motion. A ruined pale stone arcade recedes behind the spell; keep generous open space between the mage's head, hands and hourglass. ONE solar rosette on the tall floppy ivory hat, ONE solar clasp on the closed loose cloak, cream-blond short bob, face in shadow down to a soft chin, ivory and peach lining. Use apricot-pink daylight, clean cream-gold highlights, cool muted stone shadow as balance, matte gouache, broad shapes and clear focal contrast. Distinct airy staging, natural hands.",
+      "final_source": "user-selected PNG"
+    },
+    {
+      "name": "蔷薇绽放",
+      "model": "RoseInBloom",
+      "file": "Shenshen/images/card_portraits/rare/rose_in_bloom.png",
+      "sha256": "79cbe03b85537fdf700a0fce1a0a1df261ec4fe6256b1b9015484c7ebe7a9030",
+      "scene": "A dramatic botanical spell, no people. One huge sunlit wild rose at the apex of eight old thorn stems bursts open above an archaeological courtyard. Cream-pink petals unfurl in visibly different stages from tight at the base to explosive at the rim. A wide petal-pressure wave scatters dust and small stones from several directions around it, revealing that stored thorn growth has turned into a single area attack. Rosewood reds, peach petal undersides, crisp ivory petals; focus on the glowing heart against a dusty violet midtone. Avoid the character and circlet of the source. One flower, not a bed of roses.",
+      "references": [
+        "common-thorn_prayer.png"
+      ],
+      "last_edit_prompt": null,
+      "final_source": "generated illustration"
+    },
+    {
+      "name": "符文逻辑学",
+      "model": "RuneLogic",
+      "file": "Shenshen/images/card_portraits/rare/rune_logic.png",
+      "sha256": "cf12589a8b1034b4edc06b3164d5fa966aefc1438bab1d9bda574d659417b923",
+      "scene": "An intimate workbench scene, unusual top-down and side view combined: a single pea-sized flame hovers within a brass compass and three precisely interlocking simple geometric rune plates. Their paths snap into alignment and reduce an elaborate route into one clean gold triangle feeding the flame. On the right edge the mage's cream sleeve, rose cuff and one hand carefully align the plate; her face is not needed. Matte warm parchment, rosewood tabletop, soft daylight through a high arch. Suggest an ingenious magical engineering shortcut for the Little Fireball spell, not a homework diagram. No letters, numbers or readable text.",
+      "references": [
+        "rare-made_real.png",
+        "shenshen-approved.png"
+      ],
+      "last_edit_prompt": null,
+      "final_source": "generated illustration"
+    },
+    {
+      "name": "时间停止",
+      "model": "StopTime",
+      "file": "Shenshen/images/card_portraits/rare/stop_time.png",
+      "sha256": "316da38a676d79e8e525c2480f6815b7d70dde31a453d22b71f087654d06f36e",
+      "scene": "Wide but intimate action tableau in a sunken courtyard. An elongated cloaked Shenshen stands in the lower right in quiet profile, fingers slightly raised. Three incoming distinct projectiles, a thrown spear, a dark stone and a spray of smaller chips, are utterly still at separate depths; individual droplets from a small fountain and one red maple leaf hang suspended among them. A single still finch mid-flight far back can add scale. Crisp motionless silhouettes intersect ONE narrow plane of pearly light that spans the scene; distant attackers remain ghosted silhouettes. The stopped threat fills the picture. No hourglasses, numerals, giant clocks or interface.",
+      "references": [
+        "rare-made_real.png",
+        "shenshen-approved.png"
+      ],
+      "last_edit_prompt": null,
+      "final_source": "generated illustration"
+    },
+    {
+      "name": "变形术",
+      "model": "Polymorph",
+      "file": "Shenshen/images/card_portraits/rare/polymorph.png",
+      "sha256": "088bf260b83efb51a28f4deb28c310a05238dab2823b316f2773dfc1e6e9d82a",
+      "scene": "Charming, readable instant of transformation: at the center a single round cream sheep with small curled horns, a loose battered warrior helmet slipped over one ear, is peacefully nibbling a sprig of green grass. Its elongated shadow on apricot ruins still shows the imposing armored foe it used to be. A faint tapered gold spell trail arrives from the small sun-tipped end of Shenshen's staff appearing at the edge. Sheep is the main subject, body and hooves clearly recognizable, neither a rabbit nor a cat. Let the silhouette of grazing sheep and threatening shadow tell the story. No additional people in foreground.",
+      "references": [
+        "rare-made_real.png",
+        "shenshen-approved.png"
+      ],
+      "last_edit_prompt": null,
+      "final_source": "generated illustration"
+    },
+    {
+      "name": "深深的不确定之手",
+      "model": "UncertainHand",
+      "file": "Shenshen/images/card_portraits/rare/uncertain_hand.png",
+      "sha256": "bbed2122ceed3e7fa8211042d32925a49c1496f270221fa606846f56873e3006",
+      "scene": "Close-up magical physics demonstration. ONE anatomically correct pale mage hand in an ivory cuff moves through an intact upright pane of smoky lavender mirror-glass. Its wrist and forearm on the near side are crisply painted; at the boundary, the very same fingertips become fine cream-gold interference fringes and re-form on the far side, holding a tiny point of fire. Show two or three delicate probability-wave arcs around this sole hand, no duplicate fingers or ghost hands. Pane is unbroken; no cracks, explosion or digital circuitry. A sliver of broad hat and solar brooch in relief at the far edge links it to Shenshen. Clean negative space, concentrated value contrast.",
+      "references": [
+        "rare-made_real.png",
+        "shenshen-approved.png"
+      ],
+      "last_edit_prompt": "The user approves this exact side-on pose, anatomical left hand, occluded thumb, wall geometry. Make one tiny adjustment confined to the FOUR non-thumb fingertips: let them breathe. Open a small soft slit of negative space between adjacent fingertips so the four are just slightly separated while remaining near parallel. At full image size around 3 to 5 pixels of air between neighboring distal fingers is enough. Slight natural stagger in reach, middle finger longest, little finger shortest. Keep all four pads AND palm gently flat to the wall, keep the exact same side-on left arm, hand and wall angle. The thumb remains completely hidden behind the palm (no thumb silhouette, bump, tip or nail). These are relaxed adjacent fingers of one modestly sized hand, NOT splayed fan fingers and NOT a broad flat back-of-hand view. Do not change any other pixel or scene element. The narrow blue wall's vertical glowing edge remains exactly at 23% canvas width, the beam, ripples, character, nose, cloak and light are as in the input. 1.316 landscape. No text, frames, rings, decals, extra fingers or jewelry.",
+      "final_source": "user-selected PNG"
+    },
+    {
+      "name": "豪华大裂解",
+      "model": "GrandDisjunction",
+      "file": "Shenshen/images/card_portraits/rare/grand_disjunction.png",
+      "sha256": "20c20e44b787cbd709b8b17aa17631a079d31751083a6bc554fbed120429e6e2",
+      "scene": "Focus on an enemy's ornate magical protection being meticulously UNMADE. A small old defensive bronze charm hangs over layered faceted mirror armor at center. Shenshen draws one clean diagonal with her staff at the lower corner; metal and glass unravel into separate geometric ribbons and chips, and underneath, a single fresh sun-mark glows on the now-exposed stone guardian. Two modest distant shields unravel in sympathy. Broad, deliberate painterly shapes against a quiet midnight-plum shadow, warm apricot sunlight on the torn edges; spell reads as dismantling and marking a defense, not an explosion or a weapon beam.",
+      "references": [
+        "rare-made_real.png",
+        "shenshen-approved.png"
+      ],
+      "last_edit_prompt": null,
+      "final_source": "generated illustration"
+    },
+    {
+      "name": "阳电子炮",
+      "model": "PositronCannon",
+      "file": "Shenshen/images/card_portraits/rare/positron_cannon.png",
+      "sha256": "3274abe5f0aa7166d410249ba8d5c6e717d0233289dfdfea9b02ffb9b476f76b",
+      "scene": "Epic side-on instant of annihilation in a dawn-lit stone arena. From the left, Shenshen's small solar staff and cloak launch one tightly collimated pearly peach beam into the broad face of a raised enemy shield at the right. The SHIELD ITSELF begins to glow from within and breaks into a triangular chain of incandescent fragments that turn back toward its owner. Make the contained beam thin and the armor-fed second detonation much broader; this visibly tells how the enemy's own defense enhances the attack. Let the shield, contact point and returning blast dominate, not a generic fireball. One coherent shot, no literal gun, no modern technology, no UI.",
+      "references": [
+        "rare-made_real.png",
+        "shenshen-approved.png"
+      ],
+      "last_edit_prompt": null,
+      "final_source": "generated illustration"
+    },
+    {
+      "name": "乘隙",
+      "model": "SeizeTheOpening",
+      "file": "Shenshen/images/card_portraits/rare/seize_the_opening.png",
+      "sha256": "69048fef249f3885d137b97b39cf3598c3bc7f0b2ff903340db3e155a73c2602",
+      "scene": "Low ground-level action image. A large weathered stone opponent has turned aside and lifted its bracer, leaving a narrow LIGHT gap beneath the elbow. The single silver-cream kitten darts through that opening, long tail balancing the movement, clearly separated paws, alert amber eyes. One thorn barb catches the edge of the idle bracer, followed by two short parallel scratching trails. The enemy is mostly implied by the heavy bracer and distant turned silhouette. Composition reads immediately as a small clever cat exploiting a very specific opening, not hissing or leaping at the viewer. Keep anatomy natural and all paws attached.",
+      "references": [
+        "rare-sheathed_claws.png",
+        "cat-approved.png"
+      ],
+      "last_edit_prompt": null,
+      "final_source": "generated illustration"
+    },
+    {
+      "name": "凝眸",
+      "model": "FixedGaze",
+      "file": "Shenshen/images/card_portraits/rare/fixed_gaze.png",
+      "sha256": "f974c93c6511f50c016591d3d5b8769afc8c0a38123d4a6f6225d46bcdd59cc2",
+      "scene": "Extreme close three-quarter profile of the silver-cream kitten in the left foreground, whiskers sharply defined, eyes composed and utterly focused. In the nearer amber iris, the clear tiny silhouette of one selected stone foe. In front of the cat one modest angled shard of mirror light bends an incoming thorn toward that SAME distant foe across a low, out-of-focus courtyard; other shadow forms recede. The watchful eye, the single target and a single bend of light form one graphic diagonal. Do not duplicate the cat physically. No target reticle, UI or glowing laser eyes.",
+      "references": [
+        "rare-sheathed_claws.png",
+        "cat-approved.png"
+      ],
+      "last_edit_prompt": null,
+      "final_source": "generated illustration"
+    },
+    {
+      "name": "起死回生",
+      "model": "Resurrection",
+      "file": "Shenshen/images/card_portraits/rare/resurrection.png",
+      "sha256": "6df65deaec82c82627283e5aaf7bdfbe9e400c07e6f96ef0b1baefd299fda314",
+      "scene": "Tender multiplayer revival scene at daybreak. Shenshen kneels in side view at left, normally proportioned, broad white mantle pooled on the steps, long sun staff leaning in the stone beside her. One hand gently raises a fallen OTHER traveler's gloved hand. The traveler's head/shoulders lift from the ground as a small distinct golden pulse returns to a dim amber lantern at their chest. Give the teammate a simple slate-blue traveling coat so identity and roles are legible. Faces peaceful, no gore, no skeletons, no dead-animal imagery. Two separate hands with natural anatomy, a quiet central point of contact and a shaft of warm dawn light.",
+      "references": [
+        "rare-made_real.png",
+        "shenshen-approved.png"
+      ],
+      "last_edit_prompt": "Edit this illustration of Resurrection while keeping the established Shenshen mage on the left, the dawn ruins, and the lantern lighting again. The fallen ally on the RIGHT must be an anonymous, completely hooded, gender-neutral teammate. Replace the visible male head/hair/face with a generous slate-blue HOOD turned slightly away. The entire face and all hair remain concealed in deep soft shadow under the hood. Zero visible male or female facial features, beard, jawline, lips or gender-coded physique. A flowing unstructured cloak conceals the torso. Convey someone reviving by one gloved hand pressing the floor to rise, a subtle lift of the hood, and the rekindled gold light in the chest lantern. Shenshen offers warm healing light toward the teammate's lantern; if adjusting the contact, her one natural hand can hover above the lamp instead of convoluted intertwined hands. Gentle collaborative rescue, no romantic hand-holding pose. Keep Shenshen's appearance, short ivory hair, sun brooch, staff, palette and full landscape composition. Only one Shenshen and one hooded ally; no text/border.",
+      "final_source": "generated illustration"
+    },
+    {
+      "name": "双相光印",
+      "model": "DualLightSigil",
+      "file": "Shenshen/images/card_portraits/ancient/dual_light_sigil.png",
+      "sha256": "fb78d3790207f06ea93bf42d6d09759305d415a9316aabfb3f42e81e4d41dd48",
+      "scene": "Ancient area spell. A single striking double-aspect solar sigil is the hero object: pale cat-paw curves and a four-pointed sun nested in the same golden seal. It projects distinct smaller copies simultaneously onto three separate stone enemy silhouettes at different depths of a sandstone stair. One elegant two-tone pulse passes over the scene as each mark lands; the surrounding stone is grazed by light. At the margin show only the mage's cuff and staff tip as a scale cue. Avoid card frames, printed emblems, grids or diagrams; make tangible sunlit dust and richly dimensional projected light. Amber, cream, dusty peach with selectively cool reflected shadow.",
+      "references": [
+        "rare-made_real.png",
+        "shenshen-approved.png",
+        "cat-approved.png"
+      ],
+      "last_edit_prompt": null,
+      "final_source": "generated illustration"
+    },
+    {
+      "name": "回环星图",
+      "model": "OrbitingStarChart",
+      "file": "Shenshen/images/card_portraits/ancient/orbiting_star_chart.png",
+      "sha256": "37751a6ed494c9adfcff17ab805094087ac8e0c9751a7c9251ed946bb8984aa3",
+      "scene": "Ancient spell chart as a tactile brass astrolabe suspended over a dark rosewood observatory table, seen at a rakish angle. Two connected orbits respond to a single spark of expended magic: along one orbit grows a fine living strand of hooked briar ending in a tiny feline paw-shaped constellation; along the other, a nimble bright ribbon outlines the mysterious wide-hatted mage in sparse stars. Teethlike constellations and overlapping elliptical brass rings converge on one radiant hub, with broad negative space around the dial. A few sunlit stones in a high window beyond. No numerals, real scientific labels, letters or zodiac signs. Make the contrasting two paths legible when small.",
+      "references": [
+        "common-thorn_prayer.png",
+        "shenshen-approved.png",
+        "cat-approved.png"
+      ],
+      "last_edit_prompt": "Precisely edit this particular Orbiting Star Chart illustration; keep the Shenshen design, pose and hand, kitten paw constellation, enormous aged brass astrolabe, dawn architecture, crop and Apricot Dawn Gold painting style. The correction is to remove repeated solar medallions. On her clothing, keep the ONE authentic sun pin on the hat and ONLY ONE small authentic sun BROOCH at the top center of the closed cloak. Erase the duplicate sun brooch immediately beside it; naturally fill that location with unbroken ivory cloth. Keep the original modest staff tip but make it less dominant, in shadow with subdued highlights. On the STAR MAP remove ALL toothed circular SUN BADGE shapes, including the emblem on the hat and the emblem on the chest of the drawn miniature mage contour and the large sunburst at the center of the chart. The small hooded mage constellation on the orbital track should be rendered solely as a simple constellation of unadorned fine lines and distant small star dots. At the center of the chart use ONE elegant small cream-gold four-pointed guiding star with NO metallic round rim and NO sun rays, as the hub linking the two paths; leave open dark sky around it. The chart now has ONLY a handful of sparingly placed pinprick stars along its two trajectories. Preserve a thorn branch on one path and the graceful other orbit, clarity at thumbnail size, no letters or text. No added emblems or round spiky icons anywhere. Avoid altering the original composition or duplicating hands and faces.",
+      "final_source": "generated illustration"
+    }
+  ],
+  "prompt": "Repaint the supplied illustration as a new sibling card in this exact hand-painted game set. Keep only its visual language; replace composition, setting and subject/action with the card-specific scene below. Full-bleed opaque horizontal art, aspect 250:190 (roughly 1.316:1), for a card art window, not the card UI. No text, written letters, labels, numbers, border, watermark, UI or graphic overlay. One strong readable subject/silhouette and one clear magical gesture. Use the established Apricot Dawn Gold palette: clean ivory, buttery sunlight #FFF0CD, apricot-pink #EFB89D and pale peach #F8D4B5; mauve or cool mineral shadows as local accents, true clean whites and deliberate darks, never a uniform sepia wash. Hand-laid gouache, chunky confident shapes, soft dry-brush surface, crisp selective edges, expressive lighting. Occasional stone architecture or color accents as the scene demands. Keep essential subjects within the inner 88 percent and moving limbs readable at thumbnail size.",
+  "style": "杏桃晨金"
+}
