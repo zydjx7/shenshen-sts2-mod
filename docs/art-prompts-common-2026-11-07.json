@@ -1,0 +1,425 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-07",
+  "status": "用户已确认21张白卡卡图并授权接入；源码和素材已接入，Windows Release编译与资源打包成功，未运行自动测试或游戏测试，由用户实测。",
+  "tool": "image_gen.imagegen (built-in)",
+  "scope": "21张Common：少女单人10张、猫10张、少女多人专用光之祝福1张。起始牌和蓝卡不在本次接入。",
+  "generation": {
+    "human_selected": 11,
+    "cat_selected": 10,
+    "cat_discarded": 1,
+    "total_generated": 22,
+    "total_selected": 21,
+    "discarded_note": "猫回眸首稿未清楚表现回头，已重新生成；退稿不进入正式资源。"
+  },
+  "asset_policy": {
+    "width": 1438,
+    "height": 1093,
+    "format": "PNG",
+    "processing": "获确认原图原封不动复制到目标路径，不裁切、缩放、重绘或重新编码。"
+  },
+  "references": {
+    "human": "Shenshen/images/character_forms/human/solar-b5/approved-design.png",
+    "cat": "Shenshen/images/character_forms/cat/kitten-faithful/approved-design.png",
+    "style": "Shenshen/images/card_portraits/common/twin_sparks.png"
+  },
+  "verification": "本轮不运行自动测试或游戏测试；编译、资源打包与游戏实测分层记录。游戏内效果等待用户实测。",
+  "cards": [
+    {
+      "class_name": "ShatteredMirror",
+      "name": "碎光镜",
+      "form": "human",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/human/solar-b5/approved-design.png"
+        },
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/shattered_mirror.png",
+      "prompt": "Use case: stylized-concept. One ORIGINAL landscape 25:19 (approximately 4:3) full-bleed fantasy deckbuilder CARD ILLUSTRATION, no card UI. Unified art direction for an entire Slay the Spire 2-inspired mod card set: expressive hand-painted gouache/digital brushwork, bold angular interlocking shapes, selective dark plum ink contour, crisp graphic silhouette, simplified sculpted forms, strong warm-cool contrast, matte painted texture, dramatic localized light, a restrained slightly eerie storybook mood with charming characterization. Visually legible at 250x190. NOT anime, NOT photoreal, NOT glossy 3D, NOT vector-flat, NOT ornate high-detail splash art. Palette family: deep desaturated indigo/plum stone shadows, warm dusty rose, ivory, antique sun gold, optional pale cyan reflections. Limit each image to one clear action and 2-3 large value groups. Detailed subject occupies central 75%; retain useful background to all edges; wide landscape 25:19 (approximately 4:3) composition. No letters, words, numbers, titles, watermark, panels, card border, cost icons, UI or labels. This is a new scene, not alteration of the supplied reference image. Reference is for character identity only; redraw in the unified painted card-art style.\nReference roles: image 1 is approved witch IDENTITY. Image 2 is the already made Twin Sparks card STYLE reference ONLY. Match its brush language, color harmony, lighting quality and rendering; compose an entirely DIFFERENT scene, not a replica. Keep full-bleed 25:19 horizontal image.\nThe SAME mysterious sun-witch girl from reference: wide ivory and dusty pink pointed sun-brooch hat, short cream platinum hair wisps, face under opaque deep hat shadow so ONLY small pale chin is visible (no eyes/nose/mouth), flowing fully clothed layered ivory/rose cloak with simple antique-gold sun brooch/trim, very pale skin, golden sun-tipped slim staff. Graceful modest silhouette; no exposed cleavage. In medium or wide shots preserve connected sleeves/hands. If feet shown they are bare. Never replace with an exposed-face anime girl. No pet or second form present.\nCard scene: 碎光镜 / ShatteredMirror. Close-up diagonal composition: the sun witch's connected cloak sleeve and pale open hand at lower left command THREE LARGE jagged floating mirror shards at center. In their cyan-tinted reflective faces a single dull red enemy bolt from upper-right visibly bends back outward as a small sharp golden return streak. Witch's hat-shadow face only partly visible behind left edge, small. The shards are a LIMITED frontal barrier, not an enclosing impenetrable bubble. Dark plum stone room, bold graphic reflected highlights, sparse glass sparkle. Mirrors and reflection action are the focal subject."
+    },
+    {
+      "class_name": "ThornPrayer",
+      "name": "荆棘祝祷",
+      "form": "human",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/human/solar-b5/approved-design.png"
+        },
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/thorn_prayer.png",
+      "prompt": "Use case: stylized-concept. One ORIGINAL landscape 25:19 (approximately 4:3) full-bleed fantasy deckbuilder CARD ILLUSTRATION, no card UI. Unified art direction for an entire Slay the Spire 2-inspired mod card set: expressive hand-painted gouache/digital brushwork, bold angular interlocking shapes, selective dark plum ink contour, crisp graphic silhouette, simplified sculpted forms, strong warm-cool contrast, matte painted texture, dramatic localized light, a restrained slightly eerie storybook mood with charming characterization. Visually legible at 250x190. NOT anime, NOT photoreal, NOT glossy 3D, NOT vector-flat, NOT ornate high-detail splash art. Palette family: deep desaturated indigo/plum stone shadows, warm dusty rose, ivory, antique sun gold, optional pale cyan reflections. Limit each image to one clear action and 2-3 large value groups. Detailed subject occupies central 75%; retain useful background to all edges; wide landscape 25:19 (approximately 4:3) composition. No letters, words, numbers, titles, watermark, panels, card border, cost icons, UI or labels. This is a new scene, not alteration of the supplied reference image. Reference is for character identity only; redraw in the unified painted card-art style.\nReference roles: image 1 is approved witch IDENTITY. Image 2 is the already made Twin Sparks card STYLE reference ONLY. Match its brush language, color harmony, lighting quality and rendering; compose an entirely DIFFERENT scene, not a replica. Keep full-bleed 25:19 horizontal image.\nThe SAME mysterious sun-witch girl from reference: wide ivory and dusty pink pointed sun-brooch hat, short cream platinum hair wisps, face under opaque deep hat shadow so ONLY small pale chin is visible (no eyes/nose/mouth), flowing fully clothed layered ivory/rose cloak with simple antique-gold sun brooch/trim, very pale skin, golden sun-tipped slim staff. Graceful modest silhouette; no exposed cleavage. In medium or wide shots preserve connected sleeves/hands. If feet shown they are bare. Never replace with an exposed-face anime girl. No pet or second form present.\nCard scene: 荆棘祝祷 / ThornPrayer. Quiet medium frontal composition: same shadow-faced sun witch bows her hat slightly, hands gently brought together around her vertical sun staff at chest height. One tangible antique-gold thorny vine curls once around her forearms and outward into a low protective crescent. Small sharp thorns glow ivory, not wounds, no blood, no plants everywhere. Rose fabric catches warm light against very dark indigo-plum alcove. The hands, thorn ring, and sun brooch form one readable central triangle. This is self-protection by prayer, not attacking."
+    },
+    {
+      "class_name": "LightfootBlessing",
+      "name": "轻盈祝福",
+      "form": "human",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/human/solar-b5/approved-design.png"
+        },
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/lightfoot_blessing.png",
+      "prompt": "Use case: stylized-concept. One ORIGINAL landscape 25:19 (approximately 4:3) full-bleed fantasy deckbuilder CARD ILLUSTRATION, no card UI. Unified art direction for an entire Slay the Spire 2-inspired mod card set: expressive hand-painted gouache/digital brushwork, bold angular interlocking shapes, selective dark plum ink contour, crisp graphic silhouette, simplified sculpted forms, strong warm-cool contrast, matte painted texture, dramatic localized light, a restrained slightly eerie storybook mood with charming characterization. Visually legible at 250x190. NOT anime, NOT photoreal, NOT glossy 3D, NOT vector-flat, NOT ornate high-detail splash art. Palette family: deep desaturated indigo/plum stone shadows, warm dusty rose, ivory, antique sun gold, optional pale cyan reflections. Limit each image to one clear action and 2-3 large value groups. Detailed subject occupies central 75%; retain useful background to all edges; wide landscape 25:19 (approximately 4:3) composition. No letters, words, numbers, titles, watermark, panels, card border, cost icons, UI or labels. This is a new scene, not alteration of the supplied reference image. Reference is for character identity only; redraw in the unified painted card-art style.\nReference roles: image 1 is approved witch IDENTITY. Image 2 is the already made Twin Sparks card STYLE reference ONLY. Match its brush language, color harmony, lighting quality and rendering; compose an entirely DIFFERENT scene, not a replica. Keep full-bleed 25:19 horizontal image.\nThe SAME mysterious sun-witch girl from reference: wide ivory and dusty pink pointed sun-brooch hat, short cream platinum hair wisps, face under opaque deep hat shadow so ONLY small pale chin is visible (no eyes/nose/mouth), flowing fully clothed layered ivory/rose cloak with simple antique-gold sun brooch/trim, very pale skin, golden sun-tipped slim staff. Graceful modest silhouette; no exposed cleavage. In medium or wide shots preserve connected sleeves/hands. If feet shown they are bare. Never replace with an exposed-face anime girl. No pet or second form present.\nCard scene: 轻盈祝福 / LightfootBlessing. Fresh low-angle diagonal crop from the SAME witch's waist to both BARE feet, no head required. Ivory and rose cloak hems swept upward by a light step, pale ankles retain natural fullness. One pointed bare foot lightly touches a dark stone step, the other naturally lifts behind; both connected legs anatomically plausible, elegant movement. Two thin golden feather-shaped wind ribbons curl around the ankles and carry one small loose pale-gold leaf upward. Focus on lightness/agility, not a shield or attack, no winged feet. Cool plum/teal stone background, restrained warm sunlit edges. Keep both feet and ankles comfortably inside frame, not cropped."
+    },
+    {
+      "class_name": "LightCurtain",
+      "name": "光幕",
+      "form": "human",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/human/solar-b5/approved-design.png"
+        },
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/light_curtain.png",
+      "prompt": "Use case: stylized-concept. One ORIGINAL landscape 25:19 (approximately 4:3) full-bleed fantasy deckbuilder CARD ILLUSTRATION, no card UI. Unified art direction for an entire Slay the Spire 2-inspired mod card set: expressive hand-painted gouache/digital brushwork, bold angular interlocking shapes, selective dark plum ink contour, crisp graphic silhouette, simplified sculpted forms, strong warm-cool contrast, matte painted texture, dramatic localized light, a restrained slightly eerie storybook mood with charming characterization. Visually legible at 250x190. NOT anime, NOT photoreal, NOT glossy 3D, NOT vector-flat, NOT ornate high-detail splash art. Palette family: deep desaturated indigo/plum stone shadows, warm dusty rose, ivory, antique sun gold, optional pale cyan reflections. Limit each image to one clear action and 2-3 large value groups. Detailed subject occupies central 75%; retain useful background to all edges; wide landscape 25:19 (approximately 4:3) composition. No letters, words, numbers, titles, watermark, panels, card border, cost icons, UI or labels. This is a new scene, not alteration of the supplied reference image. Reference is for character identity only; redraw in the unified painted card-art style.\nReference roles: image 1 is approved witch IDENTITY. Image 2 is the already made Twin Sparks card STYLE reference ONLY. Match its brush language, color harmony, lighting quality and rendering; compose an entirely DIFFERENT scene, not a replica. Keep full-bleed 25:19 horizontal image.\nThe SAME mysterious sun-witch girl from reference: wide ivory and dusty pink pointed sun-brooch hat, short cream platinum hair wisps, face under opaque deep hat shadow so ONLY small pale chin is visible (no eyes/nose/mouth), flowing fully clothed layered ivory/rose cloak with simple antique-gold sun brooch/trim, very pale skin, golden sun-tipped slim staff. Graceful modest silhouette; no exposed cleavage. In medium or wide shots preserve connected sleeves/hands. If feet shown they are bare. Never replace with an exposed-face anime girl. No pet or second form present.\nCard scene: 光幕 / LightCurtain. Strong broad lateral composition: same witch seen in medium profile on right, face still entirely hidden under hat, lifts her sun staff and draws ONE wide translucent flowing curtain of ivory-gold light from upper center across the left two-thirds. Its scalloped cloth-like layers are plainly a soft continuous luminous veil, NOT mirror shards, NOT a circular shield. A few small blunt shadow stones halt and dim along its outside left edge. Rose-gold light on hand and sleeve, deep indigo ruined arches behind. One clear protective gesture, large simple painted shapes."
+    },
+    {
+      "class_name": "LingeringLight",
+      "name": "留光",
+      "form": "human",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/human/solar-b5/approved-design.png"
+        },
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/lingering_light.png",
+      "prompt": "Use case: stylized-concept. One ORIGINAL landscape 25:19 (approximately 4:3) full-bleed fantasy deckbuilder CARD ILLUSTRATION, no card UI. Unified art direction for an entire Slay the Spire 2-inspired mod card set: expressive hand-painted gouache/digital brushwork, bold angular interlocking shapes, selective dark plum ink contour, crisp graphic silhouette, simplified sculpted forms, strong warm-cool contrast, matte painted texture, dramatic localized light, a restrained slightly eerie storybook mood with charming characterization. Visually legible at 250x190. NOT anime, NOT photoreal, NOT glossy 3D, NOT vector-flat, NOT ornate high-detail splash art. Palette family: deep desaturated indigo/plum stone shadows, warm dusty rose, ivory, antique sun gold, optional pale cyan reflections. Limit each image to one clear action and 2-3 large value groups. Detailed subject occupies central 75%; retain useful background to all edges; wide landscape 25:19 (approximately 4:3) composition. No letters, words, numbers, titles, watermark, panels, card border, cost icons, UI or labels. This is a new scene, not alteration of the supplied reference image. Reference is for character identity only; redraw in the unified painted card-art style.\nReference roles: image 1 is approved witch IDENTITY. Image 2 is the already made Twin Sparks card STYLE reference ONLY. Match its brush language, color harmony, lighting quality and rendering; compose an entirely DIFFERENT scene, not a replica. Keep full-bleed 25:19 horizontal image.\nThe SAME mysterious sun-witch girl from reference: wide ivory and dusty pink pointed sun-brooch hat, short cream platinum hair wisps, face under opaque deep hat shadow so ONLY small pale chin is visible (no eyes/nose/mouth), flowing fully clothed layered ivory/rose cloak with simple antique-gold sun brooch/trim, very pale skin, golden sun-tipped slim staff. Graceful modest silhouette; no exposed cleavage. In medium or wide shots preserve connected sleeves/hands. If feet shown they are bare. Never replace with an exposed-face anime girl. No pet or second form present.\nCard scene: 留光 / LingeringLight. Intimate close-up: the SAME witch's pale hand emerging from connected ivory/rose gold-trimmed cloak sleeve gently catches ONE warm lingering filament of sunlight. Filament curves up from a dim stone ledge into a protective semicircle and returns a single abstract GOLDEN PAW-PRINT light sigil toward her palm. The paw print is a flat magical memory symbol, NOT a living cat, NOT a ghost animal. Hat brim and sun brooch appear softly cropped in upper-left background, girl remains shadow-faced. Quiet watchful mood, dusk violet negative space, no cards, no text, no multiple objects."
+    },
+    {
+      "class_name": "TwinSparks",
+      "name": "双生火花",
+      "form": "human",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/human/solar-b5/approved-design.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/twin_sparks.png",
+      "prompt": "Use case: stylized-concept. One ORIGINAL landscape 25:19 (approximately 4:3) full-bleed fantasy deckbuilder CARD ILLUSTRATION, no card UI. Unified art direction for an entire Slay the Spire 2-inspired mod card set: expressive hand-painted gouache/digital brushwork, bold angular interlocking shapes, selective dark plum ink contour, crisp graphic silhouette, simplified sculpted forms, strong warm-cool contrast, matte painted texture, dramatic localized light, a restrained slightly eerie storybook mood with charming characterization. Visually legible at 250x190. NOT anime, NOT photoreal, NOT glossy 3D, NOT vector-flat, NOT ornate high-detail splash art. Palette family: deep desaturated indigo/plum stone shadows, warm dusty rose, ivory, antique sun gold, optional pale cyan reflections. Limit each image to one clear action and 2-3 large value groups. Detailed subject occupies central 75%; retain useful background to all edges; wide landscape 25:19 (approximately 4:3) composition. No letters, words, numbers, titles, watermark, panels, card border, cost icons, UI or labels. This is a new scene, not alteration of the supplied reference image. Reference is for character identity only; redraw in the unified painted card-art style.\nThe SAME mysterious sun-witch girl from reference: wide ivory and dusty pink pointed sun-brooch hat, short cream platinum hair wisps, face under opaque deep hat shadow so ONLY small pale chin is visible (no eyes/nose/mouth), flowing fully clothed layered ivory/rose cloak with simple antique-gold sun brooch/trim, very pale skin, golden sun-tipped slim staff. Graceful modest silhouette; no exposed cleavage. In medium or wide shots preserve connected sleeves/hands. If feet shown they are bare. Never replace with an exposed-face anime girl. No pet or second form present.\nCard scene: TWIN SPARKS / 双生火花. Medium dynamic over-shoulder crop of the sun witch on left, connected sleeve and one pale hand guiding her sun staff diagonally toward right. EXACTLY TWO bright separate small ivory-gold flame bolts with rose-orange outer fire corkscrew in parallel toward the right foreground. Keep both firebolts clearly separated, equal main importance, with short angular painted flame trails. Quiet dark plum ruined stone wall behind, not a huge explosion; silhouette and the pair of flames read immediately. Crop at waist or knees, so the hat, staff hand, and two projectiles fill the composition without feet. No symbols or text."
+    },
+    {
+      "class_name": "ChasingFlame",
+      "name": "追焰",
+      "form": "human",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/human/solar-b5/approved-design.png"
+        },
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/chasing_flame.png",
+      "prompt": "Use case: stylized-concept. One ORIGINAL landscape 25:19 (approximately 4:3) full-bleed fantasy deckbuilder CARD ILLUSTRATION, no card UI. Unified art direction for an entire Slay the Spire 2-inspired mod card set: expressive hand-painted gouache/digital brushwork, bold angular interlocking shapes, selective dark plum ink contour, crisp graphic silhouette, simplified sculpted forms, strong warm-cool contrast, matte painted texture, dramatic localized light, a restrained slightly eerie storybook mood with charming characterization. Visually legible at 250x190. NOT anime, NOT photoreal, NOT glossy 3D, NOT vector-flat, NOT ornate high-detail splash art. Palette family: deep desaturated indigo/plum stone shadows, warm dusty rose, ivory, antique sun gold, optional pale cyan reflections. Limit each image to one clear action and 2-3 large value groups. Detailed subject occupies central 75%; retain useful background to all edges; wide landscape 25:19 (approximately 4:3) composition. No letters, words, numbers, titles, watermark, panels, card border, cost icons, UI or labels. This is a new scene, not alteration of the supplied reference image. Reference is for character identity only; redraw in the unified painted card-art style.\nReference roles: image 1 is approved witch IDENTITY. Image 2 is the already made Twin Sparks card STYLE reference ONLY. Match its brush language, color harmony, lighting quality and rendering; compose an entirely DIFFERENT scene, not a replica. Keep full-bleed 25:19 horizontal image.\nThe SAME mysterious sun-witch girl from reference: wide ivory and dusty pink pointed sun-brooch hat, short cream platinum hair wisps, face under opaque deep hat shadow so ONLY small pale chin is visible (no eyes/nose/mouth), flowing fully clothed layered ivory/rose cloak with simple antique-gold sun brooch/trim, very pale skin, golden sun-tipped slim staff. Graceful modest silhouette; no exposed cleavage. In medium or wide shots preserve connected sleeves/hands. If feet shown they are bare. Never replace with an exposed-face anime girl. No pet or second form present.\nCard scene: 追焰 / ChasingFlame. Action-focused wide composition: ONE curving hooked ivory-orange fire trail swerves around a thick plum stone pillar from lower left to upper right, homing toward a clear little antique-gold SUN MARK on the shoulder of a dark faceless stone enemy silhouette at right. The sun-mark is a simple bright circle with six pointed rays, no letters. Only witch's sun-staff tip and a bit of rose sleeve seen at lower left, no full portrait needed. Pursuit movement is unmistakable, one flame not twin bolts. Warm sharply tapered fire against cool dark ruined architecture, restrained debris."
+    },
+    {
+      "class_name": "DazzlingLight",
+      "name": "眩光术",
+      "form": "human",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/human/solar-b5/approved-design.png"
+        },
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/dazzling_light.png",
+      "prompt": "Use case: stylized-concept. One ORIGINAL landscape 25:19 (approximately 4:3) full-bleed fantasy deckbuilder CARD ILLUSTRATION, no card UI. Unified art direction for an entire Slay the Spire 2-inspired mod card set: expressive hand-painted gouache/digital brushwork, bold angular interlocking shapes, selective dark plum ink contour, crisp graphic silhouette, simplified sculpted forms, strong warm-cool contrast, matte painted texture, dramatic localized light, a restrained slightly eerie storybook mood with charming characterization. Visually legible at 250x190. NOT anime, NOT photoreal, NOT glossy 3D, NOT vector-flat, NOT ornate high-detail splash art. Palette family: deep desaturated indigo/plum stone shadows, warm dusty rose, ivory, antique sun gold, optional pale cyan reflections. Limit each image to one clear action and 2-3 large value groups. Detailed subject occupies central 75%; retain useful background to all edges; wide landscape 25:19 (approximately 4:3) composition. No letters, words, numbers, titles, watermark, panels, card border, cost icons, UI or labels. This is a new scene, not alteration of the supplied reference image. Reference is for character identity only; redraw in the unified painted card-art style.\nReference roles: image 1 is approved witch IDENTITY. Image 2 is the already made Twin Sparks card STYLE reference ONLY. Match its brush language, color harmony, lighting quality and rendering; compose an entirely DIFFERENT scene, not a replica. Keep full-bleed 25:19 horizontal image.\nThe SAME mysterious sun-witch girl from reference: wide ivory and dusty pink pointed sun-brooch hat, short cream platinum hair wisps, face under opaque deep hat shadow so ONLY small pale chin is visible (no eyes/nose/mouth), flowing fully clothed layered ivory/rose cloak with simple antique-gold sun brooch/trim, very pale skin, golden sun-tipped slim staff. Graceful modest silhouette; no exposed cleavage. In medium or wide shots preserve connected sleeves/hands. If feet shown they are bare. Never replace with an exposed-face anime girl. No pet or second form present.\nCard scene: 眩光术 / DazzlingLight. Punchy high-contrast medium-wide composition: shadow-faced witch at left thrusts her SUN staff toward camera-right and unfurls a SINGLE concentrated serrated white-gold flash like a small sunburst. One dark faceless armored enemy silhouette on right staggers and shields its eye area with an arm, conveying weakness/dazzle. Flash is central, witch and recoiling enemy readable at thumbnail scale, background nearly solid dark plum with minimal painterly ruin detail. Do not reveal witch's eyes, no blood, not an enormous destructive explosion."
+    },
+    {
+      "class_name": "Halo",
+      "name": "光晕",
+      "form": "human",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/human/solar-b5/approved-design.png"
+        },
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/halo.png",
+      "prompt": "Use case: stylized-concept. One ORIGINAL landscape 25:19 (approximately 4:3) full-bleed fantasy deckbuilder CARD ILLUSTRATION, no card UI. Unified art direction for an entire Slay the Spire 2-inspired mod card set: expressive hand-painted gouache/digital brushwork, bold angular interlocking shapes, selective dark plum ink contour, crisp graphic silhouette, simplified sculpted forms, strong warm-cool contrast, matte painted texture, dramatic localized light, a restrained slightly eerie storybook mood with charming characterization. Visually legible at 250x190. NOT anime, NOT photoreal, NOT glossy 3D, NOT vector-flat, NOT ornate high-detail splash art. Palette family: deep desaturated indigo/plum stone shadows, warm dusty rose, ivory, antique sun gold, optional pale cyan reflections. Limit each image to one clear action and 2-3 large value groups. Detailed subject occupies central 75%; retain useful background to all edges; wide landscape 25:19 (approximately 4:3) composition. No letters, words, numbers, titles, watermark, panels, card border, cost icons, UI or labels. This is a new scene, not alteration of the supplied reference image. Reference is for character identity only; redraw in the unified painted card-art style.\nReference roles: image 1 is approved witch IDENTITY. Image 2 is the already made Twin Sparks card STYLE reference ONLY. Match its brush language, color harmony, lighting quality and rendering; compose an entirely DIFFERENT scene, not a replica. Keep full-bleed 25:19 horizontal image.\nThe SAME mysterious sun-witch girl from reference: wide ivory and dusty pink pointed sun-brooch hat, short cream platinum hair wisps, face under opaque deep hat shadow so ONLY small pale chin is visible (no eyes/nose/mouth), flowing fully clothed layered ivory/rose cloak with simple antique-gold sun brooch/trim, very pale skin, golden sun-tipped slim staff. Graceful modest silhouette; no exposed cleavage. In medium or wide shots preserve connected sleeves/hands. If feet shown they are bare. Never replace with an exposed-face anime girl. No pet or second form present.\nCard scene: 光晕 / Halo. Wide dramatic low camera composition: SAME witch stands near center, complete modest cloak and hidden face, BARE feet visible on small dark stone dais. From around her waist expands ONE broad tilted oval ring of antique-gold/ivory sunlight across the entire frame, striking two small indistinct shadow enemy forms at left and right edges. A SECOND MUCH SMALLER cluster of thorned golden branches curls near her lower cloak as a protective conditional motif, subordinate to the big blast halo. Girl alone, no cat. Clear simple concentric action, warm rosy center versus indigo foreground, no intricate rune text."
+    },
+    {
+      "class_name": "RefractedVolley",
+      "name": "折光连射",
+      "form": "human",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/human/solar-b5/approved-design.png"
+        },
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/refracted_volley.png",
+      "prompt": "Use case: stylized-concept. One ORIGINAL landscape 25:19 (approximately 4:3) full-bleed fantasy deckbuilder CARD ILLUSTRATION, no card UI. Unified art direction for an entire Slay the Spire 2-inspired mod card set: expressive hand-painted gouache/digital brushwork, bold angular interlocking shapes, selective dark plum ink contour, crisp graphic silhouette, simplified sculpted forms, strong warm-cool contrast, matte painted texture, dramatic localized light, a restrained slightly eerie storybook mood with charming characterization. Visually legible at 250x190. NOT anime, NOT photoreal, NOT glossy 3D, NOT vector-flat, NOT ornate high-detail splash art. Palette family: deep desaturated indigo/plum stone shadows, warm dusty rose, ivory, antique sun gold, optional pale cyan reflections. Limit each image to one clear action and 2-3 large value groups. Detailed subject occupies central 75%; retain useful background to all edges; wide landscape 25:19 (approximately 4:3) composition. No letters, words, numbers, titles, watermark, panels, card border, cost icons, UI or labels. This is a new scene, not alteration of the supplied reference image. Reference is for character identity only; redraw in the unified painted card-art style.\nReference roles: image 1 is approved witch IDENTITY. Image 2 is the already made Twin Sparks card STYLE reference ONLY. Match its brush language, color harmony, lighting quality and rendering; compose an entirely DIFFERENT scene, not a replica. Keep full-bleed 25:19 horizontal image.\nThe SAME mysterious sun-witch girl from reference: wide ivory and dusty pink pointed sun-brooch hat, short cream platinum hair wisps, face under opaque deep hat shadow so ONLY small pale chin is visible (no eyes/nose/mouth), flowing fully clothed layered ivory/rose cloak with simple antique-gold sun brooch/trim, very pale skin, golden sun-tipped slim staff. Graceful modest silhouette; no exposed cleavage. In medium or wide shots preserve connected sleeves/hands. If feet shown they are bare. Never replace with an exposed-face anime girl. No pet or second form present.\nCard scene: 折光连射 / RefractedVolley. Geometric close-up dynamic composition: same witch at far left in three-quarter shoulder crop, connected hand and sun staff aim toward a single LARGE angular translucent pale-cyan shield-prism at center. EXACTLY TWO slim gold-white light projectiles pass through the shield facet and visibly change angle in parallel toward upper right, ending in two crisp bright spearheads. Keep shield one solid plane distinct from fragmented mirrors. Deep plum background, strong restrained cyan-gold contrast with dusty pink sleeve, no third beam, no arrows or UI."
+    },
+    {
+      "class_name": "LightBlessing",
+      "name": "光之祝福",
+      "form": "human",
+      "rarity": "Common",
+      "multiplayer_only": true,
+      "input_images": [
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/human/solar-b5/approved-design.png"
+        },
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/light_blessing.png",
+      "prompt": "Use case: stylized-concept. One ORIGINAL landscape 25:19 (approximately 4:3) full-bleed fantasy deckbuilder CARD ILLUSTRATION, no card UI. Unified art direction for an entire Slay the Spire 2-inspired mod card set: expressive hand-painted gouache/digital brushwork, bold angular interlocking shapes, selective dark plum ink contour, crisp graphic silhouette, simplified sculpted forms, strong warm-cool contrast, matte painted texture, dramatic localized light, a restrained slightly eerie storybook mood with charming characterization. Visually legible at 250x190. NOT anime, NOT photoreal, NOT glossy 3D, NOT vector-flat, NOT ornate high-detail splash art. Palette family: deep desaturated indigo/plum stone shadows, warm dusty rose, ivory, antique sun gold, optional pale cyan reflections. Limit each image to one clear action and 2-3 large value groups. Detailed subject occupies central 75%; retain useful background to all edges; wide landscape 25:19 (approximately 4:3) composition. No letters, words, numbers, titles, watermark, panels, card border, cost icons, UI or labels. This is a new scene, not alteration of the supplied reference image. Reference is for character identity only; redraw in the unified painted card-art style.\nReference roles: image 1 is approved witch IDENTITY. Image 2 is the already made Twin Sparks card STYLE reference ONLY. Match its brush language, color harmony, lighting quality and rendering; compose an entirely DIFFERENT scene, not a replica. Keep full-bleed 25:19 horizontal image.\nThe SAME mysterious sun-witch girl from reference: wide ivory and dusty pink pointed sun-brooch hat, short cream platinum hair wisps, face under opaque deep hat shadow so ONLY small pale chin is visible (no eyes/nose/mouth), flowing fully clothed layered ivory/rose cloak with simple antique-gold sun brooch/trim, very pale skin, golden sun-tipped slim staff. Graceful modest silhouette; no exposed cleavage. In medium or wide shots preserve connected sleeves/hands. If feet shown they are bare. Never replace with an exposed-face anime girl. No pet or second form present.\nCard scene: 光之祝福 / LightBlessing. Gentle cooperative medium-close composition: SAME shadow-faced sun witch positioned left extends sun staff and open pale hand toward a DIFFERENT hooded adventurer teammate at right. Teammate is a simple dark indigo-cloaked shoulder-and-hand silhouette, not a cat, not a copy of the witch. ONE small floating warm sun disk travels clearly from witch's staff toward the TEAMMATE'S upturned open palm on right; gold light lands on the teammate's fingertips. Witch's own hand remains unlit to clarify blessing another person. Soft broad rose-gold light path, muted dark stone sanctuary, quiet generosity, no handshake, no text."
+    },
+    {
+      "class_name": "ArchedBack",
+      "name": "弓背",
+      "form": "cat",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        },
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/cat/kitten-faithful/approved-design.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/arched_back.png",
+      "prompt": "Use case: stylized-concept. Asset type: original game card illustration only, landscape 25:19 (roughly 4:3), full-bleed, without card frame or UI.\nInput images: Image 1 is the ONLY ART STYLE reference; copy its rough hand-painted gouache, expressive angular interlocking brush shapes, selective dark plum contour, matte painted surface, atmospheric slate-purple masonry and strong warm/cool light contrast. Do not copy the girl or any objects from image 1. Image 2 is the CAT IDENTITY reference only: preserve this same small cream-and-silver-gray long-haired kitten, clever amber eyes, natural quadrupedal anatomy, long relaxed torso, small round paws, fluffy curved tail, triangular ears and silver-gray crown/back markings. Stylize its fur in the exact painted technique of image 1 rather than copying image 2's smoother rendering.\nStyle: Slay the Spire 2-inspired expressive gouache fantasy card art, tactile visible brushwork, clear bold silhouette, quiet dark bluish-plum stone ruins, warm ivory highlights and restrained golden-white/soft-pink magic. Compact readable single action at 250x190. Keep the kitten unmistakably the same identity across the set. No text, letters, numerals, watermarks, borders, UI, human girl, second cat, garments, collars or accessories. No photorealism, no plastic 3D, no smooth anime cel shading, no dense repetitive particle noise.\nScene/action: Low three-quarter side view of the kitten on a cold stone floor, all four paws apart with generous front-to-back stance spacing, torso naturally long. It arches its back defensively with fur fluffed and alert amber eyes looking toward an offscreen threat. A few SHORT fine golden magical thorn glints flare outward at the fur edge along the arched back; these are light outside the coat, not physical spikes growing from skin, and do not recolor the kitten. A subtle curved warm protective glow hugs its silhouette. Composition centers the clear arched silhouette, with dark negative space above and to the right. Keep four legs anatomically readable and no extra paws. The art represents temporary thorns and defense, not an attack leap."
+    },
+    {
+      "class_name": "FurballCurl",
+      "name": "蜷成毛球",
+      "form": "cat",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        },
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/cat/kitten-faithful/approved-design.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/furball_curl.png",
+      "prompt": "Use case: stylized-concept. Asset type: original game card illustration only, landscape 25:19 (roughly 4:3), full-bleed, without card frame or UI.\nInput images: Image 1 is the ONLY ART STYLE reference; copy its rough hand-painted gouache, expressive angular interlocking brush shapes, selective dark plum contour, matte painted surface, atmospheric slate-purple masonry and strong warm/cool light contrast. Do not copy the girl or any objects from image 1. Image 2 is the CAT IDENTITY reference only: preserve this same small cream-and-silver-gray long-haired kitten, clever amber eyes, natural quadrupedal anatomy, long relaxed torso, small round paws, fluffy curved tail, triangular ears and silver-gray crown/back markings. Stylize its fur in the exact painted technique of image 1 rather than copying image 2's smoother rendering.\nStyle: Slay the Spire 2-inspired expressive gouache fantasy card art, tactile visible brushwork, clear bold silhouette, quiet dark bluish-plum stone ruins, warm ivory highlights and restrained golden-white/soft-pink magic. Compact readable single action at 250x190. Keep the kitten unmistakably the same identity across the set. No text, letters, numerals, watermarks, borders, UI, human girl, second cat, garments, collars or accessories. No photorealism, no plastic 3D, no smooth anime cel shading, no dense repetitive particle noise.\nScene/action: Slight overhead view, close-to-medium composition. The kitten curls tightly into a compact protective ball on a weathered dark stone slab, a clear ring of its fluffy tail wraps around its tucked body. Its cream muzzle and TWO alert amber eyes peek from the fur, forepaws tucked beneath the chin, not a sleeping expression. Small elegant golden thorn-shaped magical glints point outward around the perimeter of its coat, enclosed by a broad translucent warm-gold defensive arc. Distinguish the pose from sleeping: taut defensive circular silhouette, eyes open and vigilant, no sunbeam of afternoon sleep. No physical quills, cactus or hedgehog anatomy; the same longhaired kitten is only curled. Strong dark plum negative background and broad cream-gold fur brush planes."
+    },
+    {
+      "class_name": "CuriousPeek",
+      "name": "好奇探头",
+      "form": "cat",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        },
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/cat/kitten-faithful/approved-design.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/curious_peek.png",
+      "prompt": "Use case: stylized-concept. Asset type: original game card illustration only, landscape 25:19 (roughly 4:3), full-bleed, without card frame or UI.\nInput images: Image 1 is the ONLY ART STYLE reference; copy its rough hand-painted gouache, expressive angular interlocking brush shapes, selective dark plum contour, matte painted surface, atmospheric slate-purple masonry and strong warm/cool light contrast. Do not copy the girl or any objects from image 1. Image 2 is the CAT IDENTITY reference only: preserve this same small cream-and-silver-gray long-haired kitten, clever amber eyes, natural quadrupedal anatomy, long relaxed torso, small round paws, fluffy curved tail, triangular ears and silver-gray crown/back markings. Stylize its fur in the exact painted technique of image 1 rather than copying image 2's smoother rendering.\nStyle: Slay the Spire 2-inspired expressive gouache fantasy card art, tactile visible brushwork, clear bold silhouette, quiet dark bluish-plum stone ruins, warm ivory highlights and restrained golden-white/soft-pink magic. Compact readable single action at 250x190. Keep the kitten unmistakably the same identity across the set. No text, letters, numerals, watermarks, borders, UI, human girl, second cat, garments, collars or accessories. No photorealism, no plastic 3D, no smooth anime cel shading, no dense repetitive particle noise.\nScene/action: Intimate low eye-level close view. The kitten peeks curiously over and around the corner of an ancient broken slate-purple stone pedestal. Its head tilts forward, one small forepaw rests on the edge, both attentive amber eyes track THREE quiet golden motes arranged as a loose small arc in the air. The lower body is naturally partly hidden behind stone, with one curved fluffy tail visible behind it, never a second body. One diagonal shaft of warm gold light catches its ear tufts and cream cheek fur. The expression is clever curiosity rather than fear or aggression. Strong asymmetric stone framing; kitten face remains the focal point. No human symbols required."
+    },
+    {
+      "class_name": "Catnap",
+      "name": "小憩",
+      "form": "cat",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        },
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/cat/kitten-faithful/approved-design.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/catnap.png",
+      "prompt": "Use case: stylized-concept. Asset type: original game card illustration only, landscape 25:19 (roughly 4:3), full-bleed, without card frame or UI.\nInput images: Image 1 is the ONLY ART STYLE reference; copy its rough hand-painted gouache, expressive angular interlocking brush shapes, selective dark plum contour, matte painted surface, atmospheric slate-purple masonry and strong warm/cool light contrast. Do not copy the girl or any objects from image 1. Image 2 is the CAT IDENTITY reference only: preserve this same small cream-and-silver-gray long-haired kitten, clever amber eyes, natural quadrupedal anatomy, long relaxed torso, small round paws, fluffy curved tail, triangular ears and silver-gray crown/back markings. Stylize its fur in the exact painted technique of image 1 rather than copying image 2's smoother rendering.\nStyle: Slay the Spire 2-inspired expressive gouache fantasy card art, tactile visible brushwork, clear bold silhouette, quiet dark bluish-plum stone ruins, warm ivory highlights and restrained golden-white/soft-pink magic. Compact readable single action at 250x190. Keep the kitten unmistakably the same identity across the set. No text, letters, numerals, watermarks, borders, UI, human girl, second cat, garments, collars or accessories. No photorealism, no plastic 3D, no smooth anime cel shading, no dense repetitive particle noise.\nScene/action: Slightly elevated three-quarter view of the kitten napping peacefully on a worn broad stone ledge in a ruined chamber. Its naturally long body settles into a loose restful oval, fluffy tail curved around but not covering the whole face, eyes gently closed, head resting on its front paws. A broad diagonal patch of warm afternoon gold sun cuts across its cream fur, with the rest of the room deep slate-purple. TWO small soft golden energy embers hover quietly near the sleeping tail, communicating energy stored for later; no electric effects or exploding magic. Sparse serene composition, soft edges for background but angular painterly fur shapes, a visibly different resting pose from the defense cards."
+    },
+    {
+      "class_name": "Grooming",
+      "name": "舔毛",
+      "form": "cat",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        },
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/cat/kitten-faithful/approved-design.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/grooming.png",
+      "prompt": "Use case: stylized-concept. Asset type: original game card illustration only, landscape 25:19 (roughly 4:3), full-bleed, without card frame or UI.\nInput images: Image 1 is the ONLY ART STYLE reference; copy its rough hand-painted gouache, expressive angular interlocking brush shapes, selective dark plum contour, matte painted surface, atmospheric slate-purple masonry and strong warm/cool light contrast. Do not copy the girl or any objects from image 1. Image 2 is the CAT IDENTITY reference only: preserve this same small cream-and-silver-gray long-haired kitten, clever amber eyes, natural quadrupedal anatomy, long relaxed torso, small round paws, fluffy curved tail, triangular ears and silver-gray crown/back markings. Stylize its fur in the exact painted technique of image 1 rather than copying image 2's smoother rendering.\nStyle: Slay the Spire 2-inspired expressive gouache fantasy card art, tactile visible brushwork, clear bold silhouette, quiet dark bluish-plum stone ruins, warm ivory highlights and restrained golden-white/soft-pink magic. Compact readable single action at 250x190. Keep the kitten unmistakably the same identity across the set. No text, letters, numerals, watermarks, borders, UI, human girl, second cat, garments, collars or accessories. No photorealism, no plastic 3D, no smooth anime cel shading, no dense repetitive particle noise.\nScene/action: Calm medium portrait in landscape format, front three-quarter view, kitten sitting upright on hindquarters on a worn stone floor. ONE small front paw is lifted to its mouth and the kitten's pink tongue visibly licks the paw; the other front paw supports the body naturally. Its eyes are relaxed half-open, ears attentive. A fine golden shimmer runs down the freshly smoothed cream chest and wrist fur into a small translucent protective crescent by the shoulder. A few very subtle thornlike light glints remain external to the flank fur. Tail rests in a single broad curve beside the kitten. Full coherent seated anatomy, exactly four limbs with two hindlegs naturally partly hidden by chest and fur. Quiet plum ruin background with cool shadows and warm rim lighting. Make the visible tongue-on-paw action instantly readable."
+    },
+    {
+      "class_name": "ShedFur",
+      "name": "抖毛",
+      "form": "cat",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        },
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/cat/kitten-faithful/approved-design.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/shed_fur.png",
+      "prompt": "Use case: stylized-concept. Asset type: original game card illustration only, landscape 25:19 (roughly 4:3), full-bleed, without card frame or UI.\nInput images: Image 1 is the ONLY ART STYLE reference; copy its rough hand-painted gouache, expressive angular interlocking brush shapes, selective dark plum contour, matte painted surface, atmospheric slate-purple masonry and strong warm/cool light contrast. Do not copy the girl or any objects from image 1. Image 2 is the CAT IDENTITY reference only: preserve this same small cream-and-silver-gray long-haired kitten, clever amber eyes, natural quadrupedal anatomy, long relaxed torso, small round paws, fluffy curved tail, triangular ears and silver-gray crown/back markings. Stylize its fur in the exact painted technique of image 1 rather than copying image 2's smoother rendering.\nStyle: Slay the Spire 2-inspired expressive gouache fantasy card art, tactile visible brushwork, clear bold silhouette, quiet dark bluish-plum stone ruins, warm ivory highlights and restrained golden-white/soft-pink magic. Compact readable single action at 250x190. Keep the kitten unmistakably the same identity across the set. No text, letters, numerals, watermarks, borders, UI, human girl, second cat, garments, collars or accessories. No photorealism, no plastic 3D, no smooth anime cel shading, no dense repetitive particle noise.\nScene/action: Dynamic full-body kitten shaking its fur vigorously on a cold stone floor, near front three-quarter angle. Its head and shoulders twist one way while the fluffy rump twists the other, eyes squint with effort, ears still distinctly feline. All four small paws remain planted apart so the torso is naturally long; use angular zigzag fur silhouette and a few broad sweeping paint strokes to communicate the shake. Tiny cream tufts and golden-white thorn-shaped magical streaks fling radially outward to both sides from the coat, as a radial attack, never actual blood, skin spikes, feathers or detached body parts. Single cat, single head and single tail; motion represented by background arcs rather than duplicated facial features or extra paws. Center the kitten large with dark plum stone walls receding behind, warm restrained glow in the radiating streaks."
+    },
+    {
+      "class_name": "SweepingClaws",
+      "name": "横扫爪",
+      "form": "cat",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        },
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/cat/kitten-faithful/approved-design.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/sweeping_claws.png",
+      "prompt": "Use case: stylized-concept. Asset type: original game card illustration only, landscape 25:19 (roughly 4:3), full-bleed, without card frame or UI.\nInput images: Image 1 is the ONLY ART STYLE reference; copy its rough hand-painted gouache, expressive angular interlocking brush shapes, selective dark plum contour, matte painted surface, atmospheric slate-purple masonry and strong warm/cool light contrast. Do not copy the girl or any objects from image 1. Image 2 is the CAT IDENTITY reference only: preserve this same small cream-and-silver-gray long-haired kitten, clever amber eyes, natural quadrupedal anatomy, long relaxed torso, small round paws, fluffy curved tail, triangular ears and silver-gray crown/back markings. Stylize its fur in the exact painted technique of image 1 rather than copying image 2's smoother rendering.\nStyle: Slay the Spire 2-inspired expressive gouache fantasy card art, tactile visible brushwork, clear bold silhouette, quiet dark bluish-plum stone ruins, warm ivory highlights and restrained golden-white/soft-pink magic. Compact readable single action at 250x190. Keep the kitten unmistakably the same identity across the set. No text, letters, numerals, watermarks, borders, UI, human girl, second cat, garments, collars or accessories. No photorealism, no plastic 3D, no smooth anime cel shading, no dense repetitive particle noise.\nScene/action: Kinetic low-angle wide composition, kitten drives a broad sweeping forepaw slash across the image from lower left toward upper right. Its body twists with natural feline length, hind paws braced apart and the supporting front paw planted; only ONE attacking front paw lifted. Two distinct parallel warm gold-white crescent claw trails carve a wide sweep across the foreground, communicating two sweeping attacks affecting all enemies. A few abstract faceless dark stone-enemy silhouettes remain tiny and out of focus at the far edge; focus entirely on kitten and broad strike. Keep one head, one long fluffy tail counterbalancing behind, four total anatomically coherent legs. Clever determined amber eyes, playful fierce energy, never grotesque teeth. Stone chamber backdrop simplified into diagonal plum brush planes. Do not reuse the static standing reference pose."
+    },
+    {
+      "class_name": "BunnyKick",
+      "name": "抱住蹬踹",
+      "form": "cat",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        },
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/cat/kitten-faithful/approved-design.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/bunny_kick.png",
+      "prompt": "Use case: stylized-concept. Asset type: original game card illustration only, landscape 25:19 (roughly 4:3), full-bleed, without card frame or UI.\nInput images: Image 1 is the ONLY ART STYLE reference; copy its rough hand-painted gouache, expressive angular interlocking brush shapes, selective dark plum contour, matte painted surface, atmospheric slate-purple masonry and strong warm/cool light contrast. Do not copy the girl or any objects from image 1. Image 2 is the CAT IDENTITY reference only: preserve this same small cream-and-silver-gray long-haired kitten, clever amber eyes, natural quadrupedal anatomy, long relaxed torso, small round paws, fluffy curved tail, triangular ears and silver-gray crown/back markings. Stylize its fur in the exact painted technique of image 1 rather than copying image 2's smoother rendering.\nStyle: Slay the Spire 2-inspired expressive gouache fantasy card art, tactile visible brushwork, clear bold silhouette, quiet dark bluish-plum stone ruins, warm ivory highlights and restrained golden-white/soft-pink magic. Compact readable single action at 250x190. Keep the kitten unmistakably the same identity across the set. No text, letters, numerals, watermarks, borders, UI, human girl, second cat, garments, collars or accessories. No photorealism, no plastic 3D, no smooth anime cel shading, no dense repetitive particle noise.\nScene/action: Show the kitten performing an unmistakable feline bunny kick, side-on dynamic medium view. Its naturally long torso lies partly on its left flank on a stone floor, head at the left, hindquarters to the right. BOTH FRONT PAWS hug tightly around ONE dark plum stone-and-metal armored enemy forearm that enters diagonally from the upper right frame edge. The forearm is not attached to the kitten and has its own clearly dark color. BOTH HIND PAWS are lifted toward that same forearm, one hindleg extended into a contact kick while the other is bent ready to kick. Anatomically exactly four kitten legs total: two hugging front limbs, two kicking rear limbs. Keep the kitten torso and fluffy tail clearly separate from all four paws. Four short gold impact strokes can indicate rapid repeated kicks but must not duplicate paws or limbs. Kitten ears upright and amber eyes focused on the gripped target, no gore. Camera stays nearly side-on so the hugging/kicking anatomy is immediately readable, background a few simple purple stone blocks."
+    },
+    {
+      "class_name": "BiteTheOpening",
+      "name": "咬住破绽",
+      "form": "cat",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        },
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/cat/kitten-faithful/approved-design.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/bite_the_opening.png",
+      "prompt": "Use case: stylized-concept. Asset type: original game card illustration only, landscape 25:19 (roughly 4:3), full-bleed, without card frame or UI.\nInput images: Image 1 is the ONLY ART STYLE reference; copy its rough hand-painted gouache, expressive angular interlocking brush shapes, selective dark plum contour, matte painted surface, atmospheric slate-purple masonry and strong warm/cool light contrast. Do not copy the girl or any objects from image 1. Image 2 is the CAT IDENTITY reference only: preserve this same small cream-and-silver-gray long-haired kitten, clever amber eyes, natural quadrupedal anatomy, long relaxed torso, small round paws, fluffy curved tail, triangular ears and silver-gray crown/back markings. Stylize its fur in the exact painted technique of image 1 rather than copying image 2's smoother rendering.\nStyle: Slay the Spire 2-inspired expressive gouache fantasy card art, tactile visible brushwork, clear bold silhouette, quiet dark bluish-plum stone ruins, warm ivory highlights and restrained golden-white/soft-pink magic. Compact readable single action at 250x190. Keep the kitten unmistakably the same identity across the set. No text, letters, numerals, watermarks, borders, UI, human girl, second cat, garments, collars or accessories. No photorealism, no plastic 3D, no smooth anime cel shading, no dense repetitive particle noise.\nScene/action: Tight dynamic side-angle closeup, kitten lunges with its mouth biting onto the cracked vulnerable seam of a large dark purple armored enemy wrist entering from the right edge. The kitten has a small realistic feline mouth with tiny natural teeth, no huge monster fangs; one front paw braces on the plated gauntlet and the second front paw supports its advancing body on the stone ledge below. The crack in the armor is lit by a crisp pink-gold notch of light and a few angular sparks at the bite point, communicating vulnerability exposed. The kitten amber eye and dark silver crown markings stay clearly visible in profile, ears tilted with intent. The mouth must contact the armor seam visibly instead of hovering. Only one kitten with a naturally long partly cropped torso stretching to the left, tail visible as single curved tip; no blood, no severed limbs, no flesh wound. Dark cool stone and metallic plum shapes contrast warm cream fur."
+    },
+    {
+      "class_name": "BackwardGlance",
+      "name": "回眸",
+      "form": "cat",
+      "rarity": "Common",
+      "multiplayer_only": false,
+      "input_images": [
+        {
+          "role": "style_reference",
+          "path": "Shenshen/images/card_portraits/common/twin_sparks.png"
+        },
+        {
+          "role": "character_identity",
+          "path": "Shenshen/images/character_forms/cat/kitten-faithful/approved-design.png"
+        }
+      ],
+      "target_path": "Shenshen/images/card_portraits/common/backward_glance.png",
+      "prompt": "Use case: stylized-concept. Asset type: original game card illustration only, landscape 25:19 (roughly 4:3), full-bleed, without card frame or UI.\nInput images: Image 1 is the ONLY ART STYLE reference; copy its rough hand-painted gouache, expressive angular interlocking brush shapes, selective dark plum contour, matte painted surface, atmospheric slate-purple masonry and strong warm/cool light contrast. Do not copy the girl or any objects from image 1. Image 2 is the CAT IDENTITY reference only: preserve this same small cream-and-silver-gray long-haired kitten, clever amber eyes, natural quadrupedal anatomy, long relaxed torso, small round paws, fluffy curved tail, triangular ears and silver-gray crown/back markings. Stylize its fur in the exact painted technique of image 1 rather than copying image 2's smoother rendering.\nStyle: Slay the Spire 2-inspired expressive gouache fantasy card art, tactile visible brushwork, clear bold silhouette, quiet dark bluish-plum stone ruins, warm ivory highlights and restrained golden-white/soft-pink magic. Compact readable single action at 250x190. Keep the kitten unmistakably the same identity across the set. No text, letters, numerals, watermarks, borders, UI, human girl, second cat, garments, collars or accessories. No photorealism, no plastic 3D, no smooth anime cel shading, no dense repetitive particle noise.\nScene/action: BACKWARD GLANCE. Very clear rear view of the kitten walking AWAY TO THE RIGHT but looking BACK TO THE LEFT, its HEAD turned in the OPPOSITE direction to its body. Camera behind the cat's left haunch: rear paws and hindquarters closest to viewer at LOWER LEFT, the long spine recedes toward shoulders at UPPER RIGHT. The head twists over its LEFT shoulder, so the kitten's small NOSE POINTS LEFT toward the viewer behind it; show only a three-quarter part of its face and one clever amber eye, ears oriented back with the head. Body direction and nose direction must be opposite. The kitten is caught finishing a step, one forepaw at far right lightly lifted and a short thin gold slash trails next to it, four total paws. One broad fluffy tail curves near the LEFT foreground.\nA tiny abstract GOLDEN line-art pointed sun-hat and sun-tipped wand light glyph floats at UPPER LEFT in the empty background BEHIND the cat, and the kitten's amber eye looks back directly toward that glyph. It is just a simple two-dimensional luminous symbol, no actual human or physical hat and no second entity. No human figure, face, body, dress or second cat. Stone step and dark plum ruins use broad quiet angular paint planes. Keep same cream-silver kitten and coarse gouache brush texture of the two references. Backside and tail foreground must dominate silhouette instead of a frontal side-standing portrait. No text or UI.",
+      "discarded_draft_note": "回眸首稿未清楚表现回头，强化背身与头部朝向后重新生成。退稿未收录正式资源，不跟踪退稿文件。"
+    }
+  ]
+}
