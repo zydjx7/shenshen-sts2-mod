@@ -181,7 +181,7 @@
   "SHENSHEN-LICH_PHYLACTERY.description": "[gold]Girl card.[/gold]\nDraw 1 fewer card on each of your next {Turns:diff()} turns. Once complete, the next time you would die, keep HP fixed at 1 until your next turn's play phase.",
   "SHENSHEN-TEMPORAL_WARD.title": "Temporal Ward",
   "SHENSHEN-TEMPORAL_WARD.description": "[gold]Girl card.[/gold]\nDefer unblocked damage this round until the end of your next turn. Healing pays the debt first, then Block at expiry. Lose the remaining HP.",
-  "SHENSHEN-SEVENFOLD_MIRROR.title": "Sevenfold Mirror",
+  "SHENSHEN-SEVENFOLD_MIRROR.title": "Seven Rings of Blazing Thorns",
   "SHENSHEN-SEVENFOLD_MIRROR.description": "[gold]Girl card.[/gold]\nSet mirror layers to 7. At the end of your turn, gain fixed Block and temporary Thorns equal to the layers, then lose 1 layer.",
   "SHENSHEN-CROWN_OF_THORNS.title": "Crown of Thorns",
   "SHENSHEN-CROWN_OF_THORNS.description": "[gold]Girl card.[/gold]\nThe first time a card gives you Block each turn, gain 1 Mirror Block per {Ratio:diff()} Thorns, up to 4.",

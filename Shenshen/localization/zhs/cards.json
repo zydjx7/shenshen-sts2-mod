@@ -181,7 +181,7 @@
   "SHENSHEN-LICH_PHYLACTERY.description": "[gold]少女牌。[/gold]\n接下来{Turns:diff()}个自身回合各少抽1张。制成后，下次将倒下时，生命固定为1，直到下回合出牌阶段。",
   "SHENSHEN-TEMPORAL_WARD.title": "迟滞结界",
   "SHENSHEN-TEMPORAL_WARD.description": "[gold]少女牌。[/gold]\n本轮未挡住的伤害延至下回合结束。治疗先抵消欠伤，到期再用格挡抵消，余量直接失去生命。",
-  "SHENSHEN-SEVENFOLD_MIRROR.title": "七层镜盾",
+  "SHENSHEN-SEVENFOLD_MIRROR.title": "炽天棘华七重圆环",
   "SHENSHEN-SEVENFOLD_MIRROR.description": "[gold]少女牌。[/gold]\n将镜盾设为7层。自身回合结束时，按剩余层数获得等量固定格挡和临时荆棘，然后失去1层。",
   "SHENSHEN-CROWN_OF_THORNS.title": "荆棘之冕",
   "SHENSHEN-CROWN_OF_THORNS.description": "[gold]少女牌。[/gold]\n每回合首次用牌获得格挡时，每{Ratio:diff()}荆棘额外获得1镜面格挡，最多4点。",
