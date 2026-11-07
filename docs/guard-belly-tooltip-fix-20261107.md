@@ -19,7 +19,7 @@
 - Windows Release：`tools/build.ps1 build --no-restore` 成功，0 警告、0 错误。日志为本机忽略目录 `work/guard-belly-tooltip-fix/build.log`。
 - 交付包：`dist/Shenshen-guard-belly-tooltip-20261107.zip`，133,373,098 字节，包含 Shenshen 与 BaseLib。此次仅更新程序集，沿用已安装版本的正式 PCK；未将工作区内其他尚在修改的美术资源重新打包。
 - 构建前，核对 dist 与游戏已安装的 7 个交付文件哈希一致。构建后，核对除 DLL／PDB 外的文件保持原哈希。
-- 覆盖前检查发现游戏仍在运行，脚本在任何备份或写入之前停止，尚未覆盖游戏文件，等待用户正常退出游戏。
+- 首次覆盖检查发现游戏仍在运行，脚本在任何写入之前停止。用户正常退出并明确要求覆盖后，已完整备份现有 Shenshen／BaseLib 至本机忽略目录 `local/mod-backups/20261107-191035-guard-belly-tooltip/`，核对备份后，仅覆盖 `Shenshen.dll` 与 `Shenshen.pdb`。安装后的 7 个交付文件 SHA256 全部与 dist 一致；部署清单位于 `work/guard-belly-tooltip-fix/deployment.json`。
 - 遵照用户要求，没有运行自动测试或启动游戏。编译成功与文件哈希核对不代替用户的实际界面验收。
 
 | 产物 | SHA256 |
