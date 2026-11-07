@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
+using Godot;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using Shenshen.ShenshenCode.CardPools;
 using Shenshen.ShenshenCode.Character;
@@ -17,6 +18,10 @@ public abstract class ShenshenCard : CustomCardModel
     }
 
     public abstract ShenshenForm? Form { get; }
+
+    public override Material? CreateCustomFrameMaterial =>
+        VisualCardPool.IsColorless ? null : ResourceLoader.Load<ShaderMaterial>(
+            MainFile.ResPath + "/materials/cards/rose_peach_frame.tres");
 
     // Direct selection effects can put a card into hand without using normal Draw.
     protected override bool IsPlayable => Form is not { } required || CombatState == null ||

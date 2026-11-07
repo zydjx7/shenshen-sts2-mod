@@ -11,8 +11,8 @@ public sealed class ShenshenCardPool : CustomCardPoolModel
 {
     public override string Title => "Shenshen";
     public override bool IsColorless => false;
-    public override Color DeckEntryCardColor => new("ffffff");
-    public override Color ShaderColor => new("ffffff");
+    public override Color DeckEntryCardColor => new("eab0b2");
+    public override Color ShaderColor => new("eab0b2");
     public override string BigEnergyIconPath => $"{MainFile.ResPath}/images/charui/big_energy.png";
     public override string TextEnergyIconPath => $"{MainFile.ResPath}/images/charui/text_energy.png";
 
