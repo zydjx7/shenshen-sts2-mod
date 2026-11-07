@@ -310,6 +310,7 @@ public partial class Harness : Node
         await RunCommonCardChecks();
         await RunFormFaceDodgeChecks();
         UiResourceChecks.Run(Check);
+        await UiResourceChecks.RunLayout(this, Check);
         AnimationChecks.Run(this, Check);
     }
 

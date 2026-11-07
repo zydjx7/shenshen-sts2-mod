@@ -1,0 +1,12 @@
+{
+  "palette_id": "apricot-dawn-gold",
+  "palette_name_zh": "杏桃晨金",
+  "image": "background.png",
+  "design_size": [1672, 941],
+  "select_icon_region": [946, 0, 440, 650],
+  "palette_reference": {
+    "apricot_peach": "#EFB89D",
+    "peach_highlight": "#F8D4B5",
+    "cream_gold": "#FFF0CD"
+  }
+}

@@ -35,11 +35,14 @@ internal static class UiResourceChecks
         using var rig = JsonDocument.Parse(Godot.FileAccess.GetFileAsString(ShenshenVisuals.RigPath));
         var layout = rig.RootElement;
         var sourcePath = ShenshenVisuals.AssetDirectory + "/" + layout.GetProperty("image").GetString();
-        var ringPath = ShenshenVisuals.AssetDirectory + "/solar-ring.tscn";
         using var sourceImage = ReadImage(ResourceLoader.Load<Texture2D>(sourcePath));
         var head = layout.GetProperty("head_region").EnumerateArray().Select(value => value.GetInt32()).ToArray();
         var region = new Rect2I(head[0], head[1], head[2], head[3]);
-        var select = layout.GetProperty("select_icon_region").EnumerateArray().Select(value => value.GetInt32()).ToArray();
+        const string selectionDirectory = "res://Shenshen/images/character_select/apricot-dawn-gold";
+        using var selection = JsonDocument.Parse(Godot.FileAccess.GetFileAsString(selectionDirectory + "/selection.json"));
+        var selectionSourcePath = selectionDirectory + "/" + selection.RootElement.GetProperty("image").GetString();
+        using var selectionImage = ReadImage(ResourceLoader.Load<Texture2D>(selectionSourcePath));
+        var select = selection.RootElement.GetProperty("select_icon_region").EnumerateArray().Select(value => value.GetInt32()).ToArray();
         var selectRegion = new Rect2I(select[0], select[1], select[2], select[3]);
         var visibleBounds = VisibleBounds(sourceImage);
         check(visibleBounds.HasArea() && TransparentBorder(sourceImage),
@@ -48,37 +51,26 @@ internal static class UiResourceChecks
         var combatVisuals = hero.CreateVisuals();
         try
         {
-            var portraitRig = selectBackground.GetNode<Node2D>("Portrait/Rig");
-            var canvas = portraitRig.GetNode<Node2D>("Canvas");
-            var portrait = canvas.GetNode<Sprite2D>("Character");
+            var artwork = selectBackground.GetNode<TextureRect>("Artwork");
             var combatMesh = combatVisuals.GetNode<Polygon2D>("Visuals/HumanRig/Canvas/Mesh");
-            var portraitRing = canvas.GetNode<Node2D>("SolarRing");
-            var combatRing = combatVisuals.GetNode<Node2D>("Visuals/HumanRig/Canvas/SolarRing");
-            check(portrait.Texture is CompressedTexture2D && portrait.Texture.ResourcePath == sourcePath &&
-                combatMesh.Texture.ResourcePath == sourcePath && portrait.Texture == combatMesh.Texture,
-                "selection portrait and actual combat mesh share the same approved character.png resource");
-            check(!portrait.Centered && !portrait.RegionEnabled && portrait.Position.IsZeroApprox() &&
-                portrait.Offset.IsZeroApprox() && portrait.Scale.IsEqualApprox(Vector2.One) &&
-                Mathf.IsZeroApprox(portrait.Rotation) && portraitRig.Scale.X > 0 &&
-                Mathf.IsEqualApprox(portraitRig.Scale.X, portraitRig.Scale.Y),
-                "selection portrait preserves the complete source image with only uniform frame scaling");
-            check(combatMesh.Polygon.Length == combatMesh.UV.Length &&
+            check(artwork.Texture is CompressedTexture2D && artwork.Texture.ResourcePath == selectionSourcePath &&
+                selectionImage.GetSize() == new Vector2I(1672, 941),
+                "selection background loads the approved full-screen apricot-dawn-gold image");
+            check(CanvasItems(selectBackground).All(item => item.Modulate == Colors.White &&
+                item.SelfModulate == Colors.White && item.ZIndex == 0 && item.ZAsRelative),
+                "selection artwork retains its approved palette without additional tint or layer overrides");
+            check(artwork.ExpandMode == TextureRect.ExpandModeEnum.IgnoreSize &&
+                artwork.StretchMode == TextureRect.StretchModeEnum.KeepAspectCovered,
+                "selection artwork fills the frame with uniform scaling rather than stretching the pose");
+            check(artwork.AnchorLeft == 0 && artwork.AnchorTop == 0 &&
+                artwork.AnchorRight == 0 && artwork.AnchorBottom == 0 &&
+                artwork.Scale.IsEqualApprox(Vector2.One) && Mathf.IsZeroApprox(artwork.Rotation) &&
+                artwork.MouseFilter == Control.MouseFilterEnum.Ignore,
+                "selection layout owns the artwork frame without competing anchors or input interception");
+            check(combatMesh.Texture.ResourcePath == sourcePath &&
+                combatMesh.Polygon.Length == combatMesh.UV.Length &&
                 combatMesh.Polygon.Zip(combatMesh.UV).All(pair => pair.First.IsEqualApprox(pair.Second)),
                 "combat rest vertices map directly to original source pixels without reassembling body parts");
-            check(portraitRing.SceneFilePath == ringPath && combatRing.SceneFilePath == ringPath &&
-                portraitRing.Position.IsEqualApprox(combatRing.Position) &&
-                portraitRing.Scale.IsEqualApprox(combatRing.Scale) &&
-                portraitRing.GetIndex() < portrait.GetIndex() && combatRing.GetIndex() < combatMesh.GetIndex(),
-                "selection and combat instantiate the same solar-ring scene at the same local placement behind the body");
-            check(CanvasItems(portraitRig).All(item => item.ZIndex == 0 && item.ZAsRelative),
-                "selection character and every halo line keep relative Z zero");
-            var corners = new[] { visibleBounds.Position, visibleBounds.End,
-                new Vector2(visibleBounds.End.X, visibleBounds.Position.Y),
-                new Vector2(visibleBounds.Position.X, visibleBounds.End.Y) };
-            check(corners.All(point => InPortraitFrame(PortraitPoint(portrait, point))) &&
-                portraitRing.GetChildren().OfType<Line2D>().All(line =>
-                    line.Points.All(point => InPortraitFrame(PortraitPoint(line, point)))),
-                "selection frame contains the actual painted silhouette and all shared halo ticks");
         }
         finally
         {
@@ -93,8 +85,8 @@ internal static class UiResourceChecks
         check(ContainsSameRegion(avatarImage, sourceImage, region),
             "HUD and map avatar preserve the approved head_region pixels with transparent padding");
         check(selectIconImage.GetSize() == selectRegion.Size &&
-            ContainsSameRegion(selectIconImage, sourceImage, selectRegion),
-            "character-select close-up fills its canvas with approved source pixels and no added padding");
+            ContainsSameRegion(selectIconImage, selectionImage, selectRegion),
+            "character-select close-up copies the approved background pixels without resampling or padding");
 
         // These inherited placeholder hand getters accept Texture2D in this game version.
         check(hero.ArmPointingTexture is Texture2D && hero.ArmRockTexture is Texture2D &&
@@ -109,6 +101,68 @@ internal static class UiResourceChecks
         finally
         {
             icon.Free();
+        }
+    }
+
+    internal static async Task RunLayout(Node host, Action<bool, string> check)
+    {
+        var window = host.GetTree().Root;
+        var originalSize = window.Size;
+        var screen = new Control { Name = "SelectionLayoutScreen", MouseFilter = Control.MouseFilterEnum.Ignore };
+        var nativeBackground = new Control
+        {
+            Name = "AnimatedBg",
+            Position = new Vector2(-388, -80),
+            PivotOffset = new Vector2(1280, 600),
+            MouseFilter = Control.MouseFilterEnum.Ignore
+        };
+        host.AddChild(screen);
+        screen.AddChild(nativeBackground);
+        var hero = ModelDb.Character<Hero>();
+        var background = ResourceLoader.Load<PackedScene>(hero.CustomCharacterSelectBg).Instantiate<Control>();
+        nativeBackground.AddChild(background);
+        try
+        {
+            foreach (var (size, zoom) in new[]
+            {
+                (new Vector2I(1920, 1080), 1.1f),
+                (new Vector2I(1736, 977), 1.1f),
+                (new Vector2I(1600, 1200), 1.2683f)
+            })
+            {
+                window.Size = size;
+                screen.Size = size;
+                nativeBackground.Size = (Vector2)size + new Vector2(640, 120);
+                nativeBackground.Scale = Vector2.One * zoom;
+                for (var frame = 0; frame < 2; frame++)
+                    await host.ToSignal(host.GetTree(), SceneTree.SignalName.ProcessFrame);
+
+                var transform = background.GetGlobalTransform();
+                check(transform.X.IsEqualApprox(Transform2D.Identity.X) &&
+                    transform.Y.IsEqualApprox(Transform2D.Identity.Y) && transform.Origin.Length() < 0.01f &&
+                    background.Size.IsEqualApprox((Vector2)size),
+                    $"selection layout cancels native overscan and fills the {size.X}x{size.Y} viewport");
+                check(!background.TopLevel && background.ZIndex == 0 && background.ZAsRelative && background.ClipContents,
+                    $"selection layout keeps native drawing order and clips overscan at {size.X}x{size.Y}");
+                var artwork = background.GetNode<TextureRect>("Artwork");
+                var artworkBounds = artwork.GetGlobalRect();
+                var imageSize = artwork.Texture.GetSize();
+                check(artworkBounds.Position.X <= 0.5f && artworkBounds.Position.Y <= 0.5f &&
+                    artworkBounds.End.X >= size.X - 0.5f && artworkBounds.End.Y >= size.Y - 0.5f &&
+                    Math.Abs(artworkBounds.End.X - size.X) <= 0.5f &&
+                    Mathf.IsEqualApprox(artworkBounds.Size.X / imageSize.X, artworkBounds.Size.Y / imageSize.Y),
+                    $"selection artwork covers {size.X}x{size.Y} uniformly and aligns to the right edge");
+                var viewportBounds = new Rect2(Vector2.Zero, (Vector2)size);
+                var artworkTransform = artwork.GetGlobalTransform();
+                check(new[] { new Vector2(650, 560), new Vector2(1500, 220) }.All(point =>
+                    viewportBounds.HasPoint(artworkTransform * (point * artwork.Size / imageSize))),
+                    $"both approved hand positions remain visible at {size.X}x{size.Y}");
+            }
+        }
+        finally
+        {
+            screen.Free();
+            window.Size = originalSize;
         }
     }
 
@@ -138,20 +192,6 @@ internal static class UiResourceChecks
             image.GetPixel(x, 0).A <= 0.04f && image.GetPixel(x, image.GetHeight() - 1).A <= 0.04f) &&
         Enumerable.Range(0, image.GetHeight()).All(y =>
             image.GetPixel(0, y).A <= 0.04f && image.GetPixel(image.GetWidth() - 1, y).A <= 0.04f);
-
-    // The packed portrait is outside the tree here; accumulate local transforms up to its Control frame.
-    private static Vector2 PortraitPoint(Node2D node, Vector2 point)
-    {
-        while (true)
-        {
-            point = node.Transform * point;
-            if (node.GetParent() is not Node2D parent) return point;
-            node = parent;
-        }
-    }
-
-    private static bool InPortraitFrame(Vector2 point) =>
-        point.X >= -0.5f && point.Y >= -0.5f && point.X <= 633.834f && point.Y <= 950.5f;
 
     private static IEnumerable<CanvasItem> CanvasItems(Node node)
     {

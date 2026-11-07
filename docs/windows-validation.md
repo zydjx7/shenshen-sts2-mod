@@ -333,3 +333,18 @@ UI 类型修复后再次完整运行 `./tools/test.ps1`，编译与打包退出 
 - 整合包 `dist/Shenshen-selection-icon-20261107.zip` 包含 Shenshen 与 BaseLib，131,529,305 字节。游戏仍在运行，部署脚本在任何复制前停止，等待正常退出后再备份覆盖。
 
 最终 DLL SHA256：`931AF3DDBCDDC3A9D22733688093B2FA24AF19C3DC094854297B209AF7283273`；PCK：`1C387C244932AF2CDC267E2606C569EDDCB0EBF2CEED31DB688FB0431641A468`；ZIP：`3FCADD6965A77BF06C2DD55A3AC839DB5204A4BE4C92BE6D03DAA3D235E242A1`。
+
+## 杏桃晨金选人背景、小卡面与配色记录（2026-11-07）
+
+用户确认 A「暖金晨光」和 C「蜜桃玫瑰」融合图，明确固定伸手向前、另一手举杖的 pose，授权背景与小卡面一起实装、打包、备份并覆盖游戏模组。这套配色命名「杏桃晨金」（`apricot-dawn-gold`），配色参考、适用范围和后续卡图复用约定见 [配色记录](art-style-apricot-dawn-gold.md)。本轮没有将全卡池改成新配色。
+
+- 素材：`background.png` 与最终确认生成图逐字节一致，1672×941，SHA256 `A0E0529508B18251B90D5E46F7059EE7E2563EB04D1982E03B227FD68E3194A2`；不重画人物或 pose。小卡面从该图 `[946,0,440,650]` 原像素裁取，44:65 与官方头像比例一致、无补边，普通及锁定选人入口共用。
+- 实现：背景场景直接引用整张确认稿。专用 GDScript 抵消原生 `AnimatedBg` 的偏移、枢轴与放大，保持相对 Z=0、普通 CanvasItem 绘制顺序、输入穿透与原生 UI；按视口等比铺满，窄屏裁左侧留白以保留双手和法杖。战斗形象、HUD／地图头像及卡牌玩法未改。
+- 构建打包：`tools/build.ps1 pack --no-restore` 的 Windows Release publish、MegaDot 导入和最终 PCK 导出通过，退出 0，日志 `work/apricot-dawn-gold/pack-final.log`；沿用项目内 SDK、NuGet 与 CLI 目录，进程临时目录位于 `local/pack-temp`。
+- 真实程序集／Godot 检查：仅运行 UI 专项隔离 Harness，**36 项通过**。包含原生 PNG getter、同源小卡面原像素、旧 HUD 与战斗 UV 保留，以及实际打包 GDScript 在 1920×1080、1736×977、1600×1200 下抵消放大、等比右对齐与双手可见性。日志 `work/apricot-dawn-gold/ui-tests/run.log`。测试工程编译有 NuGet 审计服务不可达的 NU1900 警告；未运行全量玩法回归。
+- 独立 GPU：读取同一最终 PCK 的正式场景和 GDScript，**47 项通过**，三种尺寸与同实例连续 resize 均通过；后置半透明信息板正常遮盖背景，逐张目视确认掌心、光球、指尖与右上握杖手。最终 `gpu-check/error.log` 为空。首轮发现 Artwork 的 FullRect anchors 与脚本设置 size 竞争，改为 TopLeft 手动布局后消除该警告，再打包并完成最终复验；首轮日志保留。截图、最终日志位于 `work/apricot-dawn-gold/gpu-check/`。这些是独立 Godot 渲染，不是游戏截图。
+- 交付：`dist/Shenshen-apricot-dawn-gold-20261107.zip`，133,373,122 字节，包含 Shenshen 与 BaseLib。
+- 备份与覆盖：确认游戏进程已退出后，通过 `tools/play-test.ps1 prepare` 完整备份旧 Shenshen／BaseLib 到 `local/play-test/mod-backups/20261107T094205419/`，再覆盖 7 个交付文件；安装后 7 个 SHA256 均与最终 dist 一致。旧备份的 DLL／PCK 与前一初始牌版本记录一致。部署、备份文件清单在 `work/apricot-dawn-gold/deployment.json`。
+- 存档及范围：`tools/play-test.ps1 verify` 通过，**1045 个日常文件哈希不变**，changes=[]，隔离档 162 文件；记录 `work/apricot-dawn-gold/deploy-save-verification.json`。本轮未启动实际游戏；用户下一次启动后验收选人页。Mac 与真正双端多人未实测，不以构建或独立 GPU 代替游戏内验收。
+
+最终产物 SHA256：DLL `DDE544575E01D7EB47D50CB072181F2C3ABDFD4B9A9BCD6392776FD8FDC74299`；PCK `0BCCCB463A5B773D7D1F70D3D81843E7BE023FF6A8D33356F1EE48F333F0F8D2`；ZIP `C829941239F8C893201DC76A5A29FB9CE7C337066412FF7B9BE63821BA1B538E`。

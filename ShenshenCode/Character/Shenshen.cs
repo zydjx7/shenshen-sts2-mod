@@ -16,6 +16,7 @@ namespace Shenshen.ShenshenCode.Character;
 
 public class Shenshen : PlaceholderCharacterModel, ISceneConversions
 {
+    public const string SelectionAssetDirectory = MainFile.ResPath + "/images/character_select/apricot-dawn-gold";
     public const string CharacterId = "Shenshen";
     public const string ChineseDisplayName = "光之魔法少女深深";
     public const string EnglishDisplayName = "Shenshen, Magical Girl of Light";
@@ -72,8 +73,8 @@ public class Shenshen : PlaceholderCharacterModel, ISceneConversions
     // resolve to imported PNG textures rather than AtlasTexture resources.
     public override string CustomIconTexturePath => ShenshenVisuals.AssetDirectory + "/avatar.png";
     public override string CustomIconOutlineTexturePath => ShenshenVisuals.AssetDirectory + "/avatar.png";
-    public override string CustomCharacterSelectIconPath => ShenshenVisuals.AssetDirectory + "/select-icon.png";
-    public override string CustomCharacterSelectLockedIconPath => ShenshenVisuals.AssetDirectory + "/select-icon.png";
+    public override string CustomCharacterSelectIconPath => SelectionAssetDirectory + "/select-icon.png";
+    public override string CustomCharacterSelectLockedIconPath => SelectionAssetDirectory + "/select-icon.png";
     public override string CustomMapMarkerPath => ShenshenVisuals.AssetDirectory + "/avatar.png";
     public override string CustomCharacterSelectBg => "res://Shenshen/scenes/character_select/shenshen_select_bg.tscn";
 }
