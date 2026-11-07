@@ -10,6 +10,8 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.Unlocks;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -26,13 +28,13 @@ public partial class Harness
         var solo = pool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.SingleplayerOnly).ToArray();
         var multi = pool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.MultiplayerOnly).ToArray();
         Check(solo.Count(c => c.Rarity == CardRarity.Common) == 20 &&
-            solo.Count(c => c.Rarity == CardRarity.Uncommon) == 39 &&
-            solo.Count(c => c.Rarity == CardRarity.Rare) == 36,
-            "the revised ordinary solo pool contains 20 commons, 39 uncommons and 36 rares");
+            solo.Count(c => c.Rarity == CardRarity.Uncommon) == 41 &&
+            solo.Count(c => c.Rarity == CardRarity.Rare) == 35,
+            "the revised ordinary solo pool contains 20 commons, 41 uncommons and 35 rares");
         var retired = new CardModel[] { ModelDb.Card<LightShadowHandoff>(), ModelDb.Card<ShatteredMirrorFlames>(),
-            ModelDb.Card<MoltenLightPierce>(), ModelDb.Card<Kneading>(), ModelDb.Card<Teasing>() };
+            ModelDb.Card<MoltenLightPierce>(), ModelDb.Card<Kneading>(), ModelDb.Card<Teasing>(), ModelDb.Card<BurnTheMark>() };
         Check(retired.All(c => !solo.Contains(c) && !multi.Contains(c)),
-            "all five retired cards are excluded from solo and multiplayer unlocked reward/generation pools");
+            "all six retired cards are excluded from solo and multiplayer unlocked reward/generation pools");
         var f = await CreateCommonFixture();
         foreach (var canonical in retired)
         {
@@ -52,6 +54,27 @@ public partial class Harness
         CheckCommonCardDescriptions(f, [ModelDb.Card<LightShadowTrace>(), ModelDb.Card<ReturningClaw>(), ModelDb.Card<RoomwidePounce>()]);
         await CheckRevisedAttacks();
         await CheckLightShadowRetention();
+        await CheckLegacyOwnedDeck();
+    }
+
+    private async Task CheckLegacyOwnedDeck()
+    {
+        var f = await CreateCommonFixture();
+        var originalFourthCopies = new CardModel[] { ModelDb.Card<LittleFireball>(), ModelDb.Card<LightShield>(),
+            ModelDb.Card<ClawStrike>(), ModelDb.Card<MiDodge>(), ModelDb.Card<BurnTheMark>() };
+        foreach (var canonical in originalFourthCopies)
+        {
+            var card = f.Run.CreateCard(canonical, f.Player);
+            if (card is BurnTheMark) CardCmd.Upgrade(card);
+            await CardPileCmd.Add(card, PileType.Deck);
+        }
+        var saved = SaveManager.FromJson<SerializableRun>(SaveManager.ToJson(RunManager.Instance.ToSave(null)));
+        var loaded = MegaCrit.Sts2.Core.Entities.Players.Player.FromSerializable(saved.SaveData!.Players.Single(p => p.NetId == f.Player.NetId));
+        Check(saved.Success && loaded.Deck.Cards.Count == 20 &&
+            loaded.Deck.Cards.OfType<LittleFireball>().Count() == 4 && loaded.Deck.Cards.OfType<LightShield>().Count() == 4 &&
+            loaded.Deck.Cards.OfType<ClawStrike>().Count() == 4 && loaded.Deck.Cards.OfType<MiDodge>().Count() == 4 &&
+            loaded.Deck.Cards.OfType<BurnTheMark>().Single().IsUpgraded,
+            "native run saves preserve an old nineteen-card starter deck plus its upgraded retired Burn the Mark without deleting cards");
     }
 
     private async Task CheckRevisedAttacks()

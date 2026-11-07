@@ -404,3 +404,14 @@ DLL SHA256 为 `2D97C43CF6164B4B9F386FFBA6F2D4EFE4717348CD0B4734FC78C838D2B4C148
 - 用户在此前暂缓部署后要求实装。核对当前源码仍为 `73c3355`，游戏仍为 v0.111.0；游戏进程已退出。重新核对 `Shenshen-card-balance-20261107-r2.zip` 的 SHA256 与上轮记录相同，7 个 dist 文件逐字节匹配包内内容，安装前 PCK 仍为首轮金卡版本，未混入工作区其他美术修改。
 - 沿用 `tools/play-test.ps1 prepare` 完整备份旧 Shenshen／BaseLib，再安装同一已通过 704 项回归的版本。备份为 `local/play-test/mod-backups/20261107T150915091/`（目录名使用 UTC），备份 7 文件逐一匹配覆盖前记录，安装后 7 文件逐一匹配 dist／ZIP。部署核对清单在 `work/card-balance-deploy-20261108/deployment.json`。
 - `tools/play-test.ps1 verify` 通过，**1049 个日常文件哈希不变**，changes=[]，记录为 `work/card-balance-deploy-20261108/save-verification.json`。本次只安装已验证包，没有重新编译、改玩法或启动游戏窗口；704 项属于上轮对同一产物的真实程序集／Godot 回归，不称本次游戏内验收。macOS、实际双端联机及长期平衡仍待实战。
+
+## 荆棘优先、15 张起始牌及燃印退池（2026-11-08 r3）
+
+- 用户实战反馈力量流偏强后，确认普通变猫改为 +1 常驻荆棘，升级后 +1 荆棘、+1 力量；回少女的敏捷与固定格挡不变。小憩升级由下回合能量 2→3 改为移除消耗，能量始终为 2。后续用户选择四种重复起始牌各减一，新局 15 张；燃印退池，旧档原卡和原效果保留。[版本与力量来源清单](card-history.md)
+- 当前普通单人获取池为 20 白、39 蓝、35 金，共 94 张。新局少女 7、猫 7、共享变身 1；不删除旧局的第四张基础牌。没有添加新力量牌或修改原版奖励稀有度概率。
+- **构建**：项目内锁定 SDK、Windows 构建脚本完成 Release 编译与 Godot 资源导出，0 编译错误；NuGet 审计网络不可达有 NU1900 警告。后续确认减牌和退池后重新编译 DLL；源码资源包与最终保留已安装美术的包分别通过真实程序集／Godot headless **707 项**回归。通过日志为 `work/thorns-balance-20261108/source-final-2.log` 和 `final-package.log`。
+- **新增和更新验证**：普通变猫多次累计荆棘且不获力量；升级后每次恰好增加 1 力量、1 荆棘；双语正反面与升级预览；原版锻造及联机快照；小憩升级出牌后进弃牌堆、可再次使用、下回合只加 2 能量、保存重读仍不消耗；新局 15 张和正常抽牌、换牌、手牌上限及保存；燃印不再进入解锁池但旧模型仍可出牌；原 19 张起始牌再带升级燃印的 20 张牌组经原生存档往返后没有删牌。炸毛整场首次奖励的规则未改变，测试将变猫新增荆棘单独计入。
+- **包与范围**：`dist/Shenshen-thorns-balance-20261108.zip`。已安装 r2 PCK 为基线，251 项资源中只修改中英文卡牌 JSON 的变身描述，**249 项资源相同**；未打入并行卡牌草稿、改名或角色美术修改。清单为 `work/thorns-balance-delivery-20261108/manifest.json`。
+- **部署**：游戏退出后沿用 `tools/play-test.ps1 prepare` 完整备份至 `local/play-test/mod-backups/20261107T153530412/`（目录使用 UTC），安装后 7 文件均与 ZIP／dist 一致，旧 7 文件均与覆盖前备份一致。清单为 `work/thorns-balance-20261108/deployment.json`。`verify` 确认 **1049 个日常文件哈希不变**，changes=[]；本次没有启动实际游戏窗口，macOS 和真实双端联机、长期平衡尚未实测。
+
+DLL SHA256：`A0C9E643C2D199BB4843606219A0A6B06F133E12559621FD5D4038B0B4DC3F0B`；PCK：`3A8BDABFC238D3E97505766883BCA05A0BD9ED26DCEA54C9CDF58EBCB0CB7E72`；ZIP：`D148F3F2010B3263DF278A84EF1C6B56C9B6DDACFE87874945575146142BB639`。

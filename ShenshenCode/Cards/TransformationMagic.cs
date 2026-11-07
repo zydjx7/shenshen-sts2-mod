@@ -31,17 +31,17 @@ public sealed class TransformationMagic : ShenshenCard
     {
         get
         {
-            yield return TransformsToCat ? HoverTipFactory.FromPower<StrengthPower>()
+            yield return TransformsToCat ? HoverTipFactory.FromPower<ThornsPower>()
                 : HoverTipFactory.FromPower<DexterityPower>();
-            if (TransformsToCat && IsUpgraded) yield return HoverTipFactory.FromPower<ThornsPower>();
+            if (TransformsToCat && IsUpgraded) yield return HoverTipFactory.FromPower<StrengthPower>();
             yield return HoverTipFactory.FromPower<FormPower>();
         }
     }
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<StrengthPower>(1m),
+        new PowerVar<StrengthPower>(0m),
         new PowerVar<DexterityPower>(1m),
-        new PowerVar<ThornsPower>(0m),
+        new PowerVar<ThornsPower>(1m),
         new BlockVar(0m, ValueProp.Unpowered)
     ];
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) =>
@@ -54,7 +54,7 @@ public sealed class TransformationMagic : ShenshenCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars["ThornsPower"].UpgradeValueBy(1m);
+        DynamicVars.Strength.UpgradeValueBy(1m);
         DynamicVars.Block.UpgradeValueBy(4m);
     }
 

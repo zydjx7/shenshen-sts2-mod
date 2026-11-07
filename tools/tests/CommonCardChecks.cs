@@ -58,7 +58,7 @@ public partial class Harness
             card.UpgradeInternal();
             card.FinalizeUpgradeInternal();
             Check(card.IsUpgraded && card.EnergyCost.Canonical == cost &&
-                card.Keywords.Contains(CardKeyword.Exhaust) == exhaust &&
+                card.Keywords.Contains(CardKeyword.Exhaust) == (exhaust && card is not Catnap) &&
                 values.All(v => card.DynamicVars[v.Name].BaseValue == v.Upgraded),
                 typeof(T).Name + " upgrades the approved values without changing cost or exhaust");
         }
@@ -75,7 +75,7 @@ public partial class Harness
         Values<ArchedBack>(ShenshenForm.Cat, CardType.Skill, 1, false, ("Block", 6, 8), ("ThornsPower", 2, 3));
         Values<FurballCurl>(ShenshenForm.Cat, CardType.Skill, 2, false, ("Block", 16, 20), ("ThornsPower", 4, 6));
         Values<CuriousPeek>(ShenshenForm.Cat, CardType.Skill, 1, false, ("Cards", 3, 3), ("ShiftCards", 1, 2));
-        Values<Catnap>(ShenshenForm.Cat, CardType.Skill, 1, true, ("Cards", 1, 1), ("Energy", 2, 3));
+        Values<Catnap>(ShenshenForm.Cat, CardType.Skill, 1, true, ("Cards", 1, 1), ("Energy", 2, 2));
         Values<Grooming>(ShenshenForm.Cat, CardType.Skill, 0, true, ("Cards", 1, 1), ("Block", 3, 6));
         Values<ShedFur>(ShenshenForm.Cat, CardType.Attack, 1, false, ("CalculationBase", 4, 7));
         Values<SweepingClaws>(ShenshenForm.Cat, CardType.Attack, 1, false, ("Damage", 4, 5), ("Repeat", 2, 2));
@@ -275,9 +275,9 @@ public partial class Harness
             owned = f.Player.PlayerCombatState.AllCards.ToHashSet();
             int hp = f.Enemy.CurrentHp;
             await CardCmd.AutoPlay(f.Context, backward, f.Enemy);
-            Check(f.Enemy.CurrentHp == hp - 12 && ReferenceEquals(f.Player.PlayerCombatState.DrawPile.Cards.First(c => c is ShenshenCard { Form: ShenshenForm.Human }), girl) &&
+            Check(f.Enemy.CurrentHp == hp - 11 && ReferenceEquals(f.Player.PlayerCombatState.DrawPile.Cards.First(c => c is ShenshenCard { Form: ShenshenForm.Human }), girl) &&
                 owned.SetEquals(f.Player.PlayerCombatState.AllCards),
-                "upgraded Backward Glance deals eleven plus existing strength and recovers the selected actual girl card");
+                "upgraded Backward Glance deals eleven without base-entry Strength and recovers the selected actual girl card");
             await Switch(f.Context, f.Player);
             Check(girl.Pile?.Type == PileType.Hand && girl.IsUpgraded && girl.EnergyCost.GetWithModifiers(CostModifiers.Local) == 0,
                 "returning to girl draws the same recovered upgraded girl card");
@@ -336,19 +336,28 @@ public partial class Harness
             await CardPileCmd.AddGeneratedCardToCombat(nap, PileType.Hand, f.Player);
             f.Player.PlayerCombatState!.Energy = 3;
             await PlayPaid(nap, f.Context);
-            Check(f.Player.PlayerCombatState.Energy == 2 && draw.Pile?.Type == PileType.Hand && nap.Pile?.Type == PileType.Exhaust,
-                "Catnap pays one energy now, draws and actually exhausts without immediate energy refund");
-            CheckCommonPowerPacket(f, ModelDb.Power<CatnapPower>().Id, upgraded ? 3 : 2,
+            Check(f.Player.PlayerCombatState.Energy == 2 && draw.Pile?.Type == PileType.Hand &&
+                nap.Pile?.Type == (upgraded ? PileType.Discard : PileType.Exhaust),
+                "Catnap pays one energy and draws now; only the base version exhausts");
+            CheckCommonPowerPacket(f, ModelDb.Power<CatnapPower>().Id, 2,
                 "the native combat packet carries pending Catnap energy");
             await Hook.BeforeHandDraw(f.Combat, f.Teammate, f.Context);
             Check(f.Player.PlayerCombatState.Energy == 2 && f.Player.Creature.GetPower<CatnapPower>() != null,
                 "a teammate's draw step neither grants nor consumes pending Catnap energy");
             f.Player.PlayerCombatState.Energy = 3;
             await Hook.BeforeHandDraw(f.Combat, f.Player, f.Context);
-            Check(f.Player.PlayerCombatState.Energy == (upgraded ? 6 : 5) && f.Player.Creature.GetPower<CatnapPower>() == null,
+            Check(f.Player.PlayerCombatState.Energy == 5 && f.Player.Creature.GetPower<CatnapPower>() == null,
                 "Catnap" + (upgraded ? "+" : "") + " grants its delayed energy once at the next own draw step");
             await Hook.BeforeHandDraw(f.Combat, f.Player, f.Context);
-            Check(f.Player.PlayerCombatState.Energy == (upgraded ? 6 : 5), "a later draw hook cannot repeat consumed Catnap energy");
+            Check(f.Player.PlayerCombatState.Energy == 5, "a later draw hook cannot repeat consumed Catnap energy");
+            if (upgraded)
+            {
+                await CardPileCmd.Add(nap, PileType.Hand);
+                await PlayPaid(nap, f.Context);
+                Check(nap.Pile?.Type == PileType.Discard && f.Player.Creature.GetPower<CatnapPower>()?.Amount == 2 &&
+                    CardModel.FromSerializable(nap.ToSerializable()).Keywords.All(k => k != CardKeyword.Exhaust),
+                    "the same upgraded Catnap can be played again for two delayed Energy and keeps its no-Exhaust upgrade on save reload");
+            }
         }
     }
 
@@ -390,6 +399,7 @@ public partial class Harness
         await PowerCmd.Remove(f.Player.Creature.GetPower<DexterityPower>());
         await CardCmd.AutoPlay(f.Context, CommonCard<ShatteredMirror>(f), null);
         await Switch(f.Context, f.Player);
+        await PowerCmd.Remove(f.Player.Creature.GetPower<ThornsPower>());
         hp = f.Enemy.CurrentHp;
         await CommonEnemyAttack(f, 4, 2);
         Check(f.Enemy.CurrentHp == hp - 4 && f.Player.Creature.Block == 2,

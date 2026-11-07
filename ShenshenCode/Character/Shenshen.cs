@@ -32,11 +32,11 @@ public class Shenshen : PlaceholderCharacterModel, ISceneConversions
     public override int StartingHp => 70;
 
     public override IEnumerable<CardModel> StartingDeck =>
-        Enumerable.Repeat<CardModel>(ModelDb.Card<LittleFireball>(), 4)
-            .Concat(Enumerable.Repeat(ModelDb.Card<LightShield>(), 4))
+        Enumerable.Repeat<CardModel>(ModelDb.Card<LittleFireball>(), 3)
+            .Concat(Enumerable.Repeat(ModelDb.Card<LightShield>(), 3))
             .Append(ModelDb.Card<LightMark>())
-            .Concat(Enumerable.Repeat(ModelDb.Card<ClawStrike>(), 4))
-            .Concat(Enumerable.Repeat(ModelDb.Card<MiDodge>(), 4))
+            .Concat(Enumerable.Repeat(ModelDb.Card<ClawStrike>(), 3))
+            .Concat(Enumerable.Repeat(ModelDb.Card<MiDodge>(), 3))
             .Append(ModelDb.Card<CatTailSweep>())
             .Append(ModelDb.Card<TransformationMagic>());
 

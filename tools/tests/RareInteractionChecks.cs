@@ -36,7 +36,7 @@ public partial class Harness
         await Switch(f.Context, f.Player);
         int hp = f.Enemy.CurrentHp;
         await CardCmd.AutoPlay(f.Context, claw, f.Enemy, skipCardPileVisuals: true);
-        Check(hp - f.Enemy.CurrentHp == 24 && falling.EnergyCost.GetWithModifiers(CostModifiers.All) == 4,
+        Check(hp - f.Enemy.CurrentHp == 16 && falling.EnergyCost.GetWithModifiers(CostModifiers.All) == 4,
             "the first shift doubles the next four-hit Claw and discounts Sunfall once");
         await Switch(f.Context, f.Player);
         Check(blade.Pile?.Type == PileType.Hand && blade.EnergyCost.GetWithModifiers(CostModifiers.All) == 0,

@@ -105,7 +105,7 @@ public partial class Harness
         var save = SaveManager.FromJson<SerializableRun>(SaveManager.ToJson(RunManager.Instance.ToSave(null)));
         Check(save.Success && save.SaveData != null, "upgraded fluff inventory uses the real SerializableRun JSON format");
         var loaded = Player.FromSerializable(save.SaveData!.Players.Single(p => p.NetId == player.NetId));
-        Check(loaded.Deck.Cards.Count == 20 && loaded.Deck.Cards.OfType<FluffedUp>().Single().IsUpgraded &&
+        Check(loaded.Deck.Cards.Count == 16 && loaded.Deck.Cards.OfType<FluffedUp>().Single().IsUpgraded &&
             loaded.Deck.Cards.OfType<FluffedUp>().Single().EnergyCost.Canonical == 1,
             "real inventory save reload preserves an acquired upgraded fluff and its unchanged one-energy cost");
         await RunOrdinaryTransformationSmithChecks();
@@ -219,7 +219,7 @@ public partial class Harness
         await CardPileCmd.Draw(context, 5, loaded, fromHandDraw: true);
         var openingTransform = loaded.PlayerCombatState.Hand.Cards.OfType<TransformationMagic>().Single();
         Check(ReferenceEquals(ownedCombatTransform, openingTransform) && openingTransform.IsUpgraded &&
-            loaded.PlayerCombatState.Hand.Cards.Count == 6 && loaded.PlayerCombatState.AllCards.Count() == 19 && HasStartingComposition(loaded),
+            loaded.PlayerCombatState.Hand.Cards.Count == 6 && loaded.PlayerCombatState.AllCards.Count() == 15 && HasStartingComposition(loaded),
             "the next opening moves the actual upgraded combat instance into hand before five draws without generating another card");
         await Hook.BeforeHandDraw(combat, loaded, context);
         Check(loaded.PlayerCombatState.AllCards.OfType<TransformationMagic>().Count() == 1,

@@ -16,7 +16,7 @@
   "SHENSHEN-LIGHT_MIRROR.title": "Light Mirror",
   "SHENSHEN-LIGHT_MIRROR.description": "[gold]Girl card.[/gold]\nGain {Block:diff()} [gold]Block[/gold]. This turn, whenever you block attack damage, reflect that much damage.",
   "SHENSHEN-TRANSFORMATION_MAGIC.title": "Transformation Magic",
-  "SHENSHEN-TRANSFORMATION_MAGIC.description": "{ToCat:cond:Become a cat. Gain {StrengthPower:diff()} [gold]Strength[/gold]{IfUpgraded:show: and {ThornsPower:diff()} [gold]Thorns[/gold]}.|Become a girl. Gain {DexterityPower:diff()} [gold]Dexterity[/gold]{IfUpgraded:show: and {Block:diff()} fixed [gold]Block[/gold]}.}\n{ToCat:cond:Discard the girl cards in your hand. Draw the same number of cat cards.|Discard the cat cards in your hand. Draw the same number of girl cards.}\nReturn this card to your hand.",
+  "SHENSHEN-TRANSFORMATION_MAGIC.description": "{ToCat:cond:Become a cat. Gain {ThornsPower:diff()} [gold]Thorns[/gold]{IfUpgraded:show: and {StrengthPower:diff()} [gold]Strength[/gold]}.|Become a girl. Gain {DexterityPower:diff()} [gold]Dexterity[/gold]{IfUpgraded:show: and {Block:diff()} fixed [gold]Block[/gold]}.}\n{ToCat:cond:Discard the girl cards in your hand. Draw the same number of cat cards.|Discard the cat cards in your hand. Draw the same number of girl cards.}\nReturn this card to your hand.",
   "SHENSHEN-LIGHT_BLESSING.title": "Light Blessing",
   "SHENSHEN-LIGHT_BLESSING.description": "[gold]Girl form.[/gold]\nBefore another player's next normal draw, they choose {Cards:diff()} extra cards from their draw pile to add to hand.",
   "SHENSHEN-FLUFFED_UP.title": "Fluffed Up",

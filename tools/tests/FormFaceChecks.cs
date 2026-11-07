@@ -42,7 +42,7 @@ public partial class Harness
         hp = creature.CurrentHp;
         int enemyHp = f.Enemy.CurrentHp;
         await CommonEnemyAttack(f, 3, 2);
-        Check(creature.CurrentHp == hp && creature.Block == 0 && f.Enemy.CurrentHp == enemyHp - 5,
+        Check(creature.CurrentHp == hp && creature.Block == 0 && f.Enemy.CurrentHp == enemyHp - 6,
             "shift-turn dodge skips one reception without spending block or retaliating on the skipped hit");
         Check(creature.GetPower<CatDodgePower>() is { Amount: 2, IsVisible: false },
             "the spent dodge marker is hidden while retaining this turn's consumed flag");
@@ -108,7 +108,7 @@ public partial class Harness
                 var dexterity = language == "eng" ? "Dexterity" : "敏捷";
                 var thorns = language == "eng" ? "Thorns" : "荆棘";
                 var text = transform.GetDescriptionForPile(PileType.Hand);
-                Check(text.Contains(strength) && !text.Contains(dexterity) && !text.Contains(thorns) && !text.Contains('{'),
+                Check(text.Contains(thorns) && !text.Contains(dexterity) && !text.Contains(strength) && !text.Contains('{'),
                     language + " human-held base transformation displays only the cat-entry reward");
                 var preview = transform.GetDescriptionForUpgradePreview();
                 Check(preview.Contains(strength) && preview.Contains(thorns) && !preview.Contains(dexterity) && !preview.Contains('{'),

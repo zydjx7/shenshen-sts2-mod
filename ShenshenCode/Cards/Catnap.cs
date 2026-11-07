@@ -25,5 +25,5 @@ public sealed class Catnap : ShenshenCard
             DynamicVars.Energy.IntValue, Owner.Creature, this);
     }
 
-    protected override void OnUpgrade() => DynamicVars.Energy.UpgradeValueBy(1m);
+    protected override void OnUpgrade() => RemoveKeyword(CardKeyword.Exhaust);
 }

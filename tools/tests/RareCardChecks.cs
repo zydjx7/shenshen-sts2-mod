@@ -22,10 +22,10 @@ public partial class Harness
         var pool = ModelDb.CardPool<ShenshenCardPool>();
         var solo = pool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.SingleplayerOnly).OfType<RareCard>().ToArray();
         var all = pool.GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.MultiplayerOnly).OfType<RareCard>().ToArray();
-        Check(solo.Count(c => c.Rarity == CardRarity.Rare) == 36 && !solo.OfType<Resurrection>().Any() &&
-            all.Length == 42 && all.Count(c => c.Rarity == CardRarity.Uncommon) == 3 &&
+        Check(solo.Count(c => c.Rarity == CardRarity.Rare) == 35 && !solo.OfType<Resurrection>().Any() &&
+            all.Length == 41 && all.Count(c => c.Rarity == CardRarity.Uncommon) == 3 &&
             all.Count(c => c.Rarity == CardRarity.Ancient) == 2,
-            "36 solo rares, one co-op rare, two Ancients and three former rares now uncommon in native pools");
+            "35 solo rares, one co-op rare, two Ancients and three former rares now uncommon in native pools");
         var f = await CreateCommonFixture();
         CheckCommonCardDescriptions(f, all);
         foreach (var canonical in all)
@@ -72,16 +72,17 @@ public partial class Harness
         var shift = state.AllCards.OfType<TransformationMagic>().Single();
         await CardPileCmd.Add(shift, PileType.Hand);
         await PlayPaid(shift, f.Context);
-        Check(owner.GetPower<ThornsPower>()?.Amount == 1, "paid transformation grants Thorns in the new cat form");
+        Check(owner.GetPower<ThornsPower>()?.Amount == 2 && owner.GetPower<StrengthPower>() == null,
+            "base cat entry and the paid Star Chart grant one Thorn each without Strength");
         var pounce = CommonCard<SwiftPounce>(f);
         await CardPileCmd.AddGeneratedCardToCombat(pounce, PileType.Hand, f.Player);
         int hp = f.Enemy.CurrentHp;
         var (energy, stars) = await pounce.SpendResources();
         await pounce.OnPlayWrapper(f.Context, f.Enemy, false, new ResourceInfo { EnergySpent = energy, EnergyValue = energy, StarsSpent = stars, StarValue = stars }, true);
-        Check(energy == 3 && hp - f.Enemy.CurrentHp == 21 && owner.GetPower<ThornsPower>()?.Amount == 4 && state.Energy == 0,
-            "X costs pay once, scale each hit with Strength and grant exactly the spent energy in Thorns");
+        Check(energy == 3 && hp - f.Enemy.CurrentHp == 18 && owner.GetPower<ThornsPower>()?.Amount == 5 && state.Energy == 0,
+            "X costs pay once without base transformation Strength and grant exactly the spent energy in Thorns");
         await PlayRare<SwiftPounce>(f, f.Enemy);
-        Check(owner.GetPower<ThornsPower>()?.Amount == 4, "free autoplay grants no Star Chart resources");
+        Check(owner.GetPower<ThornsPower>()?.Amount == 5, "free autoplay grants no Star Chart resources");
         await PlayRare<RuneLogic>(f, upgraded: true);
         var fire = state.AllCards.OfType<LittleFireball>().First();
         var shield = state.AllCards.OfType<LightShield>().First();
@@ -97,7 +98,7 @@ public partial class Harness
         await Switch(f.Context, f.Player);
         Check(owner.GetPower<TemporaryThornsPower>()?.Amount == 3, "first shift creates three temporary Thorns");
         await CreatureCmd.Damage(f.Context, owner, 0, ValueProp.Move, f.Enemy);
-        Check(owner.GetPower<ThornsPower>()?.Amount == 4 && owner.GetPower<TemporaryThornsPower>()?.Amount == 2,
+        Check(owner.GetPower<ThornsPower>()?.Amount == 5 && owner.GetPower<TemporaryThornsPower>()?.Amount == 2,
             "a true zero-damage hit grows one temporary Thorn and makes two permanent");
         int before = f.Enemy.CurrentHp;
         await PlayRare<Grudge>(f, f.Enemy);

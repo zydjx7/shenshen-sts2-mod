@@ -25,6 +25,7 @@ public partial class Harness
 {
     private async Task RunDeckDesignChecks()
     {
+        await CheckThornsFirstTransformation();
         RunManager.Instance.CleanUp(false);
         var heroine = Player.CreateForNewRun<Hero>(UnlockState.all, 1);
         var teammate = Player.CreateForNewRun<MegaCrit.Sts2.Core.Models.Characters.Ironclad>(UnlockState.all, 2);
@@ -47,11 +48,11 @@ public partial class Harness
         await CreatureCmd.SetMaxAndCurrentHp(otherEnemy, 2000);
         var state = heroine.PlayerCombatState!;
 
-        Check(HasStartingComposition(heroine), "starting inventory owns exactly four attacks, four defenses and one signature per form");
-        Check(heroine.Deck.Cards.Count(c => c is ShenshenCard { Form: ShenshenForm.Human }) == 9 &&
-            heroine.Deck.Cards.Count(c => c is ShenshenCard { Form: ShenshenForm.Cat }) == 9 &&
+        Check(HasStartingComposition(heroine), "starting inventory owns exactly three attacks, three defenses and one signature per form");
+        Check(heroine.Deck.Cards.Count(c => c is ShenshenCard { Form: ShenshenForm.Human }) == 7 &&
+            heroine.Deck.Cards.Count(c => c is ShenshenCard { Form: ShenshenForm.Cat }) == 7 &&
             heroine.Deck.Cards.OfType<TransformationMagic>().Count() == 1,
-            "both nine-card inventories and one shared transformation are permanently owned");
+            "both seven-card inventories and one shared transformation are permanently owned");
 
         void CheckUpgrade<T>(params (string Name, decimal Base, decimal Upgraded)[] values) where T : CardModel
         {
@@ -75,13 +76,13 @@ public partial class Harness
 
         await Hook.BeforeHandDraw(combat, heroine, context);
         var transform = state.Hand.Cards.OfType<TransformationMagic>().Single();
-        Check(transform.EnergyCost.Canonical == 1 && transform.DynamicVars.Strength.BaseValue == 1 &&
-            transform.DynamicVars["DexterityPower"].BaseValue == 1 && transform.DynamicVars["ThornsPower"].BaseValue == 0 &&
+        Check(transform.EnergyCost.Canonical == 1 && transform.DynamicVars.Strength.BaseValue == 0 &&
+            transform.DynamicVars["DexterityPower"].BaseValue == 1 && transform.DynamicVars["ThornsPower"].BaseValue == 1 &&
             transform.DynamicVars.Block.BaseValue == 0,
             "the unique owned transformation has its one-energy base bonuses");
         var baseText = transform.GetDescriptionForPile(PileType.Hand);
         var upgradePreviewText = transform.GetDescriptionForUpgradePreview();
-        Check(baseText.Contains("Strength") && !baseText.Contains("Dexterity") && !baseText.Contains("Thorns") &&
+        Check(baseText.Contains("Thorns") && !baseText.Contains("Dexterity") && !baseText.Contains("Strength") &&
             !baseText.Contains("fixed") && !upgradePreviewText.Contains("{IfUpgraded"),
             "the human-held base transformation shows only cat-entry effects and resolves its upgrade preview");
         var owned = state.AllCards.ToArray();
@@ -96,36 +97,36 @@ public partial class Harness
         await PlayPaid(transform, context);
         Check(state.Energy == 3 && state.Hand.Cards.Contains(transform) && heroine.Creature.CurrentHp == hp && heroine.Creature.Block == 5,
             "manual base transformation spends one energy and preserves its instance, HP and existing block");
-        Check(heroine.Creature.GetPower<StrengthPower>()?.Amount == 1 && heroine.Creature.GetPower<DexterityPower>() == null &&
-            heroine.Creature.GetPower<ThornsPower>() == null && heroine.Creature.GetPower<FormPower>()?.Amount == 2 &&
+        Check(heroine.Creature.GetPower<StrengthPower>() == null && heroine.Creature.GetPower<DexterityPower>() == null &&
+            heroine.Creature.GetPower<ThornsPower>()?.Amount == 1 && heroine.Creature.GetPower<FormPower>()?.Amount == 2 &&
             heroine.Creature.GetPower<FormShiftPower>()?.Amount == 1,
-            "base entry into cat grants one strength and records this turn's shift without upgraded bonuses");
+            "base entry into cat grants one permanent Thorn without any Strength and records this turn's shift");
         Check(owned.ToHashSet().SetEquals(state.AllCards) && retainedUpgrade.IsUpgraded &&
             retainedUpgrade.EnergyCost.GetWithModifiers(CostModifiers.Local) == 0 &&
             state.Hand.Cards.OfType<ShenshenCard>().All(c => c.Form != ShenshenForm.Human),
             "paid transformation exchanges owned instances without losing upgrades or combat costs");
         await PlayPaid(transform, context);
         Check(state.Energy == 2 && heroine.Creature.GetPower<DexterityPower>()?.Amount == 1 &&
-            heroine.Creature.GetPower<StrengthPower>()?.Amount == 1 && heroine.Creature.Block == 5,
-            "base return to girl adds one dexterity, retains strength and gives no extra block");
+            heroine.Creature.GetPower<StrengthPower>() == null && heroine.Creature.GetPower<ThornsPower>()?.Amount == 1 && heroine.Creature.Block == 5,
+            "base return to girl adds one dexterity, retains Thorns and gives no Strength or extra block");
         transform.UpgradeInternal();
         transform.FinalizeUpgradeInternal();
         Check(transform.EnergyCost.Canonical == 1 && transform.DynamicVars.Strength.BaseValue == 1 &&
             transform.DynamicVars["DexterityPower"].BaseValue == 1 && transform.DynamicVars["ThornsPower"].BaseValue == 1 &&
             transform.DynamicVars.Block.BaseValue == 4,
-            "upgrading the same owned combat transformation unlocks only thorns and fixed block");
+            "upgrading the same owned combat transformation unlocks Strength and fixed block without increasing its Thorn reward");
         var upgradedText = transform.GetDescriptionForPile(PileType.Hand);
         Check(upgradedText.Contains("Thorns") && !upgradedText.Contains("Dexterity") && !upgradedText.Contains("fixed") &&
             !upgradedText.Contains("{IfUpgraded"),
             "the human-held upgraded transformation shows strength and thorns without opposite-face rewards");
         transform.EnergyCost.SetThisCombat(0);
         await PlayPaid(transform, context);
-        Check(state.Energy == 2 && heroine.Creature.GetPower<StrengthPower>()?.Amount == 2 &&
-            heroine.Creature.GetPower<ThornsPower>()?.Amount == 1 && state.Hand.Cards.Contains(transform),
+        Check(state.Energy == 2 && heroine.Creature.GetPower<StrengthPower>()?.Amount == 1 &&
+            heroine.Creature.GetPower<ThornsPower>()?.Amount == 2 && state.Hand.Cards.Contains(transform),
             "upgraded cat entry adds one strength and one thorns while retaining the same zero-cost instance");
         await PlayPaid(transform, context);
         Check(heroine.Creature.GetPower<DexterityPower>()?.Amount == 2 && heroine.Creature.Block == 9 &&
-            heroine.Creature.GetPower<StrengthPower>()?.Amount == 2 && heroine.Creature.GetPower<ThornsPower>()?.Amount == 1,
+            heroine.Creature.GetPower<StrengthPower>()?.Amount == 1 && heroine.Creature.GetPower<ThornsPower>()?.Amount == 2,
             "upgraded girl entry adds one dexterity and exactly four unpowered block despite existing dexterity");
 
         await PowerCmd.Remove(heroine.Creature.GetPower<StrengthPower>());
@@ -284,17 +285,38 @@ public partial class Harness
         var loaded = Player.FromSerializable(saved.SaveData!.Players.Single(p => p.NetId == heroine.NetId));
         Check(saved.Success && HasStartingComposition(loaded) && loaded.Deck.Cards.OfType<LightMark>().Single().IsUpgraded &&
             loaded.Deck.Cards.OfType<CatTailSweep>().Single().IsUpgraded,
-            "real run-save inventory roundtrip preserves both nine-card decks and both upgraded signature instances");
+            "real run-save inventory roundtrip preserves both seven-card decks and both upgraded signature instances");
     }
 
     private static LightMarkPower? MarkOn(Creature target, Creature applier) =>
         PowerCmd.FindExistingInstanceForStacking(ModelDb.Power<LightMarkPower>(), target, applier) as LightMarkPower;
 
+    private async Task CheckThornsFirstTransformation()
+    {
+        var f = await CreateCommonFixture();
+        var state = f.Player.PlayerCombatState!;
+        var transform = state.AllCards.OfType<TransformationMagic>().Single();
+        await CardPileCmd.Add(transform, PileType.Hand);
+        transform.EnergyCost.SetThisCombat(0);
+        for (int i = 0; i < 5; i++) await PlayPaid(transform, f.Context);
+        Check(f.Player.Creature.GetPower<StrengthPower>() == null && f.Player.Creature.GetPower<ThornsPower>()?.Amount == 3,
+            "three actual base cat entries accumulate three permanent Thorns and never create Strength");
+        transform.UpgradeInternal();
+        transform.FinalizeUpgradeInternal();
+        await PlayPaid(transform, f.Context);
+        await PlayPaid(transform, f.Context);
+        Check(f.Player.Creature.GetPower<StrengthPower>()?.Amount == 1 && f.Player.Creature.GetPower<ThornsPower>()?.Amount == 4 &&
+            state.Hand.Cards.Contains(transform) && CardModel.FromSerializable(transform.ToSerializable()).IsUpgraded,
+            "a later upgraded cat entry adds exactly one Strength and one Thorn while preserving the owned upgraded card");
+        CheckCommonPowerPacket(f, ModelDb.Power<ThornsPower>().Id, 4,
+            "native combat snapshots preserve the new cumulative permanent cat-entry Thorns");
+    }
+
     private static bool HasStartingComposition(Player player) =>
-        player.Deck.Cards.Count == 19 && player.Deck.Cards.OfType<TransformationMagic>().Count() == 1 &&
-        player.Deck.Cards.OfType<LittleFireball>().Count() == 4 &&
-        player.Deck.Cards.OfType<LightShield>().Count() == 4 && player.Deck.Cards.OfType<LightMark>().Count() == 1 &&
-        player.Deck.Cards.OfType<ClawStrike>().Count() == 4 && player.Deck.Cards.OfType<MiDodge>().Count() == 4 &&
+        player.Deck.Cards.Count == 15 && player.Deck.Cards.OfType<TransformationMagic>().Count() == 1 &&
+        player.Deck.Cards.OfType<LittleFireball>().Count() == 3 &&
+        player.Deck.Cards.OfType<LightShield>().Count() == 3 && player.Deck.Cards.OfType<LightMark>().Count() == 1 &&
+        player.Deck.Cards.OfType<ClawStrike>().Count() == 3 && player.Deck.Cards.OfType<MiDodge>().Count() == 3 &&
         player.Deck.Cards.OfType<CatTailSweep>().Count() == 1;
 
     private static async Task PlayPaid(CardModel card, PlayerChoiceContext context)

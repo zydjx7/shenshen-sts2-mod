@@ -91,7 +91,7 @@ public partial class Harness : Node
         await PowerCmd.Apply<FormPower>(context, player.Creature, 1, player.Creature, null);
         var state = player.PlayerCombatState!;
         var all = state.AllCards.ToArray();
-        Check(player.Deck.Cards.Count == 19 && all.Length == 19, "both owned nine-card starting decks and one permanent transformation");
+        Check(player.Deck.Cards.Count == 15 && all.Length == 15, "both owned seven-card starting decks and one permanent transformation");
         var ownedTransformation = all.OfType<TransformationMagic>().Single();
         await CardPileCmd.Add(ownedTransformation, PileType.Hand);
         var upgraded = all.OfType<LittleFireball>().First();
@@ -107,11 +107,12 @@ public partial class Harness : Node
             state.Hand.Cards.Where(c => c is not TransformationMagic).All(c => c is ShenshenCard { Form: Shenshen.ShenshenCode.Character.ShenshenForm.Cat }),
             "switch draws same count cats and retains the actual owned transformation");
         for (int i = 0; i < 8; i++) await Switch(context, player);
-        Check(all.ToHashSet().SetEquals(state.AllCards) && state.AllCards.Count() == 19, "repeated switches preserve every exact card reference");
+        Check(all.ToHashSet().SetEquals(state.AllCards) && state.AllCards.Count() == 15, "repeated switches preserve every exact card reference");
         Check(upgraded.IsUpgraded && upgraded.EnergyCost.GetWithModifiers(CostModifiers.Local) == 0, "upgrade and cost state persist");
         // The real shared transformation remains retained. Shared state cards
         // provide eligible draws beyond the ten-card hand cap.
-        var handLimitFillers = new[] { combat.CreateCard<Wound>(player), combat.CreateCard<Wound>(player) };
+        var handLimitFillers = new[] { combat.CreateCard<Wound>(player), combat.CreateCard<Wound>(player),
+            combat.CreateCard<Wound>(player), combat.CreateCard<Wound>(player) };
         foreach (var filler in handLimitFillers)
             await CardPileCmd.AddGeneratedCardToCombat(filler, PileType.Draw, player);
         await CardPileCmd.Draw(context, 100, player);
@@ -152,6 +153,7 @@ public partial class Harness : Node
         await PowerCmd.Remove(player.Creature.GetPower<CatDodgePower>());
         player.Creature.GetPower<FormPower>()!.SetAmount(1);
         await Switch(context, player);
+        await PowerCmd.Remove(player.Creature.GetPower<ThornsPower>());
         await CreatureCmd.SetMaxAndCurrentHp(enemy, 1000);
         await CreatureCmd.LoseBlock(context, player.Creature, player.Creature.Block, player.Creature);
         int before = player.Creature.CurrentHp;
@@ -186,16 +188,18 @@ public partial class Harness : Node
         Check(player.Creature.GetPower<ThornsPower>()!.Amount == thorns + 4 && enemy.CurrentHp == enemyHp - (thorns + 1),
             "first enemy HP loss awards three thorns only after this hit retaliation");
         await Switch(context, player);
+        Check(player.Creature.GetPower<ThornsPower>()!.Amount == thorns + 5,
+            "cat entry adds exactly one permanent Thorn independently of the combat-wide fluff reward");
         await Hook.BeforeHandDraw(combat, player, context);
         await DamageCmd.Attack(2).FromMonster(enemy.Monster!).WithNoAttackerAnim().Execute(context);
-        Check(player.Creature.GetPower<ThornsPower>()!.Amount == thorns + 5,
+        Check(player.Creature.GetPower<ThornsPower>()!.Amount == thorns + 6,
             "first HP-loss bonus never refreshes across form and turn hooks");
         await CreatureCmd.Damage(context, player.Creature, 1, ValueProp.Unpowered, player.Creature);
         await CreatureCmd.Damage(context, player.Creature, 1, ValueProp.Unpowered, null, null, null);
-        Check(player.Creature.GetPower<ThornsPower>()!.Amount == thorns + 5, "self damage and poison-style HP loss do not trigger fluff");
+        Check(player.Creature.GetPower<ThornsPower>()!.Amount == thorns + 6, "self damage and poison-style HP loss do not trigger fluff");
         await PowerCmd.Apply<ArtifactPower>(context, player.Creature, 1, player.Creature, null);
         await PowerCmd.Apply<VulnerablePower>(context, player.Creature, 2, enemy, null);
-        Check(player.Creature.GetPower<ThornsPower>()!.Amount == thorns + 5, "immune enemy debuff grants no thorns");
+        Check(player.Creature.GetPower<ThornsPower>()!.Amount == thorns + 6, "immune enemy debuff grants no thorns");
 
         var snapshot = NetFullCombatState.FromRun(run, null);
         var writer = new PacketWriter();
@@ -299,17 +303,18 @@ public partial class Harness : Node
         // This combat fixture intentionally has no generated map/room sets. Reload its
         // real SerializablePlayer inventory rather than pretending to restore a complete run.
         var loadedHeroine = Player.FromSerializable(parsedSave.SaveData!.Players.Single(p => p.NetId == heroine.NetId));
-        Check(loadedHeroine.Deck.Cards.Count == 19 && loadedHeroine.Deck.Cards.Count(c => c is LittleFireball or LightShield or LightMark) == 9 &&
-            loadedHeroine.Deck.Cards.Count(c => c is ClawStrike or MiDodge or CatTailSweep) == 9 &&
+        Check(loadedHeroine.Deck.Cards.Count == 15 && loadedHeroine.Deck.Cards.Count(c => c is LittleFireball or LightShield or LightMark) == 7 &&
+            loadedHeroine.Deck.Cards.Count(c => c is ClawStrike or MiDodge or CatTailSweep) == 7 &&
             loadedHeroine.Deck.Cards.OfType<TransformationMagic>().Count() == 1 &&
             loadedHeroine.Deck.Cards.OfType<LittleFireball>().Count(c => c.IsUpgraded) == 1,
-            "permanent save reload preserves both nine-card owned decks, the shared transformation and the original upgrade");
+            "permanent save reload preserves both seven-card owned decks, the shared transformation and the original upgrade");
         File.WriteAllText(Path.Combine(Environment.GetEnvironmentVariable("SHENSHEN_REPO_ROOT")!, "work", "headless-tests", "roundtrip.save"), saveJson);
         await RunRareCardChecks();
         await RunDeckDesignChecks();
         await RunUpgradeAccessChecks();
         await RunCommonCardChecks();
         await RunCardBalanceChecks();
+        await RunNewUncommonChecks();
         await RunFormFaceDodgeChecks();
         UiResourceChecks.Run(Check);
         await UiResourceChecks.RunLayout(this, Check);

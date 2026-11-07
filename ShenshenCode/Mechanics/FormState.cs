@@ -40,9 +40,9 @@ internal static class FormState
         if (current == ShenshenForm.Human)
         {
             await CatDodgePower.GrantOnCatEntry(context, player);
-            await PowerCmd.Apply<StrengthPower>(context, player.Creature, 1, player.Creature, null);
+            await PowerCmd.Apply<ThornsPower>(context, player.Creature, 1, player.Creature, null);
             if (upgraded)
-                await PowerCmd.Apply<ThornsPower>(context, player.Creature, 1, player.Creature, null);
+                await PowerCmd.Apply<StrengthPower>(context, player.Creature, 1, player.Creature, null);
         }
         else
         {

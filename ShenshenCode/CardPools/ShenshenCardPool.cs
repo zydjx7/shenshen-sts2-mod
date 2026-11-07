@@ -21,5 +21,5 @@ public sealed class ShenshenCardPool : CustomCardPoolModel
         // Retain model IDs and behavior for old saves; exclude retired cards from
         // the unlocked pool used by rewards, merchants and card generation.
         .Where(card => card.Rarity != CardRarity.Token && card is not
-            (LightShadowHandoff or ShatteredMirrorFlames or MoltenLightPierce or Kneading or Teasing));
+            (LightShadowHandoff or ShatteredMirrorFlames or MoltenLightPierce or Kneading or Teasing or BurnTheMark));
 }
