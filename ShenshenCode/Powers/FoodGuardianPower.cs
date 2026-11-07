@@ -39,10 +39,7 @@ public sealed class FoodGuardianPower : CustomPowerModel
         SetAmount(Amount | 1);
         Flash();
         var context = new ThrowingPlayerChoiceContext();
-        var before = Owner.GetPower<ThornsPower>()?.Amount ?? 0;
-        await PowerCmd.Apply<ThornsPower>(context, Owner, DisplayAmount, Owner, null);
-        var gained = (Owner.GetPower<ThornsPower>()?.Amount ?? 0) - before;
-        if (gained > 0) await PowerCmd.Apply<TemporaryThornsPower>(context, Owner, gained, Owner, null);
+        await TemporaryThornsPower.Grant(context, Owner, DisplayAmount, null);
     }
     public override Task BeforeSideTurnStart(PlayerChoiceContext context, CombatSide side,
         IReadOnlyList<Creature> participants, ICombatState state)

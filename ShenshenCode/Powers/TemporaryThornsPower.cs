@@ -20,6 +20,11 @@ public sealed class TemporaryThornsPower : CustomPowerModel
     internal static readonly AsyncLocal<bool> GrantInProgress = new();
     public static async Task Grant(PlayerChoiceContext context, Creature target, int amount, CardModel? source)
     {
+        if (target.GetPower<MadeRealPower>() != null)
+        {
+            await PowerCmd.Apply<ThornsPower>(context, target, amount, target, source);
+            return;
+        }
         var previous = target.GetPower<ThornsPower>()?.Amount ?? 0;
         var previousGrant = GrantInProgress.Value;
         GrantInProgress.Value = true;

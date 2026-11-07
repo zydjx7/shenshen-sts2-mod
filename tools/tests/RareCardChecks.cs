@@ -31,8 +31,15 @@ public partial class Harness
         foreach (var canonical in all)
         {
             var card = f.Combat.CreateCard(canonical, f.Player);
-            Check(card.IsUpgradable && card.Portrait != null, canonical.Id.Entry + " has an upgrade and a usable placeholder portrait");
+            Check(card.IsUpgradable && card.Portrait != null, canonical.Id.Entry + " has an upgrade and a usable portrait");
         }
+        var rings = CommonCard<SevenfoldMirror>(f);
+        var portrait = rings.Portrait;
+        CardCmd.Upgrade(rings);
+        Check(portrait.ResourcePath == "res://Shenshen/images/card_portraits/rare/sevenfold_mirror.png" &&
+            portrait.GetWidth() == 1438 && portrait.GetHeight() == 1093 &&
+            rings.Portrait == portrait && rings.AllPortraitPaths.Single() == portrait.ResourcePath,
+            "both Seven Rings upgrades and the portrait cache use the approved full-size illustration");
         var tooth = (ArchaicTooth)ModelDb.Relic<ArchaicTooth>().ToMutable();
         var original = f.Player.Deck.Cards.OfType<LightMark>().Single();
         CardCmd.Upgrade(original);
@@ -91,18 +98,77 @@ public partial class Harness
 
     private async Task TestRareThorns()
     {
+        await TestMadeReal();
+        await TestBriarGrowth();
+    }
+
+    private async Task TestMadeReal()
+    {
         var f = await CreateCommonFixture();
         var owner = f.Player.Creature;
-        await PlayRare<MadeReal>(f, upgraded: true);
-        await PlayRare<BriarGrowth>(f);
+        await PlayRare<ArchedBack>(f);
+        await PlayRare<BigStretch>(f);
+        await PowerCmd.Apply<FlexPotionPower>(f.Context, owner, 2, owner, null);
+        var made = await PlayRare<MadeReal>(f, upgraded: true);
+        await PlayRare<MadeReal>(f);
+        Check(made.Keywords.Contains(CardKeyword.Retain) && made.EnergyCost.Canonical == 2 &&
+            owner.GetPower<MadeRealPower>()?.Amount == 1 && owner.GetPower<TemporaryThornsPower>()?.Amount == 2 &&
+            owner.GetPower<BigStretchPower>()?.Amount == 3 && owner.GetPower<FlexPotionPower>()?.Amount == 2,
+            "Made Real+ retains for two energy and playing it twice preserves previously temporary gains");
         await Switch(f.Context, f.Player);
-        Check(owner.GetPower<TemporaryThornsPower>()?.Amount == 3, "first shift creates three temporary Thorns");
-        await CreatureCmd.Damage(f.Context, owner, 0, ValueProp.Move, f.Enemy);
-        Check(owner.GetPower<ThornsPower>()?.Amount == 5 && owner.GetPower<TemporaryThornsPower>()?.Amount == 2,
-            "a true zero-damage hit grows one temporary Thorn and makes two permanent");
-        int before = f.Enemy.CurrentHp;
-        await PlayRare<Grudge>(f, f.Enemy);
-        Check(before - f.Enemy.CurrentHp == 16, "Grudge remembers actual thorn HP loss on this target");
+        await PlayRare<FurballCurl>(f);
+        await PlayRare<BigStretch>(f, upgraded: true);
+        await PowerCmd.Apply<FlexPotionPower>(f.Context, owner, 2, owner, null);
+        await PowerCmd.Apply<FlexPotionPower>(f.Context, f.Teammate.Creature, 3, owner, null);
+        Check(owner.GetPower<ThornsPower>()?.Amount == 7 && owner.GetPower<TemporaryThornsPower>()?.Amount == 2 &&
+            owner.GetPower<StrengthPower>()?.Amount == 11 && owner.GetPower<FlexPotionPower>()?.Amount == 2,
+            "the new four Thorns, four card Strength and two potion Strength do not extend the old expiry counters");
+        await Hook.AfterSideTurnEnd(f.Combat, CombatSide.Player, [owner, f.Teammate.Creature]);
+        await Hook.BeforeHandDraw(f.Combat, f.Player, f.Context);
+        Check(owner.GetPower<StrengthPower>()?.Amount == 6 && owner.GetPower<ThornsPower>()?.Amount == 5 &&
+            owner.GetPower<TemporaryThornsPower>() == null && f.Teammate.Creature.GetPower<StrengthPower>() == null,
+            "only pre-enchantment stacks expire and the teammate's potion still wears off normally");
+        await PowerCmd.Apply<FlexPotionPower>(f.Context, owner, 5, owner, null);
+        await PowerCmd.Apply<ShacklingPotionPower>(f.Context, owner, 1, f.Enemy, null);
+        Check(owner.GetPower<FlexPotionPower>() == null && owner.GetPower<StrengthPower>()?.Amount == 10,
+            "a fresh native potion becomes permanent while temporary Strength loss still applies");
+        await Hook.AfterSideTurnEnd(f.Combat, CombatSide.Player, [owner]);
+        Check(owner.GetPower<StrengthPower>()?.Amount == 11, "the temporary Strength loss is restored normally");
+        await PlayRare<SevenfoldMirror>(f);
+        await Hook.BeforeSideTurnEnd(f.Combat, CombatSide.Player, [owner]);
+        await Hook.BeforeHandDraw(f.Combat, f.Player, f.Context);
+        Check(owner.GetPower<ThornsPower>()?.Amount == 12 && owner.GetPower<SevenfoldMirrorPower>()?.Amount == 6,
+            "Made Real keeps all seven Thorns from the first layer of Seven Rings into the next player turn");
+    }
+
+    private async Task TestBriarGrowth()
+    {
+        foreach (var upgraded in new[] { false, true })
+        {
+            var f = await CreateCommonFixture(ShenshenForm.Cat);
+            var owner = f.Player.Creature;
+            var gain = upgraded ? 3 : 2;
+            await PlayRare<BriarGrowth>(f, upgraded: upgraded);
+            await CreatureCmd.Damage(f.Context, owner, 0, ValueProp.Move, f.Enemy);
+            Check(owner.GetPower<ThornsPower>() == null, "without a thorn hit Briar Growth cannot seed itself");
+            await PowerCmd.Apply<ThornsPower>(f.Context, owner, 4, owner, null);
+            var enemyHp = f.Enemy.CurrentHp;
+            await CommonEnemyAttack(f, 1, 5);
+            Check(owner.GetPower<ThornsPower>()?.Amount == 4 + 5 * gain &&
+                enemyHp - f.Enemy.CurrentHp == 20 + 10 * gain,
+                $"five consecutive retaliations grow by {gain} each with no per-round cap");
+            await Hook.BeforeHandDraw(f.Combat, f.Player, f.Context);
+            Check(owner.GetPower<TemporaryThornsPower>() == null && owner.GetPower<ThornsPower>()?.Amount == 4 + 5 * gain,
+                "Briar Growth grants combat-long Thorns");
+            var before = f.Enemy.CurrentHp;
+            await PlayRare<Grudge>(f, f.Enemy);
+            Check(before - f.Enemy.CurrentHp == 12 + (enemyHp - before) &&
+                owner.GetPower<ThornsPower>()?.Amount == 4 + 5 * gain,
+                "Grudge remembers the real thorn damage and its direct attack does not trigger growth");
+            await PlayRare<OvernightBloom>(f);
+            Check(owner.GetPower<ThornsPower>()?.Amount == 4 + 5 * gain + 3 + 4 * gain,
+                "two active thorn hits on each of two enemies each trigger Briar Growth");
+        }
     }
 
     private async Task TestRareDefense()

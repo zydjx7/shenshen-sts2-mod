@@ -8,7 +8,8 @@ namespace Shenshen.ShenshenCode.Cards;
 public sealed class SevenfoldMirror : RareCard
 {
     public SevenfoldMirror() : base(3, CardType.Power, TargetType.Self, ShenshenForm.Human) { }
-
+    public override string CustomPortraitPath =>
+        $"{MainFile.ResPath}/images/card_portraits/rare/sevenfold_mirror.png";
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {

@@ -415,3 +415,14 @@ DLL SHA256 为 `2D97C43CF6164B4B9F386FFBA6F2D4EFE4717348CD0B4734FC78C838D2B4C148
 - **部署**：游戏退出后沿用 `tools/play-test.ps1 prepare` 完整备份至 `local/play-test/mod-backups/20261107T153530412/`（目录使用 UTC），安装后 7 文件均与 ZIP／dist 一致，旧 7 文件均与覆盖前备份一致。清单为 `work/thorns-balance-20261108/deployment.json`。`verify` 确认 **1049 个日常文件哈希不变**，changes=[]；本次没有启动实际游戏窗口，macOS 和真实双端联机、长期平衡尚未实测。
 
 DLL SHA256：`A0C9E643C2D199BB4843606219A0A6B06F133E12559621FD5D4038B0B4DC3F0B`；PCK：`3A8BDABFC238D3E97505766883BCA05A0BD9ED26DCEA54C9CDF58EBCB0CB7E72`；ZIP：`D148F3F2010B3263DF278A84EF1C6B56C9B6DDACFE87874945575146142BB639`。
+
+## 炽天棘华七重圆环卡图与荆棘能力（2026-11-08）
+
+- 用户指定的 1438×1093 PNG 已接到「炽天棘华七重圆环」的正式肖像。附件与源码 PNG 的 SHA256 均为 `645431C77B9929EF5B48DB403CE80963AE3B0B19AEE1A0151E93642D59848B31`。原版卡框肖像区为 250×190，按比例居中显示。普通与升级卡均从最终 PCK 读取同一张完整纹理。
+- Windows Release 编译与 Godot 导出成功。以本机已安装的「织棘术／屏息」版本为底包，加入圆环的导入映射和纹理，更新双语卡牌及状态文本，其余 251 个已有资源逐项校验一致。
+- 最终 DLL 与 PCK 通过游戏 v0.111.0 真实程序集的 768 项无窗口回归。覆盖先前与后来获得的临时层数、角色及原版药水的力量、队友与临时减益、圆环的首轮 7 荆棘，以及「荆棘丛生」的连击与主动群体刺伤。日志在 `work/rings-and-thorns-20261108/regression.log`。
+- 整合包为 `dist/Shenshen-seven-rings-20261108.zip`。游戏退出后安装并核对了 7 个文件，上一版完整备份在 `local/play-test/mod-backups/20261107T155235586/`。1049 个日常文件的哈希均与安装前一致。本轮未启动游戏窗口，macOS 与真实双端联机未实测。
+
+### 织棘术／屏息的后续整合核对
+
+并行开发之后已将本轮内容并入 `Shenshen-seven-rings-20261108.zip`，当前安装版通过 768 项真实程序集／Godot 回归。只读核对两张牌的 DLL 实现，4 项卡图资源、14 条中英文文本均与首包一致；7 个安装文件匹配整合 ZIP。清单 `work/card-additions-20261108/current-install-verification.json`。本次仍未启动游戏窗口。

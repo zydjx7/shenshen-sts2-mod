@@ -47,11 +47,6 @@ internal static class RareCombat
         }
         if (first && player.Creature.GetPower<DoubleChantPower>() is { } chant)
             await PowerCmd.Apply<NextDoubleAttackPower>(context, player.Creature, chant.Amount, player.Creature, null);
-        if (first && player.Creature.GetPower<MadeRealPower>() is { } made)
-        {
-            await TemporaryThornsPower.Grant(context, player.Creature, 3, null);
-            await PowerCmd.Apply<ThornsToKeepPower>(context, player.Creature, made.Amount, player.Creature, null);
-        }
         if (form == ShenshenForm.Cat && player.Creature.GetPower<NextCatStrengthPower>() is { } cat)
         {
             await TemporaryStrength(context, player.Creature, cat.Amount, null);
@@ -122,25 +117,6 @@ internal static class RareCombat
         if (owner.GetPower<TailtipMarkPower>() is { } tail)
             foreach (var hit in results.Where(r => r.TotalDamage > 0 && r.Receiver.IsAlive))
                 await LightMarkPower.ApplyMark(context, hit.Receiver, owner, tail.Amount, 2, null);
-        if (owner.GetPower<ThornsToKeepPower>() is { } keep)
-        {
-            var remaining = keep.Amount;
-            await PowerCmd.Remove(keep);
-            if (owner.GetPower<TemporaryThornsPower>() is { } temporary)
-            {
-                var converted = Math.Min(remaining, temporary.Amount);
-                remaining -= converted;
-                await PowerCmd.ModifyAmount(context, temporary, -converted, owner, null);
-            }
-            foreach (var held in owner.GetPowerInstances<HeldThornsPower>().OrderBy(p => p.Expiry).ToArray())
-            {
-                if (remaining <= 0) break;
-                var converted = Math.Min(remaining, held.Amount);
-                remaining -= converted;
-                await PowerCmd.ModifyAmount(context, held, -converted, owner, null);
-            }
-            await CheckBloom(context, owner);
-        }
         if (owner.GetPower<BriarGrowthPower>() is { } briar) await briar.Grow(context);
     }
 
