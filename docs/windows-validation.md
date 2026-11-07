@@ -398,3 +398,9 @@ DLL SHA256 为 `2D97C43CF6164B4B9F386FFBA6F2D4EFE4717348CD0B4734FC78C838D2B4C148
 - **部署与游戏实测**：遵照用户“先不部署，之后一起部署”，没有备份或覆盖游戏目录，没有启动实际游戏窗口，也未改动日常存档。回归在 TestMode 的隔离目录运行，不代表原生选牌界面、真实双端联机、macOS 或长期平衡已验收。
 
 本轮 DLL SHA256：`044357BA63E2BE0BB53421AE4BFA2824E0752B3AB351DF740258BD51EA9934A8`；PCK：`DAAAC717B79B794DB8E79B9BA517CEE7A05EE631F32C717A6E11797942C452D6`；ZIP：`A88D888DB9BC386418BB4B78DE07EBD9A8BC05F12BA1B67674ED660F9F64ABC4`。
+
+## 卡牌调整 r2 部署（2026-11-08）
+
+- 用户在此前暂缓部署后要求实装。核对当前源码仍为 `73c3355`，游戏仍为 v0.111.0；游戏进程已退出。重新核对 `Shenshen-card-balance-20261107-r2.zip` 的 SHA256 与上轮记录相同，7 个 dist 文件逐字节匹配包内内容，安装前 PCK 仍为首轮金卡版本，未混入工作区其他美术修改。
+- 沿用 `tools/play-test.ps1 prepare` 完整备份旧 Shenshen／BaseLib，再安装同一已通过 704 项回归的版本。备份为 `local/play-test/mod-backups/20261107T150915091/`（目录名使用 UTC），备份 7 文件逐一匹配覆盖前记录，安装后 7 文件逐一匹配 dist／ZIP。部署核对清单在 `work/card-balance-deploy-20261108/deployment.json`。
+- `tools/play-test.ps1 verify` 通过，**1049 个日常文件哈希不变**，changes=[]，记录为 `work/card-balance-deploy-20261108/save-verification.json`。本次只安装已验证包，没有重新编译、改玩法或启动游戏窗口；704 项属于上轮对同一产物的真实程序集／Godot 回归，不称本次游戏内验收。macOS、实际双端联机及长期平衡仍待实战。
