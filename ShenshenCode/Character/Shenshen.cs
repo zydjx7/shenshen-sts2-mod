@@ -6,9 +6,10 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.PotionPools;
-using MegaCrit.Sts2.Core.Models.RelicPools;
 using Shenshen.ShenshenCode.Cards;
 using Shenshen.ShenshenCode.CardPools;
+using Shenshen.ShenshenCode.RelicPools;
+using Shenshen.ShenshenCode.Relics;
 using Shenshen.ShenshenCode.Visuals;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 
@@ -40,11 +41,11 @@ public class Shenshen : PlaceholderCharacterModel, ISceneConversions
             .Append(ModelDb.Card<CatTailSweep>())
             .Append(ModelDb.Card<TransformationMagic>());
 
-    public override IReadOnlyList<RelicModel> StartingRelics => [];
+    public override IReadOnlyList<RelicModel> StartingRelics => [ModelDb.Relic<SolarHairClasp>()];
 
-    // Relic and potion reward pools remain prototype placeholders.
+    // Other relic rewards and the potion pool remain prototype placeholders.
     public override CardPoolModel CardPool => ModelDb.CardPool<ShenshenCardPool>();
-    public override RelicPoolModel RelicPool => ModelDb.RelicPool<IroncladRelicPool>();
+    public override RelicPoolModel RelicPool => ModelDb.RelicPool<ShenshenRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<IroncladPotionPool>();
 
     public override NCreatureVisuals CreateCustomVisuals() => ShenshenVisuals.Create();

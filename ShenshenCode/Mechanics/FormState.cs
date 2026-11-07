@@ -80,10 +80,6 @@ internal static class FormState
             if (player.Creature.GetPower<FormPower>() != null) return;
             await PowerCmd.Apply<FormPower>(context, player.Creature, 1, player.Creature, null);
             await PowerCmd.Apply<ReturningClawMemoryPower>(context, player.Creature, 1, player.Creature, null);
-            // Move the owned card's real combat instance before the normal five-card draw.
-            var transformation = player.PlayerCombatState!.AllCards.OfType<TransformationMagic>().FirstOrDefault();
-            if (transformation != null)
-                await CardPileCmd.Add(transformation, PileType.Hand);
         }
     }
 
