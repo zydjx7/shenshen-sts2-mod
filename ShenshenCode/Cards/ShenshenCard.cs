@@ -28,6 +28,12 @@ public abstract class ShenshenCard : CustomCardModel
         {
             var portrait = this switch
             {
+                LittleFireball => "basic/little_fireball.png",
+                LightShield => "basic/light_shield.png",
+                LightMark => "basic/light_mark.png",
+                ClawStrike => "basic/claw_strike.png",
+                MiDodge => "basic/mi_dodge.png",
+                CatTailSweep => "basic/cat_tail_sweep.png",
                 ShatteredMirror => "common/shattered_mirror.png",
                 ThornPrayer => "common/thorn_prayer.png",
                 LightfootBlessing => "common/lightfoot_blessing.png",

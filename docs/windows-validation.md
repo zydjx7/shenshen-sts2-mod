@@ -314,3 +314,9 @@ UI 类型修复后再次完整运行 `./tools/test.ps1`，编译与打包退出 
 `tools/build.ps1 pack --no-restore` 的 Release publish、MegaDot 独立资源导入及 PCK 导出成功。交付 `dist/Shenshen-card-text-20261107.zip`，包含 Shenshen 与 BaseLib。依用户要求，本轮未运行自动回归或实际游戏，不自动部署游戏；奖励出现、排版、效果和平衡由用户实测。逐张清单、核对依据及产物哈希见 [本轮核对记录](card-content-audit-20261107.md)。
 
 另用锁定 ILSpy 只读核对实际游戏目录和本次交付 DLL 的类清单：游戏中仍为 21 白卡／3 蓝卡／7 Basic 的旧 DLL，蓝卡只有不喜欢你！、光之镜、炸毛；其余 37 个蓝卡类缺失。本次 DLL 包含完整 21／40／7。旧 DLL 无法提供这 37 张蓝卡奖励，用户实测前需用本次交付包更新游戏模组。本轮仅静态读取程序集，不运行其中代码。
+
+## 六张初始牌卡图接入及游戏部署（2026-11-07）
+
+用户确认小火球、光之护盾、光之印记、爪击、咪挡和猫之甩尾六张新图，并要求直接实装、打包和覆盖游戏 mods，不用测试。正式 PNG 已复制到 `Shenshen/images/card_portraits/basic/`，保持确认原图的字节与 1438×1093 尺寸；已有肖像 switch 增加六条映射，替换初始牌共用占位图的情况。白卡、蓝卡以及现有双面变形保持原有图像引用，玩法与数值未改。
+
+`tools/build.ps1 pack --no-restore` 的 Release publish、独立 MegaDot 资源导入与 PCK 导出成功，交付 `dist/Shenshen-starter-art-20261107.zip`。确认游戏退出后，先备份旧模组，再将 Shenshen 与 BaseLib 共 7 个交付文件覆盖到游戏 mods；安装后文件哈希全部与 dist 一致。部署与备份记录保存在忽略目录 `local/mod-backups/20261107-174502-starter-art/`。本轮未运行自动回归或游戏，显示与玩法由用户实测。逐卡素材、提示、产物哈希及边界见 [初始牌卡图接入记录](art-starter-cards-2026-11-07.md)。
