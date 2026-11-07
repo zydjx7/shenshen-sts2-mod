@@ -18,8 +18,10 @@ public sealed class OtherSideOfTheSun : RareCard
     internal bool GirlFace => !IsMutable || CombatState == null || FormState.GetForm(Owner) == ShenshenForm.Human;
     protected override void AddExtraArgsToDescription(LocString description) => description.Add("Girl", GirlFace);
     public override bool GainsBlock => GirlFace;
-    public override string CustomPortraitPath => GirlFace ? TransformationMagic.GirlPortraitPath : TransformationMagic.CatPortraitPath;
-    public override IEnumerable<string> AllPortraitPaths => [TransformationMagic.GirlPortraitPath, TransformationMagic.CatPortraitPath];
+    private const string GirlPortraitPath = MainFile.ResPath + "/images/card_portraits/rare/other_side_sun_girl.png";
+    private const string CatPortraitPath = MainFile.ResPath + "/images/card_portraits/rare/other_side_sun_cat.png";
+    public override string CustomPortraitPath => GirlFace ? GirlPortraitPath : CatPortraitPath;
+    public override IEnumerable<string> AllPortraitPaths => [GirlPortraitPath, CatPortraitPath];
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {

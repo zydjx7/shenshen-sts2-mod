@@ -6,6 +6,8 @@
 
 ## 当前可用内容
 
+- 已接入本轮确认的 96 张「杏桃晨金」面图；变身魔法采用居中且完整背景的独立双面，日轮的另一面使用专属双面。深深百科卡牌默认解锁，支持直接查看卡图、说明、升级和搜索。整合包 `dist/Shenshen-apricot-art-library-unlocked-20261108.zip` 已覆盖本机游戏，未运行游戏测试。[接入范围与记录](docs/art-apricot-and-library-2026-11-08.md)
+
 - 当前普通单人获取池为 **20 白、39 蓝、35 金，共 94 张**。此前五张蓝卡与本轮燃印退池，旧模型保留供旧档读取。普通变猫改给 1 常驻荆棘，升级再加 1 力量；小憩升级去掉消耗，延迟能量保持 2；四种起始牌各减一，新局为 15 张。金卡奖励概率未改动。[卡牌前后版本与力量来源](docs/card-history.md) · [当前金卡与先古牌](docs/rare-card-candidates.md)
 - 当前 35 张单人金卡为少女 24、猫 10、共享 1，多人另有「起死回生」。古老牙齿可将「光之印记」换成「双相光印」，达弗的尘封魔典可给「回环星图＋」。本轮包 `dist/Shenshen-thorns-balance-20261108.zip` 通过 707 项真实程序集／Godot 回归，已备份并部署；7 个安装文件匹配，1049 个日常文件哈希不变。本次未启动游戏窗口。完整边界见 [Windows 验证记录](docs/windows-validation.md)。
 - 当前深深形象已固定为「杏桃晨金」宽斗篷定稿：弱化身体曲线、短圆下半脸、指定淡唇，保持伸手施法和举杖 pose。选人背景及同源小卡面已接入；后续卡图以 [形象基准](docs/shenshen-appearance-baseline.md) 为准，本轮不批量重绘卡牌。交付为 `dist/Shenshen-appearance-baseline-20261107.zip`，构建与部署范围见 [Windows 验证记录](docs/windows-validation.md)。
