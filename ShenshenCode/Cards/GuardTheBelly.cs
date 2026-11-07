@@ -19,7 +19,7 @@ public sealed class GuardTheBelly : ShenshenCard
     public override ShenshenForm? Form => ShenshenForm.Cat;
     public override bool GainsBlock => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(9m, ValueProp.Move), new DynamicVar("Recovery", 6m)];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<GuardTheBellyPower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<GuardTheBellyPower>(DynamicVars["Recovery"].IntValue)];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
